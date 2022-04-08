@@ -1,51 +1,48 @@
-import dotenv from 'dotenv';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import { Web3ReactProvider } from '@web3-react/core';
-import { Web3Provider } from '@ethersproject/providers';
-// import { WebSocketProvider } from '@ethersproject/providers';
-import { ChainId, DAppProvider } from '@usedapp/core';
-import { CHAIN_ID, createNetworkHttpUrl } from './config';
+import React from 'react'
 
-dotenv.config();
+import ReactDOM from 'react-dom'
 
-// prettier-ignore
-const useDappConfig = {
-  readOnlyChainId: CHAIN_ID,
-  readOnlyUrls: {
-    [ChainId.Rinkeby]: createNetworkHttpUrl('rinkeby'),
-    [ChainId.Mainnet]: createNetworkHttpUrl('mainnet'),
-    [ChainId.Hardhat]: 'http://localhost:8545',
-  },
-};
+import { useEagerConnect, useGetTotalSupply, useGetWalletBalance, useInactiveListener, usePollGasPrice } from 'hooks'
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastWrapper } from 'styles/components'
+import GlobalStyles from 'styles/globalStyles'
 
-console.log(useDappConfig);
-console.log(process.env);
+import App from './App'
+import './index.scss'
+import { Providers } from './Providers'
+import reportWebVitals from './reportWebVitals'
+
+const GlobalHooks = () => {
+  useEagerConnect()
+  useInactiveListener()
+  usePollGasPrice()
+  useGetWalletBalance()
+  useGetTotalSupply()
+
+  return null
+}
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <Web3ReactProvider
-        getLibrary={(provider) => {
-          new Web3Provider(provider);
-        }}
-      >
-        <DAppProvider config={useDappConfig}>
-          <App />
-        </DAppProvider>
-      </Web3ReactProvider>
-    </React.StrictMode>
-  </Provider>,
+  <React.StrictMode>
+    <Providers>
+      <GlobalHooks />
+      <GlobalStyles />
+      <ToastWrapper
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={'colored'}
+      />
+      <App />
+    </Providers>
+  </React.StrictMode>,
   document.getElementById('root')
-);
+)
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+reportWebVitals()

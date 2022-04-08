@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Nippo';
+  font-weight: 300 700;
+  src: local('Nippo'), url(styles/fonts/Nippo/Nippo-Variable.ttf) format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 0;
+}
