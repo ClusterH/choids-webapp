@@ -1,0 +1,33 @@
+.manifesto {
+  background-color: #252525 !important;
+  padding: 45px 0;
+  text-align: left;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  display: flex;
+  color: #f7f7f7;
+}
+
+@media (min-width: 768px) {
+  .manifesto {
+    padding: 45px 0 75px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
+
+.manifesto-text-align-center {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.emphasis {
+  color: 'red' !important;
+  font-weight: bold;
+}

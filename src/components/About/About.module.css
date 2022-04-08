@@ -1,0 +1,28 @@
+.about {
+  background-color: #f7f7f7 !important;
+  padding: 45px 0;
+  text-align: right;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  display: flex;
+  color: #252525;
+}
+
+@media (min-width: 768px) {
+  .about {
+    padding: 45px 0 75px;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+}
+
+.about-text-align-center {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
