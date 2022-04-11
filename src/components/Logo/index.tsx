@@ -18,7 +18,7 @@ const Logo: React.FC = () => {
       src={isMobile ? LOGO_SM : LOGO}
       borderRadius={'0'}
       height={'42px'}
-      alt="Count of Kingz Logo"
+      alt="choids"
       onClick={() => {
         handleNavigate('/')
         window.scrollTo({ top: 0, behavior: 'smooth' })

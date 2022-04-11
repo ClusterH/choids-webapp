@@ -7,7 +7,7 @@ import { ScrollToTop } from 'components/ScrollTop'
 
 const Header = lazy(() => import('./components/Header'))
 const Home = lazy(() => import('./views/Home'))
-const Footer = lazy(() => import('./components/Footer'))
+const ArtGenerator = lazy(() => import('./views/ArtGenerator'))
 
 const App: React.FC = () => {
   return (
@@ -17,10 +17,9 @@ const App: React.FC = () => {
         <ScrollToTop>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/:id" element={<Home />} />
+            <Route path="/generator" element={<ArtGenerator />} />
           </Routes>
         </ScrollToTop>
-        {/* <Footer /> */}
       </Suspense>
     </Router>
   )
