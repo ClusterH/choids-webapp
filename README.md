@@ -1,8 +1,8 @@
-# Council Of Kingz 2.0 Interface
+# Blockchain Choids Interface
 
-Council of Kingz is the most innovative real estate acquisition project in the NFT and metaverse space.
+Blockchain Choids are 3.141x10³ fully decentralized generative art pieces.
 
-Council of Kingz will develop each of the land plots we purchase with the intent to create gathering places, community centers, exclusive clubs, and specific districts that attract large amounts of foot traffic to create income through leasable spaces. Income that will further benefit the community in several capacities.
+An assemblage of minter created art on the Ethereum blockchain. This project aims to provide a interactive approach to NFT creation. Also, math is beautiful!
 
 ## Project installation
 
@@ -10,8 +10,8 @@ Clone down this repository. You will need `node` and `yarn`(or You can use `npm`
 
 ### Get the code and dependencies:
 
-    git clone https://github.com/wenbali-io/cok-blockchain-v2.git
-    cd cok-webapp-v2
+    git clone https://github.com/wenbali-io/choids-webapp.git
+    cd choids-webapp
     yarn
 
 ### Start the dev server with:
