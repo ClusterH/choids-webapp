@@ -18,6 +18,8 @@ const GlobalStyles = createGlobalStyle`
     --darkPurple7: #492c4f;
     --lightPurple1: #896393;
     --lightPurple2: #d6bddb;
+    --lightPurple3: #c2adc7;
+    --lightPurple4: #d2c2d6;
     --divider: #3f444e;
     --borderColor: #383d45;
     --borderColor2: #ccb4e9;

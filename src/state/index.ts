@@ -2,15 +2,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query/react'
 import { load, save } from 'redux-localstorage-simple'
 
+import artGeneratorReducer from 'state/artGenerator/reducer'
 import web3Reducer from 'state/web3/reducer'
 
 import { updateVersion } from './global/actions'
 
-const PERSISTED_KEYS: string[] = ['web3, cok', 'highKingz']
+const PERSISTED_KEYS: string[] = ['web3']
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
-  reducer: { web3Reducer },
+  reducer: { web3Reducer, artGeneratorReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       thunk: true,

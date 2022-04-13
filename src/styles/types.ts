@@ -4,6 +4,7 @@ export interface ThemeProps {
   background2: string
   background3: string
   background4: string
+  background5: string
 
   // text color
   text1: string
@@ -11,6 +12,9 @@ export interface ThemeProps {
   text3: string
   text4: string
   text5: string
+  text6: string
+  text7: string
+  text8: string
 
   //button color
   button1: string

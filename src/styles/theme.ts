@@ -7,12 +7,16 @@ export const themeColor: ThemeProps = {
   background2: 'var(--darkPurple4)',
   background3: 'var(--darkPurple5)',
   background4: 'var(--darkPurple6)',
+  background5: 'var(--darkPurple2)',
   // text color
   text1: 'var(--white)',
   text2: 'var(--purple1)',
   text3: 'var(--purple3)',
   text4: 'var(--darkPurple7)',
   text5: 'var(--darkPurple5)',
+  text6: 'var(--lightPurple3)',
+  text7: 'var(--lightPurple1)',
+  text8: 'var(--lightPurple4)',
 
   //button color
   button1: 'var(--buttonColor1)',
@@ -32,13 +36,13 @@ export const themeColor: ThemeProps = {
 
   // border, divider color
   border1: '1px solid var(--purple1)',
-  border2: '3px solid var(--yellow)',
-  border3: '4px solid var(--lightBlue)',
+  border2: '0.5px solid rgba(255, 255, 255, 0.1)',
+  border3: '1px solid var(--darkPurple4)',
   border4: '1px solid var(--borderColor)',
   border5: '1px solid var(--borderColor2)',
   divider: 'var(--divider)',
   // box-shadow
-  boxShadow1: '0px 35px 50px var(--blackOpacity07)',
+  boxShadow1: '0px 4px 4px rgba(0, 0, 0, 0.25);',
 }
 
 // export const themeTypography = {

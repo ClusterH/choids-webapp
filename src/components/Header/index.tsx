@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import styled from 'styled-components'
 
+import { useGetCurrentURLPath } from 'hooks'
 import { BlurBackground, FlexColumn, FlexRow } from 'styles/components'
 import { themeColor } from 'styles/theme'
 import { isMobile } from 'utils'
@@ -24,17 +25,22 @@ const HeaderContainer = styled(FlexRow)`
 `
 
 const Header: React.FC = () => {
+  const path = useGetCurrentURLPath()
   return (
     <HeaderContainer>
-      <FlexRow justifyContent={'flex-start'} rowWidth={'fit-content'}>
-        <Logo />
-      </FlexRow>
-      <Menu />
-      <FlexRow justifyContent={'flex-end'} rowWidth={'fit-content'}>
-        <SocialIconsContainer />
-        <WalletConnectionContainer />
-        <Hamburger />
-      </FlexRow>
+      {path.includes('/generator') === false && (
+        <Fragment>
+          <FlexRow justifyContent={'flex-start'} rowWidth={'fit-content'}>
+            <Logo />
+          </FlexRow>
+          <Menu />
+          <FlexRow justifyContent={'flex-end'} rowWidth={'fit-content'}>
+            <SocialIconsContainer />
+            <WalletConnectionContainer />
+            <Hamburger />
+          </FlexRow>
+        </Fragment>
+      )}
     </HeaderContainer>
   )
 }

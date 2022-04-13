@@ -182,11 +182,12 @@ export const InputWrapper = styled.input<{
   backgroundColor?: string
   border?: string
   borderRadius?: string
-  color?: string
+  color?: keyof ThemeProps
+  fontSize?: keyof typeof themeTypography
+  fontWeight?: keyof typeof themeFontWeight
+  fontFamily?: keyof typeof themeFontFamily
   padding?: string
-  fontSize?: string
-  fontFamily?: string
-  fontWeight?: number
+  textAlign?: string
 }>`
   width: ${({ width }) => (width ? width : '100%')};
   min-width: ${({ width }) => (width ? width : '240px')};
@@ -195,10 +196,11 @@ export const InputWrapper = styled.input<{
   border: ${({ border, theme }) => (border ? border : theme.border1)};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.medium)};
   padding: ${({ padding }) => (padding ? padding : '20px')};
-  font-size: ${({ fontSize }) => (fontSize ? fontSize : themeTypography.base)};
-  font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : themeFontWeight.regular)};
-  font-family: ${({ fontFamily }) => (fontFamily ? fontFamily : themeFontFamily.main)};
-  color: ${({ color, theme }) => (color ? color : theme.text1)};
+  color: ${({ color, theme }) => (color ? (theme as any)[color] : theme.text1)};
+  font-size: ${({ fontSize }) => (fontSize ? themeTypography[fontSize] : themeTypography.base)};
+  font-weight: ${({ fontWeight }) => (fontWeight ? themeFontWeight[fontWeight] : themeFontWeight.regular)};
+  font-family: ${({ fontFamily }) => (fontFamily ? themeFontFamily[fontFamily] : themeFontFamily.main)};
+  text-align: ${({ textAlign }) => (textAlign ? textAlign : 'start')};
   outline: none;
 `
 export const ImageContainer = styled.img<{
