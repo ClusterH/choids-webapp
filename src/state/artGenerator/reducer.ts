@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { IArtLayer } from 'views/ArtGenerator/types'
+import { ART_PRESET_LIST } from 'config/constants'
+import { IArtLayer, IArtParams } from 'views/ArtGenerator/types'
 
 interface IState {
   layerList: IArtLayer[]
+  artParamSettings: IArtParams[]
 }
 
 export const initialState: IState = {
   layerList: [],
+  artParamSettings: ART_PRESET_LIST.PRESET1,
 }
 
 const artGeneratorSlice = createSlice({
@@ -26,8 +29,14 @@ const artGeneratorSlice = createSlice({
         isHide: !state.layerList[action.payload.id - 1].isHide,
       }
     },
+    setArtParamSettings(state, action) {
+      state.artParamSettings[action.payload.id - 1] = {
+        ...state.artParamSettings[action.payload.id - 1],
+        [action.payload.setting]: action.payload.value,
+      }
+    },
   },
 })
 
-export const { setAddRemoveLayer, setHideLayer } = artGeneratorSlice.actions
+export const { setAddRemoveLayer, setHideLayer, setArtParamSettings } = artGeneratorSlice.actions
 export default artGeneratorSlice.reducer

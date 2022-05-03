@@ -1,13 +1,14 @@
 import React, { useCallback, useState } from 'react'
 
-import { ColorPicker, useColor } from 'react-color-palette'
+import 'react-color-palette/lib/css/styles.css'
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io'
 import styled from 'styled-components'
-import 'react-color-palette/lib/css/styles.css'
 
-import RangeInput from 'components/RangeInput'
-import { FlexColumn, FlexRow, InputWrapper, TextWrapper } from 'styles/components'
-import { themeBorderRadius, themeColor } from 'styles/theme'
+import { useArtParamSettings } from 'state/artGenerator/hook'
+import { setArtParamSettings } from 'state/artGenerator/reducer'
+import { useAppDispatch } from 'state/hooks'
+import { FlexColumn, FlexRow, TextWrapper } from 'styles/components'
+import { themeColor } from 'styles/theme'
 
 import ColorParam from './ColorParam'
 import RangeParam from './RangeParam'
@@ -17,8 +18,18 @@ const MainWrapper = styled(FlexColumn)`
 `
 
 const CanvasContainer: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const artParams = useArtParamSettings()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [val, setVal] = useState<number>(0)
+  const [canvasColor, setCanvasColor] = useState<string>(() => artParams[0].canvasColor)
+
+  const handleColorChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCanvasColor(e.target.value)
+      dispatch(setArtParamSettings({ id: 1, setting: 'canvasColor', value: e.target.value }))
+    },
+    [dispatch]
+  )
 
   const handleOpen = useCallback(() => {
     setIsOpen(!isOpen)
@@ -33,8 +44,8 @@ const CanvasContainer: React.FC = () => {
         {isOpen ? <IoIosArrowUp color={themeColor.text5} size={16} /> : <IoIosArrowDown color={themeColor.text5} size={16} />}
       </FlexRow>
       {isOpen && (
-        <FlexColumn>
-          <ColorParam label={'Color'} />
+        <FlexColumn padding={'12px 0'}>
+          <ColorParam label={'Color'} value={canvasColor} handleChange={handleColorChange} />
           <RangeParam label={'Rotate'} range={{ min: 0, max: 360 }} defaultVal={180} />
         </FlexColumn>
       )}

@@ -21,20 +21,18 @@ const ColorInput = styled(InputWrapper)`
   }
 `
 
-const ColorParam: React.FC<{ label: string }> = ({ label }) => {
-  const [canvasColor, setCanvasColor] = useState<string>('#ffffff')
-
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setCanvasColor(e.target.value)
-  }, [])
-
+const ColorParam: React.FC<{ label: string; value: string; handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void }> = ({
+  label,
+  value,
+  handleChange,
+}) => {
   return (
     <FlexRow>
       <TextWrapper color={'text8'} fontSize={'xs'} lineHeight={14}>
         {label}
       </TextWrapper>
-      <ColorInput type={'color'} value={canvasColor} onChange={handleChange} width={'32px'} height={'32px'} />
-      <InputWrapper value={canvasColor} onChange={handleChange} width={'60%'} height={'32px'} />
+      <ColorInput type={'color'} value={value} onChange={handleChange} width={'32px'} height={'32px'} />
+      <InputWrapper value={value} onChange={handleChange} width={'60%'} height={'32px'} />
     </FlexRow>
   )
 }

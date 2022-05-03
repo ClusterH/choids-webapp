@@ -3,15 +3,8 @@ import React from 'react'
 import { FlexColumn } from 'styles/components'
 import { themeColor } from 'styles/theme'
 
-import {
-  ActionContainer,
-  CanvasContainer,
-  OriginContainer,
-  PencilContainer,
-  PresetContainer,
-  RadiusContainer,
-  SpeedContainer,
-} from './CanvasParams'
+import ActionContainer from './ActionContainer'
+import { CanvasContainer, OriginContainer, PencilContainer, PresetContainer, RadiusContainer, SpeedContainer } from './CanvasParams'
 
 const ParamsMainContainer: React.FC = () => {
   return (
