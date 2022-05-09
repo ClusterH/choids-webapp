@@ -5,11 +5,11 @@ import { FlexColumn } from 'styles/components'
 import { useDraw } from '../hooks'
 
 const ArtCanvasContainer: React.FC = () => {
-  const { circlesCanvasRef, artCanvasRef } = useDraw()
+  const { penCanvasRef, circlesCanvasRef, divContainerRef } = useDraw()
   return (
-    <FlexColumn colWidth={'68%'} colHeight={'calc(100vh - 60px)'}>
-      <canvas style={{ position: 'absolute' }} ref={circlesCanvasRef} width={'100%'} height={'100%'} />
-      <canvas style={{ position: 'absolute' }} ref={artCanvasRef} width={'100%'} height={'100%'} />
+    <FlexColumn colHeight={'calc(100vh - 60px)'} ref={divContainerRef}>
+      <canvas style={{ position: 'absolute' }} ref={circlesCanvasRef} width={'800px'} height={'800px'} />
+      <canvas style={{ position: 'absolute' }} ref={penCanvasRef} width={'800px'} height={'800px'} />
     </FlexColumn>
   )
 }

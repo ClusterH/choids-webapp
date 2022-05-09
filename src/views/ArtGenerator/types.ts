@@ -6,19 +6,27 @@ export interface IArtLayer {
 
 export interface IArtParams {
   id: number
-  canvasColor: string
+  statorColor: string
+  rotorColor: string
   rotate: number
-  originX: number
-  originY: number
   speed: number
   pencilDistance: number
   pencilColor: string
   pencilSize: number
   statorRadius: number
-  rotors: number[]
+  rotors: { r: number; isInner: boolean }[]
+}
+
+export interface ICoord {
+  x: number
+  y: number
 }
 
 export interface IPoint {
-  x: number
-  y: number
+  x: number | null
+  y: number | null
+  r: number
+  color: string
+  fill: boolean
+  angle?: number
 }

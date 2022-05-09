@@ -21,7 +21,7 @@ const CanvasContainer: React.FC = () => {
   const dispatch = useAppDispatch()
   const artParams = useArtParamSettings()
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [canvasColor, setCanvasColor] = useState<string>(() => artParams[0].canvasColor)
+  const [canvasColor, setCanvasColor] = useState<string>(() => artParams[0].statorColor)
 
   const handleColorChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

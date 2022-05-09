@@ -1,62 +1,59 @@
 import { IPoint } from '../types'
 
-export const drawArc = (canvasRef: any, point1: IPoint, point2: IPoint, weight: number, color: string) => {
-  if (canvasRef.current) {
-    const ctx = canvasRef.current.getContext('2d')
-    ctx.beginPath()
-    ctx.strokeStyle = color
-    ctx.lineWidth = weight
-    ctx.moveTo(point1.x, point1.y)
-    ctx.lineTo(point2.x, point2.y)
-    ctx.stroke()
-    ctx.closePath()
+// const calcRadius = (r1: number, r2: number, isInner: boolean) => {
+//   return isInner ? r1 - r2 : r1 + r2
+// }
+
+// export const calcRotorCenterPosition = (angle: number, statorRadius: number, rotorRadius: number, isInner: boolean) => {
+//   return {
+//     x: calcRadius(statorRadius, rotorRadius, isInner) * Math.cos(angle),
+//     y: calcRadius(statorRadius, rotorRadius, isInner) * Math.sin(angle),
+//     angle: (angle * calcRadius(statorRadius, rotorRadius, isInner)) / rotorRadius,
+//   }
+// }
+
+// export const calcAngle = (speed: number) => {
+//   return (2 * Math.PI * speed) / 1000
+// }
+
+// new stuff
+
+export const circlePoint = (a: number, b: number, r: number, ng: number) => {
+  var rad = ng * (Math.PI / 180)
+  var y = r * Math.sin(rad)
+  var x = r * Math.cos(rad)
+  x = a + x
+  y = b - y
+  return {
+    x: x,
+    y: y,
   }
 }
 
-export const drawLine = (canvasRef: any, point1: IPoint, point2: IPoint, weight: number, color: string) => {
-  if (canvasRef.current) {
-    const ctx = canvasRef.current.getContext('2d')
-    ctx.lineWidth = weight
-    ctx.lineStyle = color
+export const drawOneCircle = (
+  canvas: HTMLCanvasElement,
+  a: number,
+  b: number,
+  r: number,
+  circleColor: string,
+  pencilColor?: string,
+  fill = false
+) => {
+  const ctx = canvas.getContext('2d')
+  if (ctx) {
     ctx.beginPath()
-    ctx.moveTo(point1.x, point1.y)
-    ctx.lineTo(point2.x, point2.y)
+    ctx.arc(a, b, r, 0, 2 * Math.PI)
+    const currentColor = ctx.strokeStyle
+    const currentWidth = ctx.lineWidth
+    ctx.strokeStyle = circleColor
+    ctx.lineWidth = 0.5
+    if (fill) {
+      ctx.fillStyle = pencilColor!
+      ctx.fill()
+      ctx.strokeStyle = pencilColor!
+    }
     ctx.stroke()
     ctx.closePath()
+    ctx.strokeStyle = currentColor
   }
-}
-
-export const drawCircle = (canvasRef: any, center: IPoint, radius: number, weight: number, color: string) => {
-  if (canvasRef.current) {
-    const ctx = canvasRef.current.getContext('2d')
-    ctx.lineWidth = weight
-    ctx.strokeStyle = color
-    ctx.beginPath()
-    ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI)
-    ctx.stroke()
-    ctx.closePath()
-  }
-}
-
-export const drawPoint = (canvasRef: any, point: IPoint, radius: number, color: string) => {
-  if (canvasRef.current) {
-    const ctx = canvasRef.current.getContext('2d')
-    ctx.fillStyle = color
-    ctx.beginPath()
-    ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI)
-    ctx.stroke()
-    ctx.closePath()
-    ctx.fill()
-  }
-}
-
-export const drawCanvas = (canvasRef: any, w: number, h: number, color: string) => {
-  const ctx = canvasRef.current.getContext('2d')
-  ctx.fillStyle = color
-  ctx.fillRect(0, 0, w, h)
-}
-
-export const clearCanvas = (canvasRef: any, w: number, h: number) => {
-  let context = canvasRef.current.getContext('2d')
-  context.clearRect(0, 0, w, h)
 }

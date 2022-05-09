@@ -8,3 +8,7 @@ export const useLayerList = () => {
 export const useArtParamSettings = () => {
   return useAppSelector((state: AppState) => state.artGeneratorReducer.artParamSettings)
 }
+
+export const useIsDraw = () => {
+  return useAppSelector((state: AppState) => state.artGeneratorReducer.isDraw)
+}

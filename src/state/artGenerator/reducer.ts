@@ -6,11 +6,13 @@ import { IArtLayer, IArtParams } from 'views/ArtGenerator/types'
 interface IState {
   layerList: IArtLayer[]
   artParamSettings: IArtParams[]
+  isDraw: boolean
 }
 
 export const initialState: IState = {
   layerList: [],
   artParamSettings: ART_PRESET_LIST.PRESET1,
+  isDraw: false,
 }
 
 const artGeneratorSlice = createSlice({
@@ -35,8 +37,11 @@ const artGeneratorSlice = createSlice({
         [action.payload.setting]: action.payload.value,
       }
     },
+    setIsDraw(state, action) {
+      state.isDraw = !state.isDraw
+    },
   },
 })
 
-export const { setAddRemoveLayer, setHideLayer, setArtParamSettings } = artGeneratorSlice.actions
+export const { setAddRemoveLayer, setHideLayer, setArtParamSettings, setIsDraw } = artGeneratorSlice.actions
 export default artGeneratorSlice.reducer
