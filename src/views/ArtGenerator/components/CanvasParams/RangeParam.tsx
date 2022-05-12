@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 
@@ -6,16 +6,21 @@ import RangeInput from 'components/RangeInput'
 import { FlexRow, InputWrapper, TextWrapper } from 'styles/components'
 import { themeBorderRadius, themeColor } from 'styles/theme'
 
-const RangeParam: React.FC<{ label: string; range: { min: number; max: number }; defaultVal?: number }> = ({
-  label,
-  range,
-  defaultVal = 0,
-}) => {
+const RangeParam: React.FC<{
+  label: string
+  range: { min: number; max: number }
+  handleRangeChange: (value: number) => void
+  defaultVal?: number
+}> = ({ label, range, handleRangeChange, defaultVal = 0 }) => {
   const [val, setVal] = useState<number>(() => defaultVal)
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setVal(e.target.value as unknown as number)
   }, [])
+
+  useEffect(() => {
+    handleRangeChange(val)
+  }, [handleRangeChange, val])
 
   return (
     <FlexRow>

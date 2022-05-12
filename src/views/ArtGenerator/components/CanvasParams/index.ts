@@ -1,6 +1,2 @@
 export { default as PresetContainer } from './PresetContainer'
 export { default as CanvasContainer } from './CanvasContainer'
-export { default as OriginContainer } from './OriginContainer'
-export { default as SpeedContainer } from './SpeedContainer'
-export { default as PencilContainer } from './PencilContainer'
-export { default as RadiusContainer } from './RadiusContainer'

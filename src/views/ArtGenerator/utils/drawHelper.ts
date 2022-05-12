@@ -1,59 +1,28 @@
-import { IPoint } from '../types'
+const cos = Math.cos
+const sin = Math.sin
 
-// const calcRadius = (r1: number, r2: number, isInner: boolean) => {
-//   return isInner ? r1 - r2 : r1 + r2
-// }
+export const hypotrochoid = (d: number, radii: number[], t: number, output: any) => {
+  output = output || []
 
-// export const calcRotorCenterPosition = (angle: number, statorRadius: number, rotorRadius: number, isInner: boolean) => {
-//   return {
-//     x: calcRadius(statorRadius, rotorRadius, isInner) * Math.cos(angle),
-//     y: calcRadius(statorRadius, rotorRadius, isInner) * Math.sin(angle),
-//     angle: (angle * calcRadius(statorRadius, rotorRadius, isInner)) / rotorRadius,
-//   }
-// }
+  let x = 0
+  let y = 0
+  let a
+  let b
 
-// export const calcAngle = (speed: number) => {
-//   return (2 * Math.PI * speed) / 1000
-// }
+  const l = radii.length - 1
 
-// new stuff
+  const cosT = cos(t)
+  const sinT = sin(t)
 
-export const circlePoint = (a: number, b: number, r: number, ng: number) => {
-  var rad = ng * (Math.PI / 180)
-  var y = r * Math.sin(rad)
-  var x = r * Math.cos(rad)
-  x = a + x
-  y = b - y
-  return {
-    x: x,
-    y: y,
+  for (let i = 0; i < l; i += 1) {
+    b = radii[i + 1]
+    a = radii[i] - b
+    x += a * cosT + d * cos((a / b) * t)
+    y += a * sinT - d * sin((a / b) * t)
   }
-}
 
-export const drawOneCircle = (
-  canvas: HTMLCanvasElement,
-  a: number,
-  b: number,
-  r: number,
-  circleColor: string,
-  pencilColor?: string,
-  fill = false
-) => {
-  const ctx = canvas.getContext('2d')
-  if (ctx) {
-    ctx.beginPath()
-    ctx.arc(a, b, r, 0, 2 * Math.PI)
-    const currentColor = ctx.strokeStyle
-    const currentWidth = ctx.lineWidth
-    ctx.strokeStyle = circleColor
-    ctx.lineWidth = 0.5
-    if (fill) {
-      ctx.fillStyle = pencilColor!
-      ctx.fill()
-      ctx.strokeStyle = pencilColor!
-    }
-    ctx.stroke()
-    ctx.closePath()
-    ctx.strokeStyle = currentColor
-  }
+  output[0] = x
+  output[1] = y
+
+  return output
 }

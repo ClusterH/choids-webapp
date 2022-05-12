@@ -5,16 +5,10 @@ export interface IArtLayer {
 }
 
 export interface IArtParams {
-  id: number
-  statorColor: string
-  rotorColor: string
-  rotate: number
-  speed: number
-  pencilDistance: number
-  pencilColor: string
-  pencilSize: number
-  statorRadius: number
-  rotors: { r: number; isInner: boolean }[]
+  size: number
+  canvasColor: string
+  backgroundColor: string
+  radii: { id: number; r: number }[]
 }
 
 export interface ICoord {

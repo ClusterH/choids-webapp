@@ -9,7 +9,7 @@ const ArtGenerator: React.FC = () => {
     <PageWrapper>
       <Header />
       <FlexRow gap={'0px'}>
-        <LayerListContainer />
+        {/* <LayerListContainer /> */}
         <ArtCanvasContainer />
         <ParamsMainContainer />
       </FlexRow>

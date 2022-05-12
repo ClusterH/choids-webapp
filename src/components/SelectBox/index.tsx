@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 
 import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmark } from 'react-icons/io'
 import styled from 'styled-components'
@@ -23,6 +23,7 @@ const OptionPanelWrapper = styled(FlexColumn)`
   border: ${themeColor.border3};
   border-radius: ${themeBorderRadius.medium};
   background-color: ${themeColor.background5};
+  z-index: 1;
 `
 const OptionWrapper = styled(FlexRow)`
   cursor: pointer;
@@ -34,8 +35,12 @@ const OptionWrapper = styled(FlexRow)`
   }
 `
 
-const SelectBox: React.FC<{ optionList: any[]; isBorder: boolean }> = ({ optionList, isBorder }) => {
-  const [selectedOption, setSelectedOption] = useState<string>(() => optionList[0].option)
+const SelectBox: React.FC<{ optionList: string[]; isBorder: boolean; handleOptionChange: (selectedOption: string) => void }> = ({
+  optionList,
+  isBorder,
+  handleOptionChange,
+}) => {
+  const [selectedOption, setSelectedOption] = useState<string>(() => optionList[0])
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleOpen = useCallback(() => {
@@ -46,31 +51,30 @@ const SelectBox: React.FC<{ optionList: any[]; isBorder: boolean }> = ({ optionL
     setSelectedOption(option)
   }, [])
 
+  useEffect(() => {
+    handleOptionChange(selectedOption)
+  }, [handleOptionChange, selectedOption])
+
   return (
     <SelectBoxWrapper isBorder={isBorder} onClick={handleOpen}>
       <TextWrapper color={'text8'} fontSize={'sm'} lineHeight={16}>
-        {selectedOption ?? 'PRESET'}
+        {selectedOption ?? 'PRESET 1'}
       </TextWrapper>
       {isOpen ? <IoIosArrowUp size={16} /> : <IoIosArrowDown size={16} />}
       {isOpen && (
         <OptionPanelWrapper padding={'4%'} alignItems={'flex-start'} gap={'0px'}>
-          {optionList.map((item) => (
+          {optionList.map((item, index) => (
             <OptionWrapper
-              key={item.id}
+              key={`${item}_index`}
               onClick={() => {
-                handleSelectOption(item.option)
+                handleSelectOption(item)
                 handleOpen()
               }}
             >
-              <TextWrapper
-                color={selectedOption === item.option ? 'text1' : 'text7'}
-                fontSize={'xs'}
-                fontWeight={'semiBold'}
-                lineHeight={14}
-              >
-                {item.option}
+              <TextWrapper color={selectedOption === item ? 'text1' : 'text7'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14}>
+                {item}
               </TextWrapper>
-              {selectedOption === item.option && <IoMdCheckmark size={16} />}
+              {selectedOption === item && <IoMdCheckmark size={16} />}
             </OptionWrapper>
           ))}
         </OptionPanelWrapper>
