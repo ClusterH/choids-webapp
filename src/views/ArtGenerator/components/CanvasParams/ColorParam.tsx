@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 
@@ -31,8 +31,10 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (e: Rea
       <TextWrapper color={'text8'} fontSize={'xs'} lineHeight={14}>
         {label}
       </TextWrapper>
-      <ColorInput type={'color'} value={value} onChange={handleChange} width={'32px'} height={'32px'} />
-      <InputWrapper value={value} onChange={handleChange} width={'60%'} height={'32px'} />
+      <FlexRow justifyContent={'flex-end'} rowWidth={'60%'}>
+        <ColorInput type={'color'} value={value} onChange={handleChange} width={'32px'} height={'32px'} />
+        <InputWrapper value={value} onChange={handleChange} height={'32px'} />
+      </FlexRow>
     </FlexRow>
   )
 }

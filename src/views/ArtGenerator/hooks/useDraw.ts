@@ -36,7 +36,8 @@ export const useDraw = () => {
       ctx.save()
       ctx.translate(canvasSize.width / 2, canvasSize.height / 2)
 
-      ctx.globalCompositeOperation = 'lighter'
+      // ctx.globalCompositeOperation = 'lighter'
+      ctx.lineWidth = params.pencilSize
       ctx.strokeStyle = params.canvasColor
       ctx.beginPath()
 

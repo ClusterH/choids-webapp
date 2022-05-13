@@ -1,21 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-import 'react-color-palette/lib/css/styles.css'
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 import styled from 'styled-components'
 
 import { useArtParamSettings, useIsDraw } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
-import { FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
+import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
 import { themeColor } from 'styles/theme'
+import { IArtParams } from 'views/ArtGenerator/types'
 
 import ColorParam from './ColorParam'
 import RangeParam from './RangeParam'
-
-const MainWrapper = styled(FlexColumn)`
-  border-bottom: ${themeColor.border2};
-`
 
 const RadiusItemWrapper: React.FC<{
   radius: { id: number; r: number }
@@ -39,54 +35,82 @@ const CanvasContainer: React.FC = () => {
   const dispatch = useAppDispatch()
   const artParams = useArtParamSettings()
 
-  const [canvasSize, setCanvasSize] = useState<number>(() => artParams.size)
-  const [canvasColor, setCanvasColor] = useState<string>(() => artParams.canvasColor)
-  const [backColor, setBackColor] = useState<string>(() => artParams.backgroundColor)
-  const [radius, setRadius] = useState<{ id: number; r: number }[]>(() => artParams.radii)
+  const [params, setParams] = useState<IArtParams>(() => artParams)
 
-  const handleColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setCanvasColor(e.target.value)
-  }, [])
+  const paramsRef = useRef({
+    ...params,
+  })
 
-  const handleBackColorChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setBackColor(e.target.value)
-  }, [])
+  const handleColorChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      paramsRef.current.canvasColor = e.target.value
+      dispatch(setArtParamSettings({ canvasColor: e.target.value }))
+    },
+    [dispatch]
+  )
 
-  const handleSizeChange = useCallback((value: number) => {
-    setCanvasSize(value)
-  }, [])
+  const handleBackColorChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      paramsRef.current.backgroundColor = e.target.value
+      dispatch(setArtParamSettings({ backgroundColor: e.target.value }))
+    },
+    [dispatch]
+  )
+
+  const handleSizeChange = useCallback(
+    (value: number) => {
+      paramsRef.current.size = value
+      dispatch(setArtParamSettings({ size: value }))
+    },
+    [dispatch]
+  )
+
+  const handlePencilSizeChange = useCallback(
+    (value: number) => {
+      paramsRef.current.pencilSize = value
+      dispatch(setArtParamSettings({ pencilSize: value }))
+    },
+    [dispatch]
+  )
 
   const handleAddRadius = useCallback(() => {
-    if (radius.length > 6) return
-    const radii = [...radius]
-    radii.push({ id: radius.length + 1, r: Math.floor(Math.random() * 190 + 10) })
-    setRadius(radii)
+    if (paramsRef.current.radii.length > 6) return
+    const radii = [...paramsRef.current.radii]
+    radii.push({ id: paramsRef.current.radii.length + 1, r: Math.floor(Math.random() * 190 + 10) })
+    paramsRef.current.radii = radii
     dispatch(setArtParamSettings({ radii }))
-  }, [dispatch, radius])
+  }, [dispatch])
 
   const handleRemoveRadius = useCallback(() => {
-    if (radius.length === 2) return
-    const radii = [...radius]
+    if (paramsRef.current.radii.length === 2) return
+    const radii = [...paramsRef.current.radii]
     radii.pop()
-    setRadius(radii)
+    paramsRef.current.radii = radii
     dispatch(setArtParamSettings({ radii }))
-  }, [dispatch, radius])
+  }, [dispatch])
 
-  const handleDraw = useCallback(() => {
-    dispatch(setArtParamSettings({ canvasColor, backgroundColor: backColor, size: canvasSize }))
-  }, [backColor, canvasColor, canvasSize, dispatch])
+  useEffect(() => {
+    paramsRef.current = { ...paramsRef.current, ...artParams }
+    setParams({ ...artParams })
+  }, [artParams])
 
   return (
-    <MainWrapper alignItems={'flex-start'} padding={'16px'}>
+    <FlexColumn alignItems={'flex-start'} padding={'16px'}>
       <FlexRow>
         <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14}>
           {'CANVAS'}
         </TextWrapper>
       </FlexRow>
       <FlexColumn padding={'12px 0'}>
-        <RangeParam label={'Size'} range={{ min: 0, max: 200 }} defaultVal={canvasSize} handleRangeChange={handleSizeChange} />
-        <ColorParam label={'Color'} value={canvasColor} handleChange={handleColorChange} />
-        <ColorParam label={'Back Color'} value={backColor} handleChange={handleBackColorChange} />
+        <RangeParam label={'Size'} range={{ min: 0, max: 200 }} defaultVal={paramsRef.current.size} handleRangeChange={handleSizeChange} />
+        <RangeParam
+          label={'Pen Size'}
+          range={{ min: 0, max: 10 }}
+          defaultVal={paramsRef.current.pencilSize}
+          handleRangeChange={handlePencilSizeChange}
+        />
+        <ColorParam label={'Color'} value={paramsRef.current.canvasColor} handleChange={handleColorChange} />
+        <ColorParam label={'Back Color'} value={paramsRef.current.backgroundColor} handleChange={handleBackColorChange} />
       </FlexColumn>
       <FlexRow>
         <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14}>
@@ -94,7 +118,7 @@ const CanvasContainer: React.FC = () => {
         </TextWrapper>
       </FlexRow>
       <FlexColumn padding={'12px 0'}>
-        {radius.map((radii) => (
+        {paramsRef.current.radii.map((radii) => (
           <RadiusItemWrapper key={radii.id} radius={radii} />
         ))}
         <FlexRow>
@@ -108,10 +132,9 @@ const CanvasContainer: React.FC = () => {
           </FlexRow>
         </FlexRow>
       </FlexColumn>
-      <MainButton width={'100%'} onClick={handleDraw}>
-        {isDraw ? 'Pause' : 'Draw'}
-      </MainButton>
-    </MainWrapper>
+      <Divider />
+      <MainButton width={'100%'}>{'Mint'}</MainButton>
+    </FlexColumn>
   )
 }
 

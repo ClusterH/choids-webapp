@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { FlexRow } from 'styles/components'
+import { FlexRow, InputWrapper } from 'styles/components'
 import './style.css'
 
 const RangeInput: React.FC<{ min?: number; max?: number; step?: number; defaultValue?: number; onChange: any }> = ({
@@ -44,18 +44,16 @@ const RangeInput: React.FC<{ min?: number; max?: number; step?: number; defaultV
   }, [inputRef, changeInputProgressPercentStyle])
 
   return (
-    <FlexRow>
-      <input
-        className="range"
-        type="range"
-        ref={inputRef}
-        min={min}
-        max={max}
-        step={step}
-        value={defaultValue}
-        onChange={(e) => onChange(e.currentTarget.value)}
-      />
-    </FlexRow>
+    <InputWrapper
+      className="range"
+      type="range"
+      ref={inputRef}
+      min={min}
+      max={max}
+      step={step}
+      value={defaultValue}
+      onChange={(e) => onChange(e.currentTarget.value)}
+    />
   )
 }
 

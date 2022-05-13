@@ -20,7 +20,7 @@ const GlobalStyles = createGlobalStyle`
     --lightPurple2: #d6bddb;
     --lightPurple3: #c2adc7;
     --lightPurple4: #d2c2d6;
-    --divider: #3f444e;
+    --divider: #ffffff1a;
     --borderColor: #383d45;
     --borderColor2: #ccb4e9;
     --inputBGColor: #383d4526;

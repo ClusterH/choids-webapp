@@ -36,7 +36,7 @@ export const themeColor: ThemeProps = {
 
   // border, divider color
   border1: '1px solid var(--purple1)',
-  border2: '0.5px solid rgba(255, 255, 255, 0.1)',
+  border2: '0.5px solid var(--divider)',
   border3: '1px solid var(--darkPurple4)',
   border4: '1px solid var(--borderColor)',
   border5: '1px solid var(--borderColor2)',

@@ -6,6 +6,7 @@ export interface IArtLayer {
 
 export interface IArtParams {
   size: number
+  pencilSize: number
   canvasColor: string
   backgroundColor: string
   radii: { id: number; r: number }[]
