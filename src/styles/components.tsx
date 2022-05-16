@@ -237,16 +237,16 @@ export const Divider = styled.div<{ width?: string; height?: string; margin?: st
   background-color: ${({ backColor, theme }) => (backColor ? backColor : theme.divider)};
   margin: ${({ margin }) => (margin ? margin : '1rem 0')};
 `
-export const OverlayContainer = styled.div`
+export const OverlayContainer = styled.div<{ opacity?: number }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 200vh;
+  height: 100vh;
   background: ${themeColor.background1};
-  opacity: 0.7;
+  opacity: ${({ opacity }) => opacity ?? 0.7};
   backdrop-filter: blur(16px);
-  z-index: 1;
+  z-index: 0;
 `
 export const BlurBackground = styled.div<{
   width?: string

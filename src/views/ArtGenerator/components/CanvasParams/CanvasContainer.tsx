@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
-import styled from 'styled-components'
 
 import { useArtParamSettings, useIsDraw } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
-import { themeColor } from 'styles/theme'
 import { IArtParams } from 'views/ArtGenerator/types'
 
 import ColorParam from './ColorParam'
@@ -26,7 +24,7 @@ const RadiusItemWrapper: React.FC<{
   )
 
   return (
-    <RangeParam label={`Radius #${radius.id}`} range={{ min: 0, max: 200 }} defaultVal={radius.r} handleRangeChange={handleSizeChange} />
+    <RangeParam label={`Radius #${radius.id}`} range={{ min: 1, max: 200 }} defaultVal={radius.r} handleRangeChange={handleSizeChange} />
   )
 }
 
@@ -42,17 +40,17 @@ const CanvasContainer: React.FC = () => {
   })
 
   const handleColorChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      paramsRef.current.canvasColor = e.target.value
-      dispatch(setArtParamSettings({ canvasColor: e.target.value }))
+    (canvasColor: string) => {
+      paramsRef.current.canvasColor = canvasColor
+      dispatch(setArtParamSettings({ canvasColor }))
     },
     [dispatch]
   )
 
   const handleBackColorChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      paramsRef.current.backgroundColor = e.target.value
-      dispatch(setArtParamSettings({ backgroundColor: e.target.value }))
+    (backgroundColor: string) => {
+      paramsRef.current.backgroundColor = backgroundColor
+      dispatch(setArtParamSettings({ backgroundColor }))
     },
     [dispatch]
   )
@@ -102,13 +100,15 @@ const CanvasContainer: React.FC = () => {
         </TextWrapper>
       </FlexRow>
       <FlexColumn padding={'12px 0'}>
-        <RangeParam label={'Size'} range={{ min: 0, max: 200 }} defaultVal={paramsRef.current.size} handleRangeChange={handleSizeChange} />
+        <RangeParam label={'Size'} range={{ min: 1, max: 200 }} defaultVal={paramsRef.current.size} handleRangeChange={handleSizeChange} />
         <RangeParam
           label={'Pen Size'}
-          range={{ min: 0, max: 10 }}
+          range={{ min: 1, max: 4 }}
           defaultVal={paramsRef.current.pencilSize}
           handleRangeChange={handlePencilSizeChange}
         />
+        {/* <TestPalette /> */}
+
         <ColorParam label={'Color'} value={paramsRef.current.canvasColor} handleChange={handleColorChange} />
         <ColorParam label={'Back Color'} value={paramsRef.current.backgroundColor} handleChange={handleBackColorChange} />
       </FlexColumn>

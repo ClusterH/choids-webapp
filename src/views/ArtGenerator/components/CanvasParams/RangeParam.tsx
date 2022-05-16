@@ -1,22 +1,24 @@
-import React, { useCallback, useEffect, useState } from 'react'
-
-import styled from 'styled-components'
+import React, { useCallback, useEffect } from 'react'
 
 import RangeInput from 'components/RangeInput'
+import { useStateWithProps } from 'hooks'
 import { FlexRow, InputWrapper, TextWrapper } from 'styles/components'
-import { themeBorderRadius, themeColor } from 'styles/theme'
+import { themeBorderRadius } from 'styles/theme'
 
 const RangeParam: React.FC<{
   label: string
   range: { min: number; max: number }
   handleRangeChange: (value: number) => void
   defaultVal?: number
-}> = ({ label, range, handleRangeChange, defaultVal = 0 }) => {
-  const [val, setVal] = useState<number>(() => defaultVal)
+}> = ({ label, range, handleRangeChange, defaultVal = 1 }) => {
+  const [val, setVal] = useStateWithProps<number>(defaultVal)
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setVal(e.target.value as unknown as number)
-  }, [])
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setVal(e.target.value as unknown as number)
+    },
+    [setVal]
+  )
 
   useEffect(() => {
     handleRangeChange(val)
@@ -40,7 +42,7 @@ const RangeParam: React.FC<{
           textAlign={'center'}
         />
         <FlexRow gap={'0px'}>
-          <RangeInput onChange={setVal} defaultValue={val} min={range.min} max={range.max} />
+          <RangeInput onChange={setVal} defaultValue={val} min={range.min} max={range.max} step={label === 'Pen Size' ? 0.1 : 1} />
         </FlexRow>
       </FlexRow>
     </FlexRow>

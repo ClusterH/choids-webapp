@@ -31,12 +31,12 @@ export const useDraw = () => {
 
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext('2d')
+      ctx.clearRect(0, 0, canvasSize.width, canvasSize.height)
       ctx.fillStyle = params.backgroundColor
       ctx.fillRect(0, 0, canvasSize.width, canvasSize.height)
       ctx.save()
       ctx.translate(canvasSize.width / 2, canvasSize.height / 2)
 
-      // ctx.globalCompositeOperation = 'lighter'
       ctx.lineWidth = params.pencilSize
       ctx.strokeStyle = params.canvasColor
       ctx.beginPath()
