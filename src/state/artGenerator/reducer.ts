@@ -8,6 +8,7 @@ interface IState {
   artParamSettings: IArtParams
   isDraw: boolean
   canvasContainerSize: { width: number; height: number }
+  artImgData: any
 }
 
 export const initialState: IState = {
@@ -15,6 +16,7 @@ export const initialState: IState = {
   artParamSettings: ART_PRESET_LIST.PRESET1,
   isDraw: false,
   canvasContainerSize: { width: 800, height: 800 },
+  artImgData: '',
 }
 
 const artGeneratorSlice = createSlice({
@@ -45,9 +47,12 @@ const artGeneratorSlice = createSlice({
     setCanvasContainerSize(state, action) {
       state.canvasContainerSize = { ...action.payload }
     },
+    setArtImgData(state, action) {
+      state.artImgData = action.payload
+    },
   },
 })
 
-export const { setAddRemoveLayer, setHideLayer, setArtParamSettings, setArtParamRadii, setIsDraw, setCanvasContainerSize } =
+export const { setAddRemoveLayer, setHideLayer, setArtParamSettings, setArtParamRadii, setIsDraw, setCanvasContainerSize, setArtImgData } =
   artGeneratorSlice.actions
 export default artGeneratorSlice.reducer

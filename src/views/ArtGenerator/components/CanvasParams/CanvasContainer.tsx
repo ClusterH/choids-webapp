@@ -2,11 +2,16 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 
+import Modal from 'components/Modal/ModalWrapper'
+import { useModal } from 'hooks'
 import { useArtParamSettings, useIsDraw } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
+import { isMobile } from 'utils'
 import { IArtParams } from 'views/ArtGenerator/types'
+
+import { MintModal } from '..'
 
 import ColorParam from './ColorParam'
 import RangeParam from './RangeParam'
@@ -29,9 +34,10 @@ const RadiusItemWrapper: React.FC<{
 }
 
 const CanvasContainer: React.FC = () => {
-  const isDraw = useIsDraw()
   const dispatch = useAppDispatch()
   const artParams = useArtParamSettings()
+
+  const { isOpen, handleOpenModal } = useModal()
 
   const [params, setParams] = useState<IArtParams>(() => artParams)
 
@@ -107,8 +113,6 @@ const CanvasContainer: React.FC = () => {
           defaultVal={paramsRef.current.pencilSize}
           handleRangeChange={handlePencilSizeChange}
         />
-        {/* <TestPalette /> */}
-
         <ColorParam label={'Color'} value={paramsRef.current.canvasColor} handleChange={handleColorChange} />
         <ColorParam label={'Back Color'} value={paramsRef.current.backgroundColor} handleChange={handleBackColorChange} />
       </FlexColumn>
@@ -133,7 +137,12 @@ const CanvasContainer: React.FC = () => {
         </FlexRow>
       </FlexColumn>
       <Divider />
-      <MainButton width={'100%'}>{'Mint'}</MainButton>
+      <MainButton width={'100%'} onClick={handleOpenModal}>
+        {'Mint'}
+      </MainButton>
+      <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder>
+        <MintModal />
+      </Modal>
     </FlexColumn>
   )
 }

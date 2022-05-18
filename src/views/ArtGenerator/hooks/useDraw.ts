@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { useArtParamSettings } from 'state/artGenerator/hook'
-import { setCanvasContainerSize } from 'state/artGenerator/reducer'
+import { setArtImgData, setCanvasContainerSize } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 
 import { hypotrochoid } from '../utils/drawHelper'
@@ -63,8 +63,10 @@ export const useDraw = () => {
       ctx.stroke()
 
       ctx.restore()
+
+      dispatch(setArtImgData(canvasRef.current.toDataURL()))
     }
-  }, [canvasSize, params])
+  }, [canvasSize, dispatch, params])
 
   useEffect(() => {
     handleDraw()

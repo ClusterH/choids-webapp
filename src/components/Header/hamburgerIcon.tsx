@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import styled from 'styled-components'
 
-import { PUBLIC_APP_FLARE_URL } from 'config/constants'
 import { useAppNavigate, useHandleExternalLink } from 'hooks'
 import { CloseButton, FlexColumn, FlexRow, HoverTextWrapper, TextWrapper } from 'styles/components'
 import { themeBreakPoint, themeColor } from 'styles/theme'
@@ -47,23 +46,7 @@ const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: b
 const HamburgerMenu: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({ setIsOpen }) => {
   const { handleOpenExternalLink } = useHandleExternalLink()
 
-  return (
-    <HamburgerMenuWrapper justifyContent={'flex-start'} onClick={() => setIsOpen(false)}>
-      <HamburgerMenuItem label={'Home'} navLink={'/'} />
-      <HamburgerMenuItem label={'Partnerships'} navLink={'/partnership'} />
-      <HamburgerMenuItem label={'NFT'} navLink={'/nft'} />
-      <HoverTextWrapper
-        fontSize={'extra'}
-        fontWeight={'bold'}
-        fontFamily={'title'}
-        onClick={() => handleOpenExternalLink(PUBLIC_APP_FLARE_URL!)}
-        margin={'24px 0 0 0'}
-      >
-        {'Flare Edition'}
-      </HoverTextWrapper>
-      <CloseIconWrapper size={30} onClick={() => setIsOpen(false)} />
-    </HamburgerMenuWrapper>
-  )
+  return <HamburgerMenuWrapper justifyContent={'flex-start'} onClick={() => setIsOpen(false)}></HamburgerMenuWrapper>
 }
 const Hamburger: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)

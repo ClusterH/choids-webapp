@@ -9,7 +9,7 @@ import { getLibrary } from 'utils/web3Helpers'
 import store from './state'
 import { themeColor } from './styles/theme'
 
-export const Providers: React.FC = ({ children }) => {
+export const Providers: React.FC<any> = ({ children }) => {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>

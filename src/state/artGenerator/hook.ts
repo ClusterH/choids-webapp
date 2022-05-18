@@ -16,3 +16,7 @@ export const useIsDraw = () => {
 export const useCanvasContainerSize = () => {
   return useAppSelector((state: AppState) => state.artGeneratorReducer.canvasContainerSize)
 }
+
+export const useArtImgData = () => {
+  return useAppSelector((state: AppState) => state.artGeneratorReducer.artImgData)
+}
