@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { useGetTotalSupply } from 'hooks'
 import { PageWrapper } from 'styles/components'
 
 import { MainContainer } from './components'

@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from 'react'
 
-import { CONTRACT_ABIS } from 'config/constants'
+import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
 import { useActiveWeb3React } from 'hooks'
 import { AppState } from 'state'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setTotalSupply } from 'state/web3/reducer'
-import { getMinterAddress } from 'utils/addressHelper'
+import { getMintableAddress, getMinterAddress } from 'utils/addressHelper'
 import { getTotalSupply } from 'utils/web3CallHelpers'
 import { getContractWithSimpleProvider } from 'utils/web3Helpers'
 
@@ -20,11 +20,15 @@ export const useGetTotalSupply = () => {
 
   const handleFetchTotalSupply = useCallback(async () => {
     try {
-      const minterContract = getContractWithSimpleProvider(getMinterAddress(chainId ?? 1), CONTRACT_ABIS.MINTER, chainId ?? 1)
-      if (!minterContract) return
-      const minterTotalSupply = await getTotalSupply(minterContract)
+      const choidContract = getContractWithSimpleProvider(
+        getMintableAddress(chainId ?? DEFAULT_CHAIN_ID),
+        CONTRACT_ABIS.MINTABLE,
+        chainId ?? DEFAULT_CHAIN_ID
+      )
+      if (!choidContract) return
+      const choidTotalSupply = await getTotalSupply(choidContract)
 
-      dispatch(setTotalSupply({ minterTotalSupply }))
+      dispatch(setTotalSupply({ choidTotalSupply }))
     } catch (e) {
       console.log(e)
     }

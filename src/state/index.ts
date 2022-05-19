@@ -7,7 +7,7 @@ import web3Reducer from 'state/web3/reducer'
 
 import { updateVersion } from './global/actions'
 
-const PERSISTED_KEYS: string[] = ['web3Reducer']
+const PERSISTED_KEYS: string[] = []
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',

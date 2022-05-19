@@ -24,6 +24,14 @@ export const useDraw = () => {
     }
   }, [])
 
+  const handleImageData = useCallback(
+    async (blob: any) => {
+      console.log(blob)
+      dispatch(setArtImgData(blob))
+    },
+    [dispatch]
+  )
+
   const handleDraw = useCallback(() => {
     let output: number[] = []
 
@@ -64,9 +72,9 @@ export const useDraw = () => {
 
       ctx.restore()
 
-      dispatch(setArtImgData(canvasRef.current.toDataURL()))
+      canvasRef.current.toBlob(handleImageData, 'image/png', 1.0)
     }
-  }, [canvasSize, dispatch, params])
+  }, [canvasSize, handleImageData, params])
 
   useEffect(() => {
     handleDraw()

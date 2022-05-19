@@ -1,7 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
 // import { File, NFTStorage } from 'nft.storage'
-import { File, NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
+import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 
 import { useReverseENSLookUp } from 'components/Header/hook'
 import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
@@ -30,9 +30,9 @@ export const useMintPhaseStatus = () => {
 
   const handleCheckMintPhaseStatus = useCallback(async () => {
     const minterContract = getContractWithSimpleProvider(
-      getMinterAddress(chainId && account ? chainId : parseInt(DEFAULT_CHAIN_ID!)),
+      getMinterAddress(chainId && account ? chainId : DEFAULT_CHAIN_ID),
       CONTRACT_ABIS.MINTER,
-      chainId && account ? chainId : parseInt(DEFAULT_CHAIN_ID!)
+      chainId && account ? chainId : DEFAULT_CHAIN_ID
     )
 
     if (!minterContract) return
@@ -58,11 +58,12 @@ export const useGenerateArtMetaData = () => {
   const artMetaData = useArtMetaData()
   const ens = useReverseENSLookUp()
 
-  const dna = useMemo(() => b64EncodeUnicode(artParams), [artParams])
-  console.log(dna)
   const creatorName = useMemo(() => (ens ? ens : account ? shortenAddress(account) : ''), [account, ens])
+  const dna = useMemo(() => b64EncodeUnicode(artParams), [artParams])
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isMinting, setIsMinting] = useState<boolean>(false)
+  const [isMinted, setIsMinted] = useState<boolean>(false)
   const [name, setName] = useState<string>('')
 
   const dispatch = useAppDispatch()
@@ -81,8 +82,6 @@ export const useGenerateArtMetaData = () => {
     const cid = await client.storeBlob(new Blob([artImgData]))
     dispatch(setArtMetaData({ dna, image: `ipfs://${cid}` }))
 
-    console.log(cid)
-
     setIsLoading(false)
   }, [artImgData, client, dispatch, dna])
 
@@ -90,12 +89,11 @@ export const useGenerateArtMetaData = () => {
     try {
       if (!minterContract || !account) return
 
-      setIsLoading(true)
+      setIsMinting(true)
 
       const metaData = {
         ...artMetaData,
         name,
-        dna,
         attributes: [
           {
             trait_type: 'Creator',
@@ -113,30 +111,29 @@ export const useGenerateArtMetaData = () => {
         ],
       }
 
-      console.log(metaData)
-
-      const cid = await client.storeBlob(new Blob([JSON.stringify(metaData)]))
+      const cid = await client.storeBlob(new Blob([JSON.stringify(metaData, null, 2)]))
 
       const res = await getSignatureAndNonce(account, cid)
       if (res) {
         const mintPrice = await getMintPrice(minterContract)
         const gas = await estimateGas(minterContract, 'mint', [account, cid, res.nonce, res.signature, { value: mintPrice }], 3000)
         const status = await mintNFT(minterContract, account, cid, res.nonce, res.signature, mintPrice, gas)
-        if (status) notifyToast({ id: 'mint', type: 'success', content: 'Successfully Mint Process done' })
-        else notifyToast({ id: 'mint_failed', type: 'error', content: 'Mint Failed!' })
+        if (status) {
+          notifyToast({ id: 'mint', type: 'success', content: 'Successfully Mint Process done' })
+          setIsMinted(true)
+        } else notifyToast({ id: 'mint_failed', type: 'error', content: 'Mint Failed!' })
       } else notifyToast({ id: 'signature_nonce', type: 'error', content: 'Failed to get Signature' })
-
-      setIsLoading(false)
     } catch (error: any) {
       console.log(error)
       notifyToast({ id: 'mint_failed', type: 'error', content: 'Error Occured, please check console' })
-      setIsLoading(false)
+    } finally {
+      setIsMinting(false)
     }
-  }, [account, artMetaData, client, creatorName, dna, minterContract, name])
+  }, [account, artMetaData, client, ens, minterContract, name])
 
   useEffect(() => {
     handleMetaData()
   }, [handleMetaData])
 
-  return { name, artMetaData, artImgData, creatorName, isLoading, handleOnChange, handleMint }
+  return { name, artMetaData, artImgData, creatorName, isLoading, isMinting, isMinted, handleOnChange, handleMint }
 }

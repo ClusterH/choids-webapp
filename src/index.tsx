@@ -2,7 +2,7 @@ import React from 'react'
 
 import ReactDOM from 'react-dom'
 
-import { useEagerConnect, useGetTotalSupply, useGetWalletBalance, useInactiveListener, usePollGasPrice } from 'hooks'
+import { useEagerConnect, useInactiveListener } from 'hooks'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastWrapper } from 'styles/components'
 import GlobalStyles from 'styles/globalStyles'
@@ -15,9 +15,6 @@ import reportWebVitals from './reportWebVitals'
 const GlobalHooks = () => {
   useEagerConnect()
   useInactiveListener()
-  // usePollGasPrice()
-  // useGetWalletBalance()
-  // useGetTotalSupply()
 
   return null
 }
