@@ -20,3 +20,7 @@ export const useCanvasContainerSize = () => {
 export const useArtImgData = () => {
   return useAppSelector((state: AppState) => state.artGeneratorReducer.artImgData)
 }
+
+export const useArtMetaData = () => {
+  return useAppSelector((state: AppState) => state.artGeneratorReducer.artMetaData)
+}

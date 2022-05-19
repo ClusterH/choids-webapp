@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { ART_PRESET_LIST } from 'config/constants'
-import { IArtLayer, IArtParams } from 'views/ArtGenerator/types'
+import { IArtLayer, IArtParams, IMetaData } from 'views/ArtGenerator/types'
 
 interface IState {
   layerList: IArtLayer[]
@@ -9,6 +9,7 @@ interface IState {
   isDraw: boolean
   canvasContainerSize: { width: number; height: number }
   artImgData: any
+  artMetaData: IMetaData
 }
 
 export const initialState: IState = {
@@ -17,6 +18,27 @@ export const initialState: IState = {
   isDraw: false,
   canvasContainerSize: { width: 800, height: 800 },
   artImgData: '',
+  artMetaData: {
+    name: '',
+    dna: '',
+    description: 'Description',
+    image: `ipfs://`, // this may be an id for Google Storage in the near future
+    attributes: [
+      {
+        trait_type: 'Creator',
+        value: '',
+      },
+      {
+        display_type: 'date',
+        trait_type: 'Birth Date',
+        value: 0, // 1644148800 // this needs to be in epoch to work with OpenSea
+      },
+      {
+        trait_type: 'Edition',
+        value: 'First Generation',
+      },
+    ],
+  },
 }
 
 const artGeneratorSlice = createSlice({
@@ -50,9 +72,20 @@ const artGeneratorSlice = createSlice({
     setArtImgData(state, action) {
       state.artImgData = action.payload
     },
+    setArtMetaData(state, action) {
+      state.artMetaData = { ...state.artMetaData, ...action.payload }
+    },
   },
 })
 
-export const { setAddRemoveLayer, setHideLayer, setArtParamSettings, setArtParamRadii, setIsDraw, setCanvasContainerSize, setArtImgData } =
-  artGeneratorSlice.actions
+export const {
+  setAddRemoveLayer,
+  setHideLayer,
+  setArtParamSettings,
+  setArtParamRadii,
+  setIsDraw,
+  setCanvasContainerSize,
+  setArtImgData,
+  setArtMetaData,
+} = artGeneratorSlice.actions
 export default artGeneratorSlice.reducer

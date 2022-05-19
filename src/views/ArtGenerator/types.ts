@@ -26,12 +26,6 @@ export interface IPoint {
   angle?: number
 }
 
-export interface Color {
-  readonly hex: string
-  readonly rgb: ColorRGB
-  readonly hsv: ColorHSV
-}
-
 interface ColorRGB {
   readonly r: number
   readonly g: number
@@ -44,4 +38,21 @@ interface ColorHSV {
   readonly s: number
   readonly v: number
   readonly a?: number
+}
+export interface Color {
+  readonly hex: string
+  readonly rgb: ColorRGB
+  readonly hsv: ColorHSV
+}
+
+export interface IMetaData {
+  name: string
+  dna: string
+  description: string
+  image: string
+  attributes: {
+    trait_type: string
+    value: string | number
+    display_type?: string
+  }[]
 }

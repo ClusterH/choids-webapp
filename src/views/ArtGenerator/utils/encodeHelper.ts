@@ -1,16 +1,3 @@
-import CryptoJS from 'crypto-js'
-import { ethers } from 'ethers'
-
-// export const b64EncodeUnicode = (data: any) => {
-//   const secret = 'choid_secret_key'
-//   return CryptoJS.AES.encrypt(JSON.stringify(data), secret).toString()
-// }
-
-// export const b64DecodeUnicode = (data: string) => {
-//   const secret = 'choid_secret_key'
-//   return JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(data, secret)))
-// }
-
 export const b64EncodeUnicode = (data: any) => {
   const str = JSON.stringify(data)
   return window.btoa(
@@ -30,4 +17,9 @@ export const b64DecodeUnicode = (str: string) => {
       })
       .join('')
   )
+}
+
+export const shortString = (str: string, chars = 10) => {
+  const length = str.length
+  return `${str.substring(0, chars)}...${str.substring(length - chars)}`
 }
