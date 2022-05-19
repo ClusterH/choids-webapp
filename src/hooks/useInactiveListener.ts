@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useWeb3React } from '@web3-react/core'
 
-import { connectorsByName } from 'config/constants/web3Connectors'
+import { connectorsByName } from 'config/constants'
 import { EthereumProvider } from 'types'
 
 export const useInactiveListener = (suppress = false) => {

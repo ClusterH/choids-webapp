@@ -15,9 +15,9 @@ import reportWebVitals from './reportWebVitals'
 const GlobalHooks = () => {
   useEagerConnect()
   useInactiveListener()
-  usePollGasPrice()
-  useGetWalletBalance()
-  useGetTotalSupply()
+  // usePollGasPrice()
+  // useGetWalletBalance()
+  // useGetTotalSupply()
 
   return null
 }

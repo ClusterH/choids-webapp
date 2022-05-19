@@ -1,5 +1,5 @@
 import { JsonRpcProvider, StaticJsonRpcProvider } from '@ethersproject/providers'
-import { BigNumber, Contract, ethers } from 'ethers'
+import { BigNumber, Bytes, Contract, ethers } from 'ethers'
 
 import { getBalanceNumber } from './bigNumberHelper'
 
@@ -42,39 +42,24 @@ export const setApprovalForAll = async (contract: Contract, operator: string, ap
   return receipt.status
 }
 
-export const mintHighKingz = async (hcokContract: Contract, mintPassTokenId: number, burnTokenIds: number[], gas: BigNumber) => {
-  const txHash = await hcokContract.mint(mintPassTokenId, burnTokenIds, { gasLimit: gas })
+export const checkMintPhaseStatus = async (minterContract: Contract) => {
+  return await minterContract.phase()
+}
+
+export const getMintPrice = async (minterContract: Contract) => {
+  const price = await minterContract.getMintPrice()
+  return price
+}
+export const mintNFT = async (
+  minterContract: Contract,
+  to: string,
+  cid: string,
+  nonce: string,
+  signature: Bytes,
+  value: BigNumber,
+  gasLimit: BigNumber
+) => {
+  const txHash = await minterContract.mint(to, cid, nonce, signature, { value, gasLimit })
   const receipt = await txHash.wait()
-
-  return { status: receipt.status, txHash: receipt.transactionHash }
-}
-
-export const checkIsValidMintPass = async (mintPassContract: Contract, tokenId: number) => {
-  return await mintPassContract.isValid(tokenId)
-}
-
-export const checkIsExpiredMintPass = async (mintPassContract: Contract, tokenId: number) => {
-  const res = await mintPassContract.isExpired(tokenId)
-  return res
-}
-
-export const checkIsUsedMintPass = async (mintPassContract: Contract, tokenId: number) => {
-  return await mintPassContract.isUsed(tokenId)
-}
-
-export const getMintPassSecondsUntilExpired = async (mintPassContract: Contract, tokenId: number) => {
-  const seconds = await mintPassContract.secondsUntilExpired(tokenId)
-  return seconds.toNumber()
-}
-
-export const getMintPassTotalExpired = async (mintPassContract: Contract) => {
-  return await mintPassContract.totalExpired()
-}
-
-export const getMintPassTotalTotalUsed = async (mintPassContract: Contract) => {
-  return await mintPassContract.totalUsed()
-}
-
-export const getMintPassTotalValid = async (mintPassContract: Contract) => {
-  return await mintPassContract.totalValid()
+  return receipt.status
 }

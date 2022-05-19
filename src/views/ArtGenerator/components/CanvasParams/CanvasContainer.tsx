@@ -9,6 +9,7 @@ import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reduce
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
 import { isMobile } from 'utils'
+import { useMintPhaseStatus } from 'views/ArtGenerator/hooks'
 import { IArtParams } from 'views/ArtGenerator/types'
 
 import { MintModal } from '..'
@@ -44,6 +45,8 @@ const CanvasContainer: React.FC = () => {
   const paramsRef = useRef({
     ...params,
   })
+
+  const { mintPhase } = useMintPhaseStatus()
 
   const handleColorChange = useCallback(
     (canvasColor: string) => {
@@ -137,8 +140,15 @@ const CanvasContainer: React.FC = () => {
         </FlexRow>
       </FlexColumn>
       <Divider />
-      <MainButton width={'100%'} onClick={handleOpenModal}>
-        {'Mint'}
+      <MainButton
+        width={'100%'}
+        disabled={mintPhase === 0}
+        onClick={() => {
+          if (mintPhase === 0) return
+          handleOpenModal()
+        }}
+      >
+        {mintPhase === 0 ? 'Mint Paused' : 'Mint'}
       </MainButton>
       <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder>
         <MintModal />

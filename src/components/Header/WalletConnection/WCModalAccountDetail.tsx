@@ -11,7 +11,6 @@ const WalletConnectionAccountDetail: React.FC<{ handleWalletView: () => void }> 
   useGetWalletBalance()
 
   const { account, connector } = useActiveWeb3React()
-  const { cokBalance, hcokBalance, mintPassBalance } = useWalletBalances()
 
   const connectedWallet = useMemo(() => {
     const name = Object.keys(SUPPORTED_WALLETS)
@@ -41,20 +40,6 @@ const WalletConnectionAccountDetail: React.FC<{ handleWalletView: () => void }> 
             </HoverTextWrapper>
           </>
         )}
-      </FlexRow>
-      <FlexRow justifyContent={'flex-start'}>
-        <FlexRow rowWidth={'fit-content'} gap={'4px'}>
-          <TextWrapper fontWeight={'bold'}>{cokBalance}</TextWrapper>
-          <TextWrapper fontFamily={'title'}>{'COK'}</TextWrapper>
-        </FlexRow>
-        <FlexRow rowWidth={'fit-content'} gap={'4px'}>
-          <TextWrapper fontWeight={'bold'}>{hcokBalance}</TextWrapper>
-          <TextWrapper fontFamily={'title'}>{'HCOK'}</TextWrapper>
-        </FlexRow>
-        <FlexRow rowWidth={'fit-content'} gap={'4px'}>
-          <TextWrapper fontWeight={'bold'}>{mintPassBalance}</TextWrapper>
-          <TextWrapper fontFamily={'title'}>{'MPCOK'}</TextWrapper>
-        </FlexRow>
       </FlexRow>
     </FlexColumn>
   )

@@ -3,9 +3,9 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import COINBASE_ICON_URL from 'assets/images/coinbase_icon.png'
 import METAMASK_ICON_URL from 'assets/images/metamask_icon.svg'
 import WALLETCONNECT_ICON_URL from 'assets/images/wallet_connect_icon.svg'
-import { connectorsByName } from 'config/constants/web3Connectors'
 
 import { ConnectorNames } from './web3'
+import { connectorsByName } from './web3Connectors'
 
 interface WalletInfo {
   connector?: AbstractConnector

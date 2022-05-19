@@ -1,13 +1,13 @@
 import axios from 'axios'
 
 import { setupInterceptorsTo } from 'config/axios/axiosInterceptors'
+import { SIGNATURE_RELAY_API_URL } from 'config/constants'
 
-const AXIOS_BASE_URL = process.env.REACT_APP_API_BASE_URL
 const specificAxios = setupInterceptorsTo(axios.create())
 
-export const fetchEventDates = async () => {
+export const getSignatureAndNonce = async (address: string, cid: string) => {
   try {
-    const { data, status } = await specificAxios.get(`${AXIOS_BASE_URL}/${'<API Endpoint>'}`)
+    const { data, status } = await specificAxios.post(`${SIGNATURE_RELAY_API_URL}`, { address, cid })
     if (status === 200) {
       return data
     } else return false

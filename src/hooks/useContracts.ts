@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 
 import { Contract } from 'ethers'
 
-import { COK_CONTRACT_ADDRESSES, CONTRACT_ABIS, HCOK_CONTRACT_ADDRESSES, MINT_PASS_CONTRACT_ADDRESSES } from 'config/constants'
+import { MINTER_CONTRACT_ADDRESSES, CONTRACT_ABIS, MINTABLE_CONTRACT_ADDRESSES } from 'config/constants'
 import { getContract, getContractWithSimpleProvider, isSupportedNetwork } from 'utils/web3Helpers'
 
 import { useActiveWeb3React } from './useActiveWeb3React'
@@ -35,14 +35,10 @@ export function useContract<T extends Contract = Contract>(
   }, [addressOrAddressMap, ABI, library, chainId, withSimpleProvider, withSignerIfPossible, account]) as T
 }
 
-export const useGetCOKContract = (withSigner = false, withSimpleProvider = true) => {
-  return useContract(COK_CONTRACT_ADDRESSES, CONTRACT_ABIS.COK, withSigner, withSimpleProvider)
+export const useGetMinterContract = (withSigner = false, withSimpleProvider = true) => {
+  return useContract(MINTER_CONTRACT_ADDRESSES, CONTRACT_ABIS.MINTER, withSigner, withSimpleProvider)
 }
 
-export const useGetMintPassContract = () => {
-  return useContract(MINT_PASS_CONTRACT_ADDRESSES, CONTRACT_ABIS.MINT_PASS, false)
-}
-
-export const useGetHCOKContract = (withSigner = false, withSimpleProvider = true) => {
-  return useContract(HCOK_CONTRACT_ADDRESSES, CONTRACT_ABIS.HCOK, withSigner, withSimpleProvider)
+export const useGetMintableContract = () => {
+  return useContract(MINTABLE_CONTRACT_ADDRESSES, CONTRACT_ABIS.MINTABLE, false)
 }

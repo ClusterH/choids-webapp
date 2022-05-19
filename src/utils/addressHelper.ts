@@ -1,13 +1,9 @@
-import { COK_CONTRACT_ADDRESSES, HCOK_CONTRACT_ADDRESSES, MINT_PASS_CONTRACT_ADDRESSES } from 'config/constants'
+import { MINTER_CONTRACT_ADDRESSES, MINTABLE_CONTRACT_ADDRESSES } from 'config/constants'
 
-export const getCokAddress = (chainId: number) => {
-  return COK_CONTRACT_ADDRESSES[chainId]
+export const getMinterAddress = (chainId: number) => {
+  return MINTER_CONTRACT_ADDRESSES[chainId]
 }
 
-export const getHCokAddress = (chainId: number) => {
-  return HCOK_CONTRACT_ADDRESSES[chainId]
-}
-
-export const getMintPassAddress = (chainId: number) => {
-  return MINT_PASS_CONTRACT_ADDRESSES[chainId]
+export const getMintableAddress = (chainId: number) => {
+  return MINTABLE_CONTRACT_ADDRESSES[chainId]
 }

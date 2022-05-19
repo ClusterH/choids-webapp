@@ -1,13 +1,13 @@
 import ETHEREUM_ICON from 'assets/images/ethereum.svg'
 import POLYGON_ICON from 'assets/images/polygon.svg'
-import COK_ABI from 'config/abis/cok.json'
-import HCOK_ABI from 'config/abis/hcok.json'
-import MINT_PASS_ABI from 'config/abis/mintPass.json'
+import MINTABLE_ABI from 'config/abis/mintable.json'
+import MINTER_ABI from 'config/abis/minter.json'
 
 export enum SupportedChainId {
   MAIN = 1,
   RINKEBY_TESTNET = 4,
 }
+export const DEFAULT_CHAIN_ID = process.env.REACT_APP_CHAIN_ID ?? '1'
 
 export const NETWORK_INDICATOR: { [chainId: number]: { name: 'Ethereum' | 'Rinkeby'; icon: string } } = {
   [SupportedChainId.MAIN]: { name: 'Ethereum', icon: ETHEREUM_ICON },
@@ -24,23 +24,18 @@ export const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [SupportedChainId.MAIN, S
 
 type AddressMap = { [chainId: number]: string }
 
-export const COK_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MAIN]: '0x34A32Df38FC511bf002Aed9dEC1B70E16870317f',
-  [SupportedChainId.RINKEBY_TESTNET]: '0x545a267e59282af53684fbad66c05da5d3c2b1cc',
+export const MINTER_CONTRACT_ADDRESSES: AddressMap = {
+  [SupportedChainId.MAIN]: '0x6beEA5649Fc6BFEb7f2d23E0678aD9D02408B1F7',
+  [SupportedChainId.RINKEBY_TESTNET]: '0x6beEA5649Fc6BFEb7f2d23E0678aD9D02408B1F7',
 }
-export const MINT_PASS_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MAIN]: '0xA877A0A06F141217ec15aF907E9617d5eD246B6f',
-  [SupportedChainId.RINKEBY_TESTNET]: '0xe3dd15f3Cf3975227a833442F03bc9A6870B1DcE',
-}
-export const HCOK_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MAIN]: '0x5f386f05e9aae19be551d4e8a98f2209c3a1dd91',
-  [SupportedChainId.RINKEBY_TESTNET]: '0x2Cf8cDA15D39D2d6448C433e4e4D316B71Bd4C31',
+export const MINTABLE_CONTRACT_ADDRESSES: AddressMap = {
+  [SupportedChainId.MAIN]: '0x6b3A1C4F88Fd57013C2c2ac97aB35317dfD424B3',
+  [SupportedChainId.RINKEBY_TESTNET]: '0x6b3A1C4F88Fd57013C2c2ac97aB35317dfD424B3',
 }
 
 export const CONTRACT_ABIS = {
-  COK: COK_ABI,
-  MINT_PASS: MINT_PASS_ABI,
-  HCOK: HCOK_ABI,
+  MINTER: MINTER_ABI,
+  MINTABLE: MINTABLE_ABI,
 }
 
 const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY

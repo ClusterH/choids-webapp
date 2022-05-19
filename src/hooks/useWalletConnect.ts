@@ -8,8 +8,7 @@ import {
   WalletConnectConnector,
 } from '@web3-react/walletconnect-connector'
 
-import { connectorLocalStorageKey, ConnectorNames } from 'config/constants'
-import { connectorsByName } from 'config/constants/web3Connectors'
+import { connectorLocalStorageKey, ConnectorNames, connectorsByName } from 'config/constants'
 import { notifyToast } from 'config/toast'
 import { setupNetwork } from 'utils/walletSetupMainNet'
 

@@ -1,4 +1,5 @@
 export const b64EncodeUnicode = (data: any) => {
+  console.log(data)
   const str = JSON.stringify(data)
   return window.btoa(
     encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {

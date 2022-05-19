@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
-import { useGetCOKContract, useGetHCOKContract, useGetMintPassContract } from 'hooks'
+import { useGetMinterContract } from 'hooks'
 import { AppState } from 'state'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setWalletBalance } from 'state/web3/reducer'
@@ -15,9 +15,7 @@ export const useWalletBalances = () => {
 
 export const useGetWalletBalance = () => {
   const { account, chainId } = useActiveWeb3React()
-  const cokContract = useGetCOKContract()
-  const hcokContract = useGetHCOKContract()
-  const mintPassContract = useGetMintPassContract()
+  const minterContract = useGetMinterContract()
 
   const dispatch = useAppDispatch()
 
@@ -26,15 +24,13 @@ export const useGetWalletBalance = () => {
       const provider = getSimpleRPCProvider(chainId)
 
       if (!account || !provider) return
-      const cokBalance = cokContract ? await getNFTBalance(cokContract, account) : 0
-      const hcokBalance = hcokContract ? await getNFTBalance(hcokContract, account) : 0
-      const mintPassBalance = mintPassContract ? await getNFTBalance(mintPassContract, account) : 0
+      const minterBalance = minterContract ? await getNFTBalance(minterContract, account) : 0
 
-      dispatch(setWalletBalance({ cokBalance, hcokBalance, mintPassBalance }))
+      dispatch(setWalletBalance({ minterBalance }))
     } catch (e) {
       console.log(e)
     }
-  }, [chainId, account, cokContract, hcokContract, mintPassContract, dispatch])
+  }, [chainId, account, minterContract, dispatch])
 
   useEffect(() => {
     handleFetchBalances()

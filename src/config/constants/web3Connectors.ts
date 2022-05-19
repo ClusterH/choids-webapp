@@ -3,7 +3,8 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 import MAIN_LOGO from 'assets/images/main_logo.png'
-import { ConnectorNames, NETWORK_URLS, POLLING_INTERVAL, SupportedChainId, SUPPORTED_CHAIN_IDS } from 'config/constants'
+
+import { ConnectorNames, NETWORK_URLS, POLLING_INTERVAL, SupportedChainId, SUPPORTED_CHAIN_IDS } from './web3'
 
 const injected = new InjectedConnector({ supportedChainIds: SUPPORTED_CHAIN_IDS })
 
@@ -16,7 +17,7 @@ const walletconnect = new WalletConnectConnector({
 
 export const walletlink = new WalletLinkConnector({
   url: NETWORK_URLS[SupportedChainId.MAIN],
-  appName: 'Council Of Kingz',
+  appName: 'Choids',
   appLogoUrl: MAIN_LOGO,
   supportedChainIds: SUPPORTED_CHAIN_IDS,
 })

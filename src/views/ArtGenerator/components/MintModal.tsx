@@ -15,15 +15,14 @@ const LongTextWrapper = styled(TextWrapper)`
 `
 
 const MintModal: React.FC = () => {
-  const { artImgData, dns, creatorName, isLoading, handleOnChange } = useGenerateArtMetaData()
-  const artMetaData = useArtMetaData()
+  const { name, artMetaData, artImgData, creatorName, isLoading, handleOnChange, handleMint } = useGenerateArtMetaData()
 
   return (
     <FlexRow rowHeight={isLoading ? '40vh' : 'auto'} justifyContent={'center'}>
       {isLoading ? (
         <FlexColumn>
           <ClipLoader size={120} color={themeColor.text1} />
-          <TextWrapper fontSize={'xxl'} fontWeight={'bold'}>
+          <TextWrapper fontSize={'xl'} fontWeight={'bold'}>
             {'Uploading image to ipfs....'}
           </TextWrapper>
         </FlexColumn>
@@ -35,7 +34,7 @@ const MintModal: React.FC = () => {
             <InputWrapper height={'40px'} onChange={handleOnChange} />
             <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
               <TextWrapper>{'DNA:'}</TextWrapper>
-              <LongTextWrapper>{shortString(dns, 14)}</LongTextWrapper>
+              <LongTextWrapper>{shortString(artMetaData.dna, 14)}</LongTextWrapper>
             </FlexRow>
             <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
               <TextWrapper>{'Description:'}</TextWrapper>
@@ -60,7 +59,7 @@ const MintModal: React.FC = () => {
                 <TextWrapper>{'First Generation'}</TextWrapper>
               </FlexRow>
             </FlexColumn>
-            <MainButton width={'100%'} height={'40px'}>
+            <MainButton width={'100%'} height={'40px'} onClick={handleMint} disabled={name === ''}>
               {'Confirm Mint'}
             </MainButton>
           </FlexColumn>

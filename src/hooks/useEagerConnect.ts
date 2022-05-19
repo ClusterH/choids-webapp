@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
-import { connectorLocalStorageKey, ConnectorNames } from 'config/constants'
-import { connectorsByName } from 'config/constants/web3Connectors'
+import { connectorLocalStorageKey, ConnectorNames, connectorsByName } from 'config/constants'
 import { useWalletConnect } from 'hooks'
 
 export const useEagerConnect = () => {
