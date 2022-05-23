@@ -30,7 +30,6 @@ const RadiusItemWrapper: React.FC<{
 
   const handleSizeChange = useCallback(
     (value: number) => {
-      console.log(value)
       dispatch(setArtParamRadii({ id: radius.id, value }))
     },
     [dispatch, radius.id]
@@ -46,7 +45,6 @@ const CanvasContainer: React.FC = () => {
   const artParams = useArtParamSettings()
 
   const { isOpen, handleOpenModal } = useModal()
-  console.log(artParams)
 
   const [params, setParams] = useState<IArtParams>(() => artParams)
 
@@ -91,7 +89,6 @@ const CanvasContainer: React.FC = () => {
   const handleZoomChange = useCallback(
     (value: number) => {
       paramsRef.current.zoom = value
-      console.log(value)
       dispatch(setArtParamSettings({ zoom: value }))
     },
     [dispatch]

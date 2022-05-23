@@ -35,47 +35,7 @@ export const useDraw = () => {
 
   const handleDraw = useCallback(
     (params: IArtParams, canvasRef: any) => {
-      console.log(params)
       drawArt(params, canvasRef, canvasSize.width, canvasSize.height)
-      // let output: number[] = []
-
-      // const h = params.size // To Do -- should update with screen size Height or Container height
-
-      // if (canvasRef.current) {
-      //   const ctx = canvasRef.current.getContext('2d')
-      //   ctx.clearRect(0, 0, canvasSize.width, canvasSize.height)
-      //   ctx.fillStyle = params.backgroundColor
-      //   ctx.fillRect(0, 0, canvasSize.width, canvasSize.height)
-      //   ctx.save()
-      //   ctx.translate(canvasSize.width / 2, canvasSize.height / 2)
-
-      //   ctx.lineWidth = params.pencilSize
-      //   ctx.strokeStyle = params.canvasColor
-      //   ctx.beginPath()
-
-      //   // The rest of the code is presentation:
-      //   // this is how you would use the module
-      //   // to trace out a curv
-      //   hypotrochoid(
-      //     h,
-      //     params.radii.map((radius) => radius.r),
-      //     0,
-      //     output
-      //   )
-      //   ctx.moveTo(output[0], output[1])
-      //   for (let i = 0; i < 40000; i += 2.5) {
-      //     hypotrochoid(
-      //       h,
-      //       params.radii.map((radius) => radius.r),
-      //       (i * Math.PI) / 200,
-      //       output
-      //     )
-      //     ctx.lineTo(output[0], output[1])
-      //   }
-      //   ctx.stroke()
-
-      //   ctx.restore()
-
       canvasRef.current.toBlob(handleImageData, 'image/png', 1.0)
     },
     [canvasSize, handleImageData]

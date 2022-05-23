@@ -35,8 +35,6 @@ export const useArtAnimation = () => {
     }
     const zoom = 0.5 * (Math.sin(Math.PI / 6 + (Math.PI * (now - 1)) / now) + 1)
 
-    console.log(radii, size, zoom)
-
     params.current.radii = [...radii]
     params.current.zoom = zoom
 

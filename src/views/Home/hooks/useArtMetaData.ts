@@ -24,29 +24,21 @@ export const useGetArtMetaData = () => {
       const choidContract = new Contract(getMintableAddress(chainId ?? DEFAULT_CHAIN_ID), CONTRACT_ABIS.MINTABLE)
       if (!choidContract) return
 
-      console.log(choidTotalSupply)
-
       const tokenIds = Array.from({ length: choidTotalSupply }, (_, i) => choidTotalSupply - i).slice(
         0,
         choidTotalSupply <= 5 ? choidTotalSupply : 5
       )
-
-      console.log(tokenIds)
 
       const _calls = tokenIds.map((id) => {
         return choidContract.tokenURI(id)
       })
       const tokenURIs = (await getMultiCall(_calls, chainId ?? DEFAULT_CHAIN_ID)) as string[]
 
-      console.log(tokenURIs)
-
       const metaDataList = await Promise.all(
         tokenURIs.map(async (uri) => {
           return (await (await fetch(convertIPFSToWebURL(uri))).json()) as IMetaData
         })
       )
-
-      console.log(metaDataList)
 
       dispatch(setMetaDataList(metaDataList))
     } catch (error) {

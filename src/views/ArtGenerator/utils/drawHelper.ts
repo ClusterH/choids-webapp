@@ -32,8 +32,6 @@ export const hypotrochoid = (d: number, radii: number[], t: number, output: any)
 export const drawArt = (params: IArtParams, canvasRef: any, width: number, height: number) => {
   let output: number[] = []
 
-  console.log(params, width, height)
-
   const h = params.size * params.zoom // To Do -- should update with screen size Height or Container height
   const w = width * params.zoom
   const he = height * params.zoom
