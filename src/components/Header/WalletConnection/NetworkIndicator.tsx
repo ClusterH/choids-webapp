@@ -17,7 +17,7 @@ const NetworkIndicator: React.FC = () => {
       rowHeight={'38px'}
       padding={'0 12px'}
       margin={'0 12px 0 -23px'}
-      borderRadius={themeBorderRadius.medium}
+      borderRadius={themeBorderRadius.regular}
       gap={'4px'}
     >
       {chainId && isSupportedNetwork(chainId) && (

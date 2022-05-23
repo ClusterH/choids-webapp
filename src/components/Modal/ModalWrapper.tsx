@@ -34,7 +34,7 @@ const Modal: React.FC<IModalProps> = ({ children, isOpen, handleOpenModal, width
       <FadeAnimationWrapper>
         <ModalWrapper
           backgroundColor={backgroundColor ? backgroundColor : themeColor.background4}
-          borderRadius={themeBorderRadius.regular}
+          borderRadius={themeBorderRadius.small}
           colWidth={width ?? '30%'}
           border={isBorder ? themeColor.border4 : 'none'}
         >

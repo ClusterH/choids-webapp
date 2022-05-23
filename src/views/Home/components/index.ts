@@ -1,1 +1,7 @@
-export { default as MainContainer } from './MainContainer'
+export { default as ArtIntroContainer } from './ArtIntroContainer'
+export { default as AboutContainer1 } from './AboutContainer1'
+export { default as AboutContainer2 } from './AboutContainer2'
+export { default as AboutContainer3 } from './AboutContainer3'
+export { default as AboutContainer4 } from './AboutContainer4'
+export { default as AboutContainer5 } from './AboutContainer5'
+export { default as AboutContainer6 } from './AboutContainer6'

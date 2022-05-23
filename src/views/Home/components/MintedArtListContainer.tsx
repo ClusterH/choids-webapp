@@ -1,23 +1,45 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 
-import ART_IMG1 from 'assets/images/art_img.svg'
-import ART_IMG2 from 'assets/images/art_img2.svg'
-import { FlexColumn, FlexRow, ImageContainer, MainButton, TextWrapper } from 'styles/components'
+import { DotLoader } from 'react-spinners'
+import styled from 'styled-components'
+
+import { useMetaDataList } from 'state/choid/hook'
+import { FlexColumn, FlexRow, ImageContainer, TextWrapper } from 'styles/components'
+import { themeBorderRadius, themeColor } from 'styles/theme'
+import { convertIPFSToWebURL } from 'utils/ipfsHelper'
+
+import { useGetArtMetaData } from '../hooks'
+
+const ArtWrapper = styled(ImageContainer)`
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));
+  border-radius: ${themeBorderRadius.regular};
+`
 
 const MintedArtList: React.FC = () => {
+  const { isLoading, handleGetArtMetaData } = useGetArtMetaData()
+
+  const metaDataList = useMetaDataList()
+
+  useEffect(() => {
+    handleGetArtMetaData()
+  }, [handleGetArtMetaData])
+
   return (
-    <FlexColumn alignItems={'flex-start'}>
+    <FlexColumn alignItems={'flex-start'} padding={'6% 8%'}>
       <TextWrapper>{'RECENTLY MINTED ARTS'}</TextWrapper>
-      {/* Static Art List atm */}
-      <FlexRow>
-        <ImageContainer src={ART_IMG2} maxWidth={'16%'} />
-        <ImageContainer src={ART_IMG2} maxWidth={'16%'} />
-        <ImageContainer src={ART_IMG1} maxWidth={'16%'} />
-        <ImageContainer src={ART_IMG1} maxWidth={'16%'} />
-        <ImageContainer src={ART_IMG2} maxWidth={'16%'} />
+      <FlexRow gap={'24px'} justifyContent={'center'}>
+        {isLoading ? (
+          <DotLoader size={'240px'} color={themeColor.text3} speedMultiplier={0.5} />
+        ) : (
+          metaDataList &&
+          metaDataList.length > 0 &&
+          metaDataList.map((metadata, index) => (
+            <ArtWrapper key={`${metadata.attributes[1].value}_${index}`} src={convertIPFSToWebURL(metadata.image)} maxWidth={'16%'} />
+          ))
+        )}
       </FlexRow>
     </FlexColumn>
   )
 }
 
-export default memo(MintedArtList)
+export default MintedArtList

@@ -15,6 +15,7 @@ export interface ThemeProps {
   text6: string
   text7: string
   text8: string
+  text9: string
 
   //button color
   button1: string

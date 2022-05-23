@@ -87,8 +87,8 @@ export const FlexColumn = styled.div<{
 `
 export const PageWrapper = styled.div`
   width: 100%;
-  min-height: calc(100vh);
-  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+  margin: 80px auto 0;
   padding: 0;
 `
 export const TextWrapper = styled.span<{
@@ -146,7 +146,7 @@ export const MainButton = styled.button<{
   width: ${({ width }) => (width ? width : 'fit-content')};
   height: ${({ height }) => (height ? height : '50px')};
   background-color: ${({ backgroundColor, theme }) => (backgroundColor ? backgroundColor : theme.button1)};
-  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.regular)};
+  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.small)};
 
   &:hover {
     background: ${({ hoverColor }) => (hoverColor ? hoverColor : themeColor.buttonHover1)};
@@ -194,7 +194,7 @@ export const InputWrapper = styled.input<{
   height: ${({ height }) => (height ? height : '50px')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'transparent')};
   border: ${({ border, theme }) => (border ? border : theme.border1)};
-  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.medium)};
+  border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.regular)};
   padding: ${({ padding }) => (padding ? padding : '20px')};
   color: ${({ color, theme }) => (color ? (theme as any)[color] : theme.text1)};
   font-size: ${({ fontSize }) => (fontSize ? themeTypography[fontSize] : themeTypography.base)};

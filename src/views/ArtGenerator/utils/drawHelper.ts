@@ -1,3 +1,5 @@
+import { IArtParams } from '../types'
+
 const cos = Math.cos
 const sin = Math.sin
 
@@ -25,4 +27,50 @@ export const hypotrochoid = (d: number, radii: number[], t: number, output: any)
   output[1] = y
 
   return output
+}
+
+export const drawArt = (params: IArtParams, canvasRef: any, width: number, height: number) => {
+  let output: number[] = []
+
+  console.log(params, width, height)
+
+  const h = params.size * params.zoom // To Do -- should update with screen size Height or Container height
+  const w = width * params.zoom
+  const he = height * params.zoom
+
+  if (canvasRef.current) {
+    const ctx = canvasRef.current.getContext('2d')
+    ctx.clearRect(0, 0, w, he)
+    ctx.fillStyle = params.backgroundColor
+    ctx.fillRect(0, 0, width, height)
+    ctx.save()
+    ctx.translate(width / 2, width / 2)
+
+    ctx.lineWidth = params.pencilSize
+    ctx.strokeStyle = params.canvasColor
+    ctx.beginPath()
+
+    // The rest of the code is presentation:
+    // this is how you would use the module
+    // to trace out a curv
+    hypotrochoid(
+      h,
+      params.radii.map((radius) => radius.r * params.zoom),
+      0,
+      output
+    )
+    ctx.moveTo(output[0], output[1])
+    for (let i = 0; i < 40000; i += 2.5) {
+      hypotrochoid(
+        h,
+        params.radii.map((radius) => radius.r * params.zoom),
+        (i * Math.PI) / 100,
+        output
+      )
+      ctx.lineTo(output[0], output[1])
+    }
+    ctx.stroke()
+
+    ctx.restore()
+  }
 }

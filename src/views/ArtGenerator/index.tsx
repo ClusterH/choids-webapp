@@ -2,12 +2,12 @@ import React from 'react'
 
 import { FlexRow, PageWrapper } from 'styles/components'
 
-import { ArtCanvasContainer, ParamsMainContainer, Header, LayerListContainer } from './components'
+import { ArtCanvasContainer, ParamsMainContainer } from './components'
 
 const ArtGenerator: React.FC = () => {
   return (
     <PageWrapper>
-      <Header />
+      {/* <Header /> */}
       <FlexRow gap={'0px'}>
         {/* <LayerListContainer /> */}
         <ArtCanvasContainer />

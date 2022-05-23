@@ -6,6 +6,7 @@ import { GlobalThemeProps } from './types'
 const GlobalStyles = createGlobalStyle`
   :root {
     --white: #ffffff;
+    --white2: #cfcfcf;
     --purple1: #6c05ac;
     --purple2: #6805a5;
     --purple3: #8405bf;
@@ -40,7 +41,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }: GlobalThemeProps) => theme.background1};
     background-size: cover;
     color: ${({ theme }: GlobalThemeProps) => theme.text1};
-    font-family: 'Roboto' !important;
+    font-family: 'Poppins' !important;
     font-size: 16px;
     font-weight: 400;
     letter-spacing: 1px;

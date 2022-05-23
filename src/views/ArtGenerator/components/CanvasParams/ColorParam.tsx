@@ -66,7 +66,7 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (color:
         <ColorWrapper
           rowWidth={'32px'}
           rowHeight={'32px'}
-          borderRadius={themeBorderRadius.regular}
+          borderRadius={themeBorderRadius.small}
           backgroundColor={val}
           onClick={handleIsOpen}
         />

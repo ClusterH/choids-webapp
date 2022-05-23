@@ -5,7 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 // eslint-disable-next-line import/no-unresolved
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 
-import { SupportedChainId } from 'config/constants'
+import { DEFAULT_CHAIN_ID, SupportedChainId } from 'config/constants'
 import { getSimpleRPCProvider } from 'utils/web3Helpers'
 
 /**
@@ -24,5 +24,5 @@ export const useActiveWeb3React = (): Web3ReactContextInterface<Web3Provider> =>
     }
   }, [chainId, library])
 
-  return { library: provider, chainId: chainId ?? SupportedChainId.MAIN, ...web3React }
+  return { library: provider, chainId: chainId ?? DEFAULT_CHAIN_ID, ...web3React }
 }

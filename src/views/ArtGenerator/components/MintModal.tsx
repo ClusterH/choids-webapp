@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ClipLoader } from 'react-spinners'
+import { ClipLoader, PulseLoader } from 'react-spinners'
 import styled from 'styled-components'
 
 import { DEFAULT_CHAIN_ID } from 'config/constants'
@@ -10,7 +10,7 @@ import { themeBorderRadius, themeColor } from 'styles/theme'
 import { getMintableAddress } from 'utils'
 import { getOpenSeaLink } from 'utils/openseaHelper'
 
-import { useGenerateArtMetaData } from '../hooks'
+import { useArtAnimation, useGenerateArtMetaData } from '../hooks'
 import { shortString } from '../utils/encodeHelper'
 
 const LongTextWrapper = styled(TextWrapper)`
@@ -27,15 +27,22 @@ const MintModal: React.FC = () => {
 
   const choidAddress = getMintableAddress(chainId ?? DEFAULT_CHAIN_ID)
 
+  const { canvasRef, canvasContainerRef, canvasSize } = useArtAnimation()
+
   return (
-    <FlexRow rowHeight={isLoading ? '40vh' : 'auto'} justifyContent={'center'}>
+    <FlexRow rowWidth={'100%'} rowHeight={isLoading ? '40vh' : 'auto'} justifyContent={'center'}>
       {isLoading ? (
-        <FlexColumn>
-          <ClipLoader size={120} color={themeColor.text1} />
-          <TextWrapper fontSize={'xl'} fontWeight={'bold'}>
-            {'Uploading image to ipfs....'}
-          </TextWrapper>
-        </FlexColumn>
+        <FlexRow>
+          <FlexColumn ref={canvasContainerRef} colWidth={'50%'} colHeight={'100%'}>
+            <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
+          </FlexColumn>
+          <FlexColumn>
+            <TextWrapper fontSize={'xl'} fontWeight={'bold'}>
+              {'Uploading image to ipfs'}
+              <PulseLoader size={6} margin={2} color={themeColor.text1} />
+            </TextWrapper>
+          </FlexColumn>
+        </FlexRow>
       ) : (
         <>
           <ImageContainer src={URL.createObjectURL(artImgData)} width={'50%'} borderRadius={themeBorderRadius.regular} />
@@ -46,9 +53,7 @@ const MintModal: React.FC = () => {
               </TextWrapper>
               <MainButton
                 onClick={() =>
-                  handleOpenExternalLink(
-                    `${getOpenSeaLink(chainId ?? DEFAULT_CHAIN_ID, Number(choidTotalSupply) + 1, choidAddress.toLowerCase())}`
-                  )
+                  handleOpenExternalLink(`${getOpenSeaLink(chainId ?? DEFAULT_CHAIN_ID, choidTotalSupply + 1, choidAddress.toLowerCase())}`)
                 }
               >
                 {'View on OpenSea'}
@@ -62,10 +67,10 @@ const MintModal: React.FC = () => {
                 <TextWrapper fontWeight={'medium'}>{'DNA:'}</TextWrapper>
                 <LongTextWrapper>{shortString(artMetaData.dna, 14)}</LongTextWrapper>
               </FlexRow>
-              <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
+              {/* <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
                 <TextWrapper fontWeight={'medium'}>{'Description:'}</TextWrapper>
                 <TextWrapper>{'This is the Description'}</TextWrapper>
-              </FlexRow>
+              </FlexRow> */}
               <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
                 <TextWrapper fontWeight={'medium'}>{'Image:'}</TextWrapper>
                 <LongTextWrapper>{artMetaData.image}</LongTextWrapper>

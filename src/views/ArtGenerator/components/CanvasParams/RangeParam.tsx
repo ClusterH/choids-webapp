@@ -15,7 +15,7 @@ const RangeParam: React.FC<{
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setVal(e.target.value as unknown as number)
+      setVal(Number(e.target.value))
     },
     [setVal]
   )
@@ -36,13 +36,19 @@ const RangeParam: React.FC<{
           width={'34px'}
           height={'34px'}
           padding={'0px'}
-          borderRadius={themeBorderRadius.regular}
+          borderRadius={themeBorderRadius.small}
           color={'text8'}
           fontSize={'xs'}
           textAlign={'center'}
         />
         <FlexRow gap={'0px'}>
-          <RangeInput onChange={setVal} defaultValue={val} min={range.min} max={range.max} step={label === 'Pen Size' ? 0.1 : 1} />
+          <RangeInput
+            onChange={setVal}
+            defaultValue={val}
+            min={range.min}
+            max={range.max}
+            step={label === 'Pen Size' || label === 'Zoom' ? 0.1 : 1}
+          />
         </FlexRow>
       </FlexRow>
     </FlexRow>

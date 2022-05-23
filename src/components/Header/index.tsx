@@ -20,27 +20,23 @@ const HeaderContainer = styled(FlexRow)`
   position: fixed;
   top: 0;
   height: 80px;
-  padding: 0 6%;
-  background-color: transparent;
+  background-color: ${themeColor.background1};
+  border-bottom: ${themeColor.border2};
 `
 
 const Header: React.FC = () => {
   const path = useGetCurrentURLPath()
   return (
-    <HeaderContainer>
-      {path.includes('/generator') === false && (
-        <Fragment>
-          <FlexRow justifyContent={'flex-start'} rowWidth={'fit-content'}>
-            <Logo />
-          </FlexRow>
-          <Menu />
-          <FlexRow justifyContent={'flex-end'} rowWidth={'fit-content'}>
-            <SocialIconsContainer />
-            <WalletConnectionContainer />
-            <Hamburger />
-          </FlexRow>
-        </Fragment>
-      )}
+    <HeaderContainer padding={path.includes('/generator') === false ? '0 8%' : '0 12px'}>
+      <FlexRow justifyContent={'flex-start'} rowWidth={'fit-content'}>
+        <Logo />
+      </FlexRow>
+      <Menu />
+      <FlexRow justifyContent={'flex-end'} rowWidth={'fit-content'}>
+        <SocialIconsContainer />
+        <WalletConnectionContainer />
+        <Hamburger />
+      </FlexRow>
     </HeaderContainer>
   )
 }

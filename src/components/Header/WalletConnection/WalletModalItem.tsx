@@ -9,7 +9,7 @@ import { IWalletModalItem } from '../types'
 
 const ItemWrapper = styled(FlexRow)<{ isClickable?: boolean }>`
   background-color: ${themeColor.background3};
-  border-radius: ${themeBorderRadius.regular};
+  border-radius: ${themeBorderRadius.small};
   border: 1px solid ${themeColor.background3};
   padding: 8px 24px;
   &:hover {

@@ -2,9 +2,10 @@ import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcSigner, StaticJsonRpcProvider, Web3Provider } from '@ethersproject/providers'
-import { ethers } from 'ethers'
+import { Provider } from 'ethcall'
+import { ContractInterface, ethers } from 'ethers'
 
-import { NETWORK_URLS, POLLING_INTERVAL, SupportedChainId } from 'config/constants'
+import { CONTRACT_ABIS, DEFAULT_CHAIN_ID, NETWORK_URLS, POLLING_INTERVAL, SupportedChainId } from 'config/constants'
 
 export const getLibrary = (provider: any): Web3Provider => {
   const library = new Web3Provider(provider)
@@ -46,8 +47,7 @@ export const getProviderOrSigner = (library: Web3Provider, account?: string): We
 }
 
 export const getSimpleRPCProvider = (chainId: number | undefined) => {
-  if (chainId === undefined) return null
-  return new StaticJsonRpcProvider(NETWORK_URLS[chainId])
+  return new StaticJsonRpcProvider(NETWORK_URLS[chainId ?? DEFAULT_CHAIN_ID])
 }
 
 // account is optional
@@ -88,4 +88,11 @@ export const estimateGas = async (contract: Contract, methodName: string, method
     .mul(ethers.BigNumber.from(10000).add(ethers.BigNumber.from(gasMarginPer10000)))
     .div(ethers.BigNumber.from(10000))
   return gasEstimation
+}
+
+export const getMultiCall = async (calls: any, chainId: number) => {
+  const ethCallProvider = new Provider()
+  const simpleProvider = getSimpleRPCProvider(chainId)
+  await ethCallProvider.init(simpleProvider)
+  return await ethCallProvider.all(calls)
 }

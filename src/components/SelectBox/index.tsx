@@ -10,7 +10,7 @@ const SelectBoxWrapper = styled(FlexRow)<{ isBorder?: boolean }>`
   border: ${({ isBorder }) => (isBorder ? themeColor.border3 : 'none')};
   background-color: ${themeColor.background5};
   padding: 12px;
-  border-radius: ${themeBorderRadius.medium};
+  border-radius: ${themeBorderRadius.regular};
 
   &:hover {
     border: ${({ isBorder }) => (isBorder ? themeColor.border1 : 'none')};
@@ -21,7 +21,7 @@ const OptionPanelWrapper = styled(FlexColumn)`
   top: 48px;
   left: 0;
   border: ${themeColor.border3};
-  border-radius: ${themeBorderRadius.medium};
+  border-radius: ${themeBorderRadius.regular};
   background-color: ${themeColor.background5};
   z-index: 1;
 `

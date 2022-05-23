@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { useStateWithProps } from 'hooks'
 import { useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtImgData, setCanvasContainerSize } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 
-import { hypotrochoid } from '../utils/drawHelper'
+import { IArtParams } from '../types'
+import { drawArt, hypotrochoid } from '../utils/drawHelper'
 
 export const useDraw = () => {
   const canvasContainerRef: any = useRef<HTMLDivElement>(null)
@@ -26,63 +28,66 @@ export const useDraw = () => {
 
   const handleImageData = useCallback(
     async (blob: any) => {
-      console.log(blob)
       dispatch(setArtImgData(blob))
     },
     [dispatch]
   )
 
-  const handleDraw = useCallback(() => {
-    let output: number[] = []
+  const handleDraw = useCallback(
+    (params: IArtParams, canvasRef: any) => {
+      console.log(params)
+      drawArt(params, canvasRef, canvasSize.width, canvasSize.height)
+      // let output: number[] = []
 
-    const h = params.size // To Do -- should update with screen size Height or Container height
+      // const h = params.size // To Do -- should update with screen size Height or Container height
 
-    if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext('2d')
-      ctx.clearRect(0, 0, canvasSize.width, canvasSize.height)
-      ctx.fillStyle = params.backgroundColor
-      ctx.fillRect(0, 0, canvasSize.width, canvasSize.height)
-      ctx.save()
-      ctx.translate(canvasSize.width / 2, canvasSize.height / 2)
+      // if (canvasRef.current) {
+      //   const ctx = canvasRef.current.getContext('2d')
+      //   ctx.clearRect(0, 0, canvasSize.width, canvasSize.height)
+      //   ctx.fillStyle = params.backgroundColor
+      //   ctx.fillRect(0, 0, canvasSize.width, canvasSize.height)
+      //   ctx.save()
+      //   ctx.translate(canvasSize.width / 2, canvasSize.height / 2)
 
-      ctx.lineWidth = params.pencilSize
-      ctx.strokeStyle = params.canvasColor
-      ctx.beginPath()
+      //   ctx.lineWidth = params.pencilSize
+      //   ctx.strokeStyle = params.canvasColor
+      //   ctx.beginPath()
 
-      // The rest of the code is presentation:
-      // this is how you would use the module
-      // to trace out a curv
-      hypotrochoid(
-        h,
-        params.radii.map((radius) => radius.r),
-        0,
-        output
-      )
-      ctx.moveTo(output[0], output[1])
-      for (let i = 0; i < 40000; i += 2.5) {
-        hypotrochoid(
-          h,
-          params.radii.map((radius) => radius.r),
-          (i * Math.PI) / 200,
-          output
-        )
-        ctx.lineTo(output[0], output[1])
-      }
-      ctx.stroke()
+      //   // The rest of the code is presentation:
+      //   // this is how you would use the module
+      //   // to trace out a curv
+      //   hypotrochoid(
+      //     h,
+      //     params.radii.map((radius) => radius.r),
+      //     0,
+      //     output
+      //   )
+      //   ctx.moveTo(output[0], output[1])
+      //   for (let i = 0; i < 40000; i += 2.5) {
+      //     hypotrochoid(
+      //       h,
+      //       params.radii.map((radius) => radius.r),
+      //       (i * Math.PI) / 200,
+      //       output
+      //     )
+      //     ctx.lineTo(output[0], output[1])
+      //   }
+      //   ctx.stroke()
 
-      ctx.restore()
+      //   ctx.restore()
 
       canvasRef.current.toBlob(handleImageData, 'image/png', 1.0)
-    }
-  }, [canvasSize, handleImageData, params])
+    },
+    [canvasSize, handleImageData]
+  )
 
   useEffect(() => {
-    handleDraw()
-  }, [handleDraw])
+    handleDraw(params, canvasRef)
+  }, [handleDraw, params])
 
   useEffect(() => {
     dispatch(setCanvasContainerSize(canvasSize))
   }, [canvasSize, dispatch])
 
-  return { canvasRef, canvasContainerRef, canvasSize }
+  return { canvasRef, canvasContainerRef, canvasSize, handleDraw }
 }

@@ -17,6 +17,7 @@ export const themeColor: ThemeProps = {
   text6: 'var(--lightPurple3)',
   text7: 'var(--lightPurple1)',
   text8: 'var(--lightPurple4)',
+  text9: 'var(--white2)',
 
   //button color
   button1: 'var(--buttonColor1)',
@@ -76,15 +77,15 @@ export const themeFontWeight = {
 }
 
 export const themeFontFamily = {
-  title: 'Nippo',
-  main: 'Roboto',
+  title: 'Roboto',
+  main: 'Poppins',
 }
 
 export const themeBorderRadius = {
   none: '0',
-  small: '4px',
-  regular: '8px',
-  medium: '12px',
+  small: '8px',
+  regular: '12px',
+  medium: '24px',
   circle: '50%',
 }
 

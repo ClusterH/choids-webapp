@@ -20,7 +20,7 @@ export const getNFTBalance = async (contract: Contract, account: string) => {
 
 export const getTotalSupply = async (contract: Contract) => {
   const totalSupply = await contract.totalSupply()
-  return totalSupply
+  return totalSupply.toNumber()
 }
 
 export const getWalletOfOwner = async (contract: Contract, account: string) => {
@@ -62,4 +62,8 @@ export const mintNFT = async (
   const txHash = await minterContract.mint(to, cid, nonce, signature, { value, gasLimit })
   const receipt = await txHash.wait()
   return receipt.status
+}
+
+export const getTokenURI = async (contract: Contract, tokenId: number) => {
+  return await contract.tokenURI(tokenId)
 }
