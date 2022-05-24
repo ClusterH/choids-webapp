@@ -290,6 +290,13 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "uint256", "name": "_supplyLimit", "type": "uint256" }],
+    "name": "setSupplyLimit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "address", "name": "tokenContract_", "type": "address" }],
     "name": "setTokenContract",
     "outputs": [],
@@ -311,6 +318,20 @@
     "type": "function"
   },
   { "inputs": [], "name": "startPublicMint", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "supplyLimit",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supplyLimitRequired",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
   {
     "inputs": [{ "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }],
     "name": "supportsInterface",
@@ -342,13 +363,6 @@
   {
     "inputs": [],
     "name": "totalReleased",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalRemaining",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"

@@ -1,13 +1,19 @@
-import React from 'react'
-
-import styled from 'styled-components'
+import React, { useEffect } from 'react'
 
 import { FlexColumn } from 'styles/components'
 import { themeColor } from 'styles/theme'
 
+import { useGetDefaltMetadata } from '../hooks'
+
 import { CanvasContainer, PresetContainer } from './CanvasParams'
 
 const ParamsMainContainer: React.FC = () => {
+  const { handleGetDefaultMetadata } = useGetDefaltMetadata()
+
+  useEffect(() => {
+    handleGetDefaultMetadata()
+  }, [handleGetDefaultMetadata])
+
   return (
     <FlexColumn
       colWidth={'30%'}

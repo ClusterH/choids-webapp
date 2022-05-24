@@ -1,27 +1,19 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { ethers } from 'ethers'
+import { formatEther } from '@ethersproject/units'
 import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 
 import { useReverseENSLookUp } from 'components/Header/hook'
 import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
 import { notifyToast } from 'config/toast'
 import { useActiveWeb3React, useGetMinterContract } from 'hooks'
-// import { File, NFTStorage } from 'nft.storage'
 import { useArtImgData, useArtMetaData, useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtMetaData } from 'state/artGenerator/reducer'
+import { setPrice } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
-import {
-  checkMintPhaseStatus,
-  estimateGas,
-  getContractWithSimpleProvider,
-  getMinterAddress,
-  mintNFT,
-  shortenAddress,
-  weiToFormatEthToBigNumber,
-} from 'utils'
+import { checkMintPhaseStatus, estimateGas, getContractWithSimpleProvider, getMinterAddress, mintNFT, shortenAddress } from 'utils'
 import { getSignatureAndNonce } from 'utils/api'
-import { storeMetadata } from 'utils/api/metadata'
+import { getDefaultMetadata, storeMetadata } from 'utils/api/metadata'
 
 import { ISignatureRequest, TUseCase } from '../types'
 import { b64EncodeUnicode } from '../utils/encodeHelper'
@@ -54,6 +46,20 @@ export const useMintPhaseStatus = () => {
   return { mintPhase }
 }
 
+export const useGetDefaltMetadata = () => {
+  const dispatch = useAppDispatch()
+  const handleGetDefaultMetadata = useCallback(async () => {
+    try {
+      const { price } = await getDefaultMetadata()
+      if (price) dispatch(setPrice(formatEther(price)))
+    } catch (error) {
+      console.log(error)
+    }
+  }, [dispatch])
+
+  return { handleGetDefaultMetadata }
+}
+
 export const useGenerateArtMetaData = () => {
   const { account } = useActiveWeb3React()
   const artImgData = useArtImgData()
@@ -77,15 +83,23 @@ export const useGenerateArtMetaData = () => {
   const client = useMemo(() => new NFTStorage({ token: NFT_STORAGE_KEY! }), [NFT_STORAGE_KEY])
 
   const handleOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value
+    if (name.length > 40) {
+      notifyToast({ id: 'name_error', type: 'error', content: 'Name must be less than 40 characters' })
+    }
     setName(e.target.value)
   }, [])
 
   const handleMetaData = useCallback(async () => {
-    setIsLoading(true)
-    const cid = await client.storeBlob(new Blob([artImgData]))
-    dispatch(setArtMetaData({ dna, image: `ipfs://${cid}` }))
-
-    setIsLoading(false)
+    try {
+      setIsLoading(true)
+      const cid = await client.storeBlob(new Blob([artImgData]))
+      dispatch(setArtMetaData({ dna, image: `ipfs://${cid}` }))
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }, [artImgData, client, dispatch, dna])
 
   const handleMint = useCallback(async () => {
@@ -97,7 +111,7 @@ export const useGenerateArtMetaData = () => {
       const metaData = {
         ...artMetaData,
         name,
-        description: `${name} is an algorithmically generated art piece created by ${ens ?? account}. For this piece, ${
+        description: `<b>${name}</b> is an algorithmically generated art piece created by ${ens ?? account}. For this piece, ${
           ens ?? account
         } chose a background color with hex code ${artParams.backgroundColor} and a pen color with hex code ${
           artParams.canvasColor

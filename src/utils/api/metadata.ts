@@ -17,6 +17,17 @@ export const storeMetadata = async (metadata: IMetaData & { useCase: TUseCase })
   }
 }
 
+export const getDefaultMetadata = async () => {
+  try {
+    const { data, status } = await specificAxios.get(`${API_URL}metadata/get/default`)
+    if (status === 200) {
+      return data
+    } else return false
+  } catch (e: any) {
+    console.log(e)
+  }
+}
+
 export const getMetadata = async (tokenURI: string) => {
   try {
     const { data, status } = await specificAxios.get(`${tokenURI}`)

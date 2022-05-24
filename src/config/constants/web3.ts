@@ -26,11 +26,11 @@ type AddressMap = { [chainId: number]: string }
 
 export const MINTER_CONTRACT_ADDRESSES: AddressMap = {
   [SupportedChainId.MAIN]: '0x6beEA5649Fc6BFEb7f2d23E0678aD9D02408B1F7',
-  [SupportedChainId.RINKEBY_TESTNET]: '0x9d217994B236BAF0Da2a96f82aD3F63Dc4C218f2',
+  [SupportedChainId.RINKEBY_TESTNET]: '0x0Aa1C1121915047db903718fb182d19a4015Aa27',
 }
 export const MINTABLE_CONTRACT_ADDRESSES: AddressMap = {
   [SupportedChainId.MAIN]: '0x6b3A1C4F88Fd57013C2c2ac97aB35317dfD424B3',
-  [SupportedChainId.RINKEBY_TESTNET]: '0xeca08b3497658bf9f9D7aF6fdda59F44C6A39448',
+  [SupportedChainId.RINKEBY_TESTNET]: '0xe22601780DCe6c3cF4E7AFBBBdeff1B6eB03Ae5c',
 }
 
 export const CONTRACT_ABIS = {

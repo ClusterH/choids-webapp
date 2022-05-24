@@ -1,10 +1,12 @@
 import React from 'react'
 
+import { FaEthereum } from 'react-icons/fa'
 import { ClipLoader, PulseLoader } from 'react-spinners'
 import styled from 'styled-components'
 
 import { DEFAULT_CHAIN_ID } from 'config/constants'
 import { useActiveWeb3React, useGetTotalSupply, useHandleExternalLink, useTotalSupply } from 'hooks'
+import { usePrice } from 'state/choid/hook'
 import { FlexColumn, FlexRow, ImageContainer, InputWrapper, MainButton, TextWrapper } from 'styles/components'
 import { themeBorderRadius, themeColor } from 'styles/theme'
 import { getMintableAddress } from 'utils'
@@ -16,6 +18,11 @@ import { shortString } from '../utils/encodeHelper'
 const LongTextWrapper = styled(TextWrapper)`
   word-break: break-all;
 `
+const PriceWrapper = styled(FlexRow)`
+  position: absolute;
+  right: 0px;
+  top: -30px;
+`
 
 const MintModal: React.FC = () => {
   useGetTotalSupply()
@@ -24,13 +31,14 @@ const MintModal: React.FC = () => {
   const { handleOpenExternalLink } = useHandleExternalLink()
   const { chainId } = useActiveWeb3React()
   const { choidTotalSupply } = useTotalSupply()
+  const price = usePrice()
 
   const choidAddress = getMintableAddress(chainId ?? DEFAULT_CHAIN_ID)
 
   const { canvasRef, canvasContainerRef, canvasSize } = useArtAnimation()
 
   return (
-    <FlexRow rowWidth={'100%'} rowHeight={isLoading ? '40vh' : 'auto'} justifyContent={'center'}>
+    <FlexRow rowWidth={'100%'} rowHeight={isLoading ? '40vh' : 'auto'} justifyContent={'center'} padding={'32px 0'}>
       {isLoading ? (
         <FlexRow>
           <FlexColumn ref={canvasContainerRef} colWidth={'50%'} colHeight={'100%'}>
@@ -61,16 +69,21 @@ const MintModal: React.FC = () => {
             </FlexColumn>
           ) : (
             <FlexColumn colWidth={'46%'} justifyContent={'flex-start'} alignItems={'flex-start'}>
-              <TextWrapper fontWeight={'medium'}>{'Name your piece'}</TextWrapper>
-              <InputWrapper height={'40px'} onChange={handleOnChange} />
+              <PriceWrapper rowWidth={'fit-content'} gap={'8px'}>
+                <FaEthereum color={themeColor.background3} size={20} />
+                <TextWrapper fontWeight={'bold'} fontSize={'xl'}>
+                  {price}
+                </TextWrapper>
+              </PriceWrapper>
+              <FlexRow>
+                <TextWrapper fontWeight={'medium'}>{'Name your piece'}</TextWrapper>
+                <TextWrapper color={'text2'}>{`${name.length} / 40`}</TextWrapper>
+              </FlexRow>
+              <InputWrapper height={'40px'} onChange={handleOnChange} maxLength={40} />
               <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
                 <TextWrapper fontWeight={'medium'}>{'DNA:'}</TextWrapper>
                 <LongTextWrapper>{shortString(artMetaData.dna, 14)}</LongTextWrapper>
               </FlexRow>
-              {/* <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
-                <TextWrapper fontWeight={'medium'}>{'Description:'}</TextWrapper>
-                <TextWrapper>{'This is the Description'}</TextWrapper>
-              </FlexRow> */}
               <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
                 <TextWrapper fontWeight={'medium'}>{'Image:'}</TextWrapper>
                 <LongTextWrapper>{artMetaData.image}</LongTextWrapper>
@@ -82,7 +95,7 @@ const MintModal: React.FC = () => {
                   <TextWrapper>{creatorName}</TextWrapper>
                 </FlexRow>
                 <FlexRow justifyContent={'flex-start'} margin={'0 0 0 24px'}>
-                  <TextWrapper>{'Birth Date:'}</TextWrapper>
+                  <TextWrapper>{'Created On:'}</TextWrapper>
                   <TextWrapper>{new Date().toLocaleDateString()}</TextWrapper>
                 </FlexRow>
                 <FlexRow justifyContent={'flex-start'} margin={'0 0 0 24px'}>
