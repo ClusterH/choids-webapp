@@ -4,7 +4,7 @@ import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 import styled from 'styled-components'
 
 import Modal from 'components/Modal/ModalWrapper'
-import { useModal } from 'hooks'
+import { useActiveWeb3React, useModal } from 'hooks'
 import { useArtParamSettings, useIsDraw } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
@@ -45,6 +45,7 @@ const CanvasContainer: React.FC = () => {
   const artParams = useArtParamSettings()
 
   const { isOpen, handleOpenModal } = useModal()
+  const { account } = useActiveWeb3React()
 
   const [params, setParams] = useState<IArtParams>(() => artParams)
 
@@ -121,6 +122,7 @@ const CanvasContainer: React.FC = () => {
         <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14} margin={'12px 0'}>
           {'CANVAS'}
         </TextWrapper>
+        <RangeParam label={'Zoom'} range={{ min: 0.1, max: 2 }} defaultVal={paramsRef.current.zoom} handleRangeChange={handleZoomChange} />
         <RangeParam label={'Size'} range={{ min: 1, max: 100 }} defaultVal={paramsRef.current.size} handleRangeChange={handleSizeChange} />
         <RangeParam
           label={'Pen Size'}
@@ -130,7 +132,6 @@ const CanvasContainer: React.FC = () => {
         />
         <ColorParam label={'Color'} value={paramsRef.current.canvasColor} handleChange={handleColorChange} />
         <ColorParam label={'Back Color'} value={paramsRef.current.backgroundColor} handleChange={handleBackColorChange} />
-        <RangeParam label={'Zoom'} range={{ min: 0.1, max: 1 }} defaultVal={paramsRef.current.zoom} handleRangeChange={handleZoomChange} />
         <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14} margin={'12px 0'}>
           {'RADIUS'}
         </TextWrapper>
@@ -161,9 +162,9 @@ const CanvasContainer: React.FC = () => {
         <MainButton
           width={'calc(100% - 32px)'}
           margin={'0 0 24px'}
-          disabled={mintPhase === 0}
+          disabled={mintPhase === 0 || !account}
           onClick={() => {
-            if (mintPhase === 0) return
+            if (mintPhase === 0 || !account) return
             handleOpenModal()
           }}
         >
@@ -171,7 +172,6 @@ const CanvasContainer: React.FC = () => {
         </MainButton>
         <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder>
           <MintModal />
-          {/* <MintModalTest /> */}
         </Modal>
       </FlexColumn>
     </>

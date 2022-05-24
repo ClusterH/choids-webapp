@@ -53,13 +53,13 @@ export const getMintPrice = async (minterContract: Contract) => {
 export const mintNFT = async (
   minterContract: Contract,
   to: string,
-  cid: string,
+  creation: { price: string; cid: string },
   nonce: string,
   signature: Bytes,
   value: BigNumber,
   gasLimit: BigNumber
 ) => {
-  const txHash = await minterContract.mint(to, cid, nonce, signature, { value, gasLimit })
+  const txHash = await minterContract.mint(to, creation, nonce, signature, { value, gasLimit })
   const receipt = await txHash.wait()
   return receipt.status
 }

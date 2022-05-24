@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { useStateWithProps } from 'hooks'
 import { useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtImgData, setCanvasContainerSize } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 
 import { IArtParams } from '../types'
-import { drawArt, hypotrochoid } from '../utils/drawHelper'
+import { drawArt } from '../utils/drawHelper'
 
 export const useDraw = () => {
   const canvasContainerRef: any = useRef<HTMLDivElement>(null)

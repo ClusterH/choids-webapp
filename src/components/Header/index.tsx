@@ -27,15 +27,14 @@ const HeaderContainer = styled(FlexRow)`
 const Header: React.FC = () => {
   const path = useGetCurrentURLPath()
   return (
-    <HeaderContainer padding={path.includes('/generator') === false ? '0 8%' : '0 12px'}>
+    <HeaderContainer padding={path.includes('/generator') === false ? (isMobile ? '0 6%' : '0 8%') : '0 12px'}>
       <FlexRow justifyContent={'flex-start'} rowWidth={'fit-content'}>
         <Logo />
       </FlexRow>
-      <Menu />
+      {/* <Menu /> */}
       <FlexRow justifyContent={'flex-end'} rowWidth={'fit-content'}>
-        <SocialIconsContainer />
+        {!isMobile && <SocialIconsContainer />}
         <WalletConnectionContainer />
-        <Hamburger />
       </FlexRow>
     </HeaderContainer>
   )

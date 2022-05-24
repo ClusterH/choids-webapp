@@ -1,14 +1,15 @@
 import axios from 'axios'
 
 import { setupInterceptorsTo } from 'config/axios/axiosInterceptors'
-import { SIGNATURE_RELAY_API_URL } from 'config/constants'
+import { API_URL, SIGNATURE_RELAY_API_URL } from 'config/constants'
+import { ISignatureRequest } from 'views/ArtGenerator/types'
 
 const specificAxios = setupInterceptorsTo(axios.create())
-
-export const getSignatureAndNonce = async (address: string, cid: string) => {
+// https://us-central1-patchwork-canteen.cloudfunctions.net/app/signature
+export const getSignatureAndNonce = async (body: ISignatureRequest) => {
   try {
-    const { data, status } = await specificAxios.post(`${SIGNATURE_RELAY_API_URL}`, { address, cid })
-    if (status === 200) {
+    const { data, status } = await specificAxios.post(`${API_URL}signature`, body)
+    if (status === 200 && data.code === 1) {
       return data
     } else return false
   } catch (e: any) {

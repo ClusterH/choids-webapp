@@ -6,3 +6,5 @@ const { type } = parser.getDevice()
 export const userAgent = parser.getResult()
 
 export const isMobile = type === 'mobile' || type === 'tablet'
+
+export const screenWidth = window.innerWidth

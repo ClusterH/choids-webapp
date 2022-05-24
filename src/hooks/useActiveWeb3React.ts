@@ -5,7 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 // eslint-disable-next-line import/no-unresolved
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 
-import { DEFAULT_CHAIN_ID, SupportedChainId } from 'config/constants'
+import { DEFAULT_CHAIN_ID } from 'config/constants'
 import { getSimpleRPCProvider } from 'utils/web3Helpers'
 
 /**

@@ -57,3 +57,12 @@ export interface IMetaData {
     display_type?: string
   }[]
 }
+
+export type TUseCase = '#1' | '#2'
+
+export interface ISignatureRequest {
+  address: string
+  amount: string
+  price: string
+  cid: string
+}

@@ -11,7 +11,7 @@ import { updateVersion } from './global/actions'
 const PERSISTED_KEYS: string[] = ['choidReducer']
 
 const store = configureStore({
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.REACT_APP_ENVIRONMENT !== 'prod',
   reducer: { web3Reducer, artGeneratorReducer, choidReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

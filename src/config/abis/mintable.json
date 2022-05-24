@@ -7,7 +7,6 @@
       { "internalType": "string", "name": "contractURI", "type": "string" },
       { "internalType": "string", "name": "basePrefix", "type": "string" },
       { "internalType": "address", "name": "administrator", "type": "address" },
-      { "internalType": "address", "name": "developer", "type": "address" },
       { "internalType": "address", "name": "royaltyReceiver", "type": "address" },
       { "internalType": "uint96", "name": "feeBasisPoints", "type": "uint96" }
     ],

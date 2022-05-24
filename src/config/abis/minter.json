@@ -4,14 +4,13 @@
       { "internalType": "address", "name": "mintable", "type": "address" },
       { "internalType": "address", "name": "signer", "type": "address" },
       { "internalType": "address", "name": "administrator", "type": "address" },
-      { "internalType": "address", "name": "developer", "type": "address" },
-      { "internalType": "uint256", "name": "mintPrice", "type": "uint256" },
       { "internalType": "address[]", "name": "payees", "type": "address[]" },
       { "internalType": "uint256[]", "name": "shares", "type": "uint256[]" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
+  { "inputs": [], "name": "CIDAlreadyUsed", "type": "error" },
   { "inputs": [], "name": "InsufficentSupply", "type": "error" },
   { "inputs": [], "name": "InvalidAddress", "type": "error" },
   { "inputs": [], "name": "InvalidMintPrice", "type": "error" },
@@ -123,13 +122,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getMintPrice",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }],
     "name": "getRoleAdmin",
     "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
@@ -183,7 +175,15 @@
   {
     "inputs": [
       { "internalType": "address", "name": "to", "type": "address" },
-      { "internalType": "string", "name": "tokenMetadataCID", "type": "string" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "string", "name": "cid", "type": "string" }
+        ],
+        "internalType": "struct CreatorERC721Minter.Creation",
+        "name": "creation_",
+        "type": "tuple"
+      },
       { "internalType": "string", "name": "nonce", "type": "string" },
       { "internalType": "bytes", "name": "signature", "type": "bytes" }
     ],
@@ -274,13 +274,6 @@
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "mintPrice_", "type": "uint256" }],
-    "name": "setMintPrice",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
   { "inputs": [], "name": "setMintingPaused", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
   {
     "inputs": [{ "internalType": "bool", "name": "_signatureRequired", "type": "bool" }],
@@ -364,6 +357,13 @@
     "inputs": [],
     "name": "totalShares",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "name": "usedCID",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },

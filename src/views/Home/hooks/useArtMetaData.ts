@@ -7,6 +7,7 @@ import { useActiveWeb3React, useTotalSupply } from 'hooks'
 import { setMetaDataList, setTokenURIs } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { getMintableAddress, getMultiCall } from 'utils'
+import { getMetadata } from 'utils/api/metadata'
 import { convertIPFSToWebURL } from 'utils/ipfsHelper'
 import { IMetaData } from 'views/ArtGenerator/types'
 
@@ -36,7 +37,7 @@ export const useGetArtMetaData = () => {
 
       const metaDataList = await Promise.all(
         tokenURIs.map(async (uri) => {
-          return (await (await fetch(convertIPFSToWebURL(uri))).json()) as IMetaData
+          return (await getMetadata(uri)) as IMetaData
         })
       )
 

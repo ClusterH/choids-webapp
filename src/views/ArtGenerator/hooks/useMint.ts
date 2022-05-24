@@ -1,12 +1,13 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
-// import { File, NFTStorage } from 'nft.storage'
+import { ethers } from 'ethers'
 import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 
 import { useReverseENSLookUp } from 'components/Header/hook'
 import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
 import { notifyToast } from 'config/toast'
 import { useActiveWeb3React, useGetMinterContract } from 'hooks'
+// import { File, NFTStorage } from 'nft.storage'
 import { useArtImgData, useArtMetaData, useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtMetaData } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
@@ -15,12 +16,14 @@ import {
   estimateGas,
   getContractWithSimpleProvider,
   getMinterAddress,
-  getMintPrice,
   mintNFT,
   shortenAddress,
+  weiToFormatEthToBigNumber,
 } from 'utils'
 import { getSignatureAndNonce } from 'utils/api'
+import { storeMetadata } from 'utils/api/metadata'
 
+import { ISignatureRequest, TUseCase } from '../types'
 import { b64EncodeUnicode } from '../utils/encodeHelper'
 
 export const useMintPhaseStatus = () => {
@@ -98,7 +101,7 @@ export const useGenerateArtMetaData = () => {
           ens ?? account
         } chose a background color with hex code ${artParams.backgroundColor} and a pen color with hex code ${
           artParams.canvasColor
-        }. A true visionary , ${ens ?? account} utilized ${artParams.radii.length} Rotors to generate the master piece before you.`,
+        }. A true visionary, ${ens ?? account} utilized ${artParams.radii.length} Rotors to generate the masterpiece before you.`,
         attributes: [
           {
             trait_type: 'Creator',
@@ -106,7 +109,7 @@ export const useGenerateArtMetaData = () => {
           },
           {
             display_type: 'date',
-            trait_type: 'Birth Date',
+            trait_type: 'Created on',
             value: Math.floor(new Date().getTime() / 1000),
           },
           {
@@ -114,27 +117,37 @@ export const useGenerateArtMetaData = () => {
             value: 'First Generation',
           },
         ],
+        useCase: '#1' as TUseCase,
       }
 
-      const cid = await client.storeBlob(new Blob([JSON.stringify(metaData, null, 2)]))
+      const { result } = await storeMetadata(metaData)
 
-      const res = await getSignatureAndNonce(account, cid)
-      if (res) {
-        const mintPrice = await getMintPrice(minterContract)
-        const gas = await estimateGas(minterContract, 'mint', [account, cid, res.nonce, res.signature, { value: mintPrice }], 3000)
-        const status = await mintNFT(minterContract, account, cid, res.nonce, res.signature, mintPrice, gas)
-        if (status) {
-          notifyToast({ id: 'mint', type: 'success', content: 'Successfully Mint Process done' })
-          setIsMinted(true)
-        } else notifyToast({ id: 'mint_failed', type: 'error', content: 'Mint Failed!' })
-      } else notifyToast({ id: 'signature_nonce', type: 'error', content: 'Failed to get Signature' })
+      if (result) {
+        const creation = { price: result.price, cid: result.cid }
+        const body: ISignatureRequest = { ...creation, address: account, amount: '1' }
+
+        const res = await getSignatureAndNonce(body)
+        if (res) {
+          const gas = await estimateGas(
+            minterContract,
+            'mint',
+            [account, creation, res.result.nonce, res.result.signature, { value: creation.price }],
+            3000
+          )
+          const status = await mintNFT(minterContract, account, creation, res.result.nonce, res.result.signature, creation.price, gas)
+          if (status) {
+            notifyToast({ id: 'mint', type: 'success', content: 'Successfully Mint Process done' })
+            setIsMinted(true)
+          } else notifyToast({ id: 'mint_failed', type: 'error', content: 'Mint Failed!' })
+        } else notifyToast({ id: 'signature_nonce', type: 'error', content: 'Failed to get Signature' })
+      } else notifyToast({ id: 'store_metadata', type: 'error', content: 'Failed to store Metadata' })
     } catch (error: any) {
       console.log(error)
       notifyToast({ id: 'mint_failed', type: 'error', content: 'Error Occured, please check console' })
     } finally {
       setIsMinting(false)
     }
-  }, [account, artMetaData, client, ens, minterContract, name])
+  }, [account, artMetaData, artParams, ens, minterContract, name])
 
   useEffect(() => {
     handleMetaData()
