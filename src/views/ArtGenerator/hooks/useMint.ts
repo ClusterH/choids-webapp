@@ -6,7 +6,7 @@ import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 import { useReverseENSLookUp } from 'components/Header/hook'
 import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
 import { notifyToast } from 'config/toast'
-import { useActiveWeb3React, useGetMinterContract } from 'hooks'
+import { useActiveWeb3React, useGetMinterContract, useGetTotalSupply } from 'hooks'
 import { useArtImgData, useArtMetaData, useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtMetaData } from 'state/artGenerator/reducer'
 import { setPrice } from 'state/choid/reducer'
@@ -14,6 +14,7 @@ import { useAppDispatch } from 'state/hooks'
 import { checkMintPhaseStatus, estimateGas, getContractWithSimpleProvider, getMinterAddress, mintNFT, shortenAddress } from 'utils'
 import { getSignatureAndNonce } from 'utils/api'
 import { getDefaultMetadata, storeMetadata } from 'utils/api/metadata'
+import { convertHexToNumber } from 'utils/byte32Helper'
 
 import { ISignatureRequest, TUseCase } from '../types'
 import { b64EncodeUnicode } from '../utils/encodeHelper'
@@ -66,6 +67,7 @@ export const useGenerateArtMetaData = () => {
   const artParams = useArtParamSettings()
   const artMetaData = useArtMetaData()
   const ens = useReverseENSLookUp()
+  const { handleFetchTotalSupply } = useGetTotalSupply()
 
   const creatorName = useMemo(() => (ens ? ens : account ? shortenAddress(account) : ''), [account, ens])
   const dna = useMemo(() => b64EncodeUnicode(artParams), [artParams])
@@ -73,6 +75,7 @@ export const useGenerateArtMetaData = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isMinting, setIsMinting] = useState<boolean>(false)
   const [isMinted, setIsMinted] = useState<boolean>(false)
+  const [txData, setTxData] = useState<{ id: number; txHash: string }>()
   const [name, setName] = useState<string>('')
 
   const dispatch = useAppDispatch()
@@ -148,10 +151,21 @@ export const useGenerateArtMetaData = () => {
             [account, creation, res.result.nonce, res.result.signature, { value: creation.price }],
             3000
           )
-          const status = await mintNFT(minterContract, account, creation, res.result.nonce, res.result.signature, creation.price, gas)
+          const { status, logs, transactionHash } = await mintNFT(
+            minterContract,
+            account,
+            creation,
+            res.result.nonce,
+            res.result.signature,
+            creation.price,
+            gas
+          )
           if (status) {
             notifyToast({ id: 'mint', type: 'success', content: 'Successfully Mint Process done' })
+            const mintedTokenId = convertHexToNumber(logs[0].topics[3])
+            setTxData({ id: mintedTokenId, txHash: transactionHash })
             setIsMinted(true)
+            handleFetchTotalSupply()
           } else notifyToast({ id: 'mint_failed', type: 'error', content: 'Mint Failed!' })
         } else notifyToast({ id: 'signature_nonce', type: 'error', content: 'Failed to get Signature' })
       } else notifyToast({ id: 'store_metadata', type: 'error', content: 'Failed to store Metadata' })
@@ -161,11 +175,11 @@ export const useGenerateArtMetaData = () => {
     } finally {
       setIsMinting(false)
     }
-  }, [account, artMetaData, artParams, ens, minterContract, name])
+  }, [account, artMetaData, artParams, ens, handleFetchTotalSupply, minterContract, name])
 
   useEffect(() => {
     handleMetaData()
   }, [handleMetaData])
 
-  return { name, artMetaData, artImgData, creatorName, isLoading, isMinting, isMinted, handleOnChange, handleMint }
+  return { name, artMetaData, artImgData, creatorName, isLoading, isMinting, isMinted, txData, handleOnChange, handleMint }
 }

@@ -3,6 +3,8 @@ import React, { memo, useEffect } from 'react'
 import { DotLoader } from 'react-spinners'
 import styled from 'styled-components'
 
+import { useTotalSupply } from 'hooks'
+import { useSupplyLimit } from 'hooks/useSupplyLimit'
 import { useMetaDataList } from 'state/choid/hook'
 import { FlexColumn, FlexRow, ImageContainer, TextWrapper } from 'styles/components'
 import { themeBorderRadius, themeColor } from 'styles/theme'
@@ -20,6 +22,9 @@ const ArtWrapper = styled(ImageContainer)`
 `
 
 const MintedArtList: React.FC = () => {
+  const { choidTotalSupply } = useTotalSupply()
+  const supplyLimit = useSupplyLimit()
+
   const { isLoading, handleGetArtMetaData } = useGetArtMetaData()
 
   const metaDataList = useMetaDataList()
@@ -31,6 +36,8 @@ const MintedArtList: React.FC = () => {
   return (
     <FlexColumn alignItems={'flex-start'} padding={isMobile ? '6%' : '6% 8%'}>
       <TextWrapper>{'RECENTLY MINTED ARTS'}</TextWrapper>
+      <TextWrapper fontWeight={'bold'} fontSize={'xl'}>{`${choidTotalSupply} / ${supplyLimit} choids minted`}</TextWrapper>
+
       <ArtListWrapper gap={'24px'} justifyContent={'flex-start'} padding={'12px 0'}>
         {isLoading ? (
           <FlexRow justifyContent={'center'}>
@@ -40,15 +47,9 @@ const MintedArtList: React.FC = () => {
           metaDataList &&
           metaDataList.length > 0 &&
           metaDataList.map((metadata, index) => (
-            <>
-              {metadata && (
-                <ArtWrapper
-                  key={`${metadata.attributes[1].value}_${index}`}
-                  src={convertIPFSToWebURL(metadata?.image)}
-                  maxWidth={isMobile ? '45%' : '16%'}
-                />
-              )}
-            </>
+            <FlexRow key={`${metadata.attributes[1].value}_${index}`} rowWidth={isMobile ? '45%' : '16%'}>
+              {metadata && <ArtWrapper src={convertIPFSToWebURL(metadata?.image)} />}
+            </FlexRow>
           ))
         )}
       </ArtListWrapper>

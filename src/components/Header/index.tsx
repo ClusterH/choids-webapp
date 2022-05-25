@@ -1,17 +1,14 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
 
 import { useGetCurrentURLPath } from 'hooks'
-import { BlurBackground, FlexColumn, FlexRow } from 'styles/components'
+import { FlexRow } from 'styles/components'
 import { themeColor } from 'styles/theme'
 import { isMobile } from 'utils'
 
 import Logo from '../Logo'
 
-import GasPriceContainer from './GasPriceContainer'
-import Hamburger from './hamburgerIcon'
-import Menu from './Menu'
 import SocialIconsContainer from './SocialIconsContainer'
 import { WalletConnectionContainer } from './WalletConnection'
 
@@ -31,7 +28,6 @@ const Header: React.FC = () => {
       <FlexRow justifyContent={'flex-start'} rowWidth={'fit-content'}>
         <Logo />
       </FlexRow>
-      {/* <Menu /> */}
       <FlexRow justifyContent={'flex-end'} rowWidth={'fit-content'}>
         {!isMobile && <SocialIconsContainer />}
         <WalletConnectionContainer />

@@ -2,6 +2,8 @@ import { CgClose } from 'react-icons/cg'
 import { ToastContainer } from 'react-toastify'
 import styled from 'styled-components'
 
+import { isMobile } from 'utils'
+
 import { themeBorderRadius, themeBreakPoint, themeColor, themeFontFamily, themeFontWeight, themeTypography } from './theme'
 import { TFlexAlignItems, TFlexJustifyContents, ThemeProps } from './types'
 
@@ -106,7 +108,7 @@ export const TextWrapper = styled.span<{
   font-size: ${({ fontSize }) => (fontSize ? themeTypography[fontSize] : themeTypography.base)};
   font-weight: ${({ fontWeight }) => (fontWeight ? themeFontWeight[fontWeight] : themeFontWeight.regular)};
   font-family: ${({ fontFamily }) => (fontFamily ? themeFontFamily[fontFamily] : themeFontFamily.main)};
-  line-height: ${({ lineHeight }) => (lineHeight ? `${(100 * lineHeight) / 1440}vmax` : '24px')};
+  line-height: ${({ lineHeight }) => (lineHeight ? `${(100 * lineHeight) / (isMobile ? 1440 : 1920)}vmax` : '24px')};
   letter-spacing: ${({ letterSpacing }) => (letterSpacing ? letterSpacing : '1px')};
   opacity: ${({ opacity }) => (opacity ? opacity : 1)};
   text-align: ${({ textAlign }) => (textAlign ? textAlign : 'start')};

@@ -5,7 +5,7 @@ import { useActiveWeb3React } from 'hooks'
 import { AppState } from 'state'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setSupplyLimit } from 'state/web3/reducer'
-import { getMintableAddress } from 'utils/addressHelper'
+import { getMinterAddress } from 'utils'
 import { getSupplyLimit } from 'utils/web3CallHelpers'
 import { getContractWithSimpleProvider } from 'utils/web3Helpers'
 
@@ -21,7 +21,7 @@ export const useGetSupplyLimit = () => {
   const handleFetchSupplyLimit = useCallback(async () => {
     try {
       const minterContract = getContractWithSimpleProvider(
-        getMintableAddress(chainId ?? DEFAULT_CHAIN_ID),
+        getMinterAddress(chainId ?? DEFAULT_CHAIN_ID),
         CONTRACT_ABIS.MINTER,
         chainId ?? DEFAULT_CHAIN_ID
       )

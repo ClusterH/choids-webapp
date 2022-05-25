@@ -39,7 +39,7 @@ const WalletConnectionOptionList: React.FC = () => {
       }
 
       if (option.connector === connectorsByName.injected) {
-        if (!(window.web3 || window.ethereum)) {
+        if (!window.ethereum) {
           return (
             <OptionItem
               key={key}

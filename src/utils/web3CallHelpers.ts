@@ -60,8 +60,8 @@ export const mintNFT = async (
   gasLimit: BigNumber
 ) => {
   const txHash = await minterContract.mint(to, creation, nonce, signature, { value, gasLimit })
-  const receipt = await txHash.wait()
-  return receipt.status
+  const { status, logs, transactionHash } = await txHash.wait()
+  return { status, logs, transactionHash }
 }
 
 export const getTokenURI = async (contract: Contract, tokenId: number) => {

@@ -20,6 +20,7 @@ const GradientBgWrapper = styled(ImageContainer)`
 
 const ArtIntroContainer: React.FC = () => {
   const { handleNavigate } = useAppNavigate()
+
   return (
     <FlexColumn>
       <GradientBgWrapper src={GRADIENT_BG} />

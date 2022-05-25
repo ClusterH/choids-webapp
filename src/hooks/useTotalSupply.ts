@@ -37,4 +37,6 @@ export const useGetTotalSupply = () => {
   useEffect(() => {
     handleFetchTotalSupply()
   }, [handleFetchTotalSupply])
+
+  return { handleFetchTotalSupply }
 }

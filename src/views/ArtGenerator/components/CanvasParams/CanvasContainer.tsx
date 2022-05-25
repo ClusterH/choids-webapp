@@ -4,7 +4,8 @@ import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 import styled from 'styled-components'
 
 import Modal from 'components/Modal/ModalWrapper'
-import { useActiveWeb3React, useModal } from 'hooks'
+import { useActiveWeb3React, useModal, useTotalSupply } from 'hooks'
+import { useSupplyLimit } from 'hooks/useSupplyLimit'
 import { useArtParamSettings, useIsDraw } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
@@ -43,6 +44,8 @@ const RadiusItemWrapper: React.FC<{
 const CanvasContainer: React.FC = () => {
   const dispatch = useAppDispatch()
   const artParams = useArtParamSettings()
+  const { choidTotalSupply } = useTotalSupply()
+  const supplyLimit = useSupplyLimit()
 
   const { isOpen, handleOpenModal } = useModal()
   const { account } = useActiveWeb3React()
@@ -162,13 +165,13 @@ const CanvasContainer: React.FC = () => {
         <MainButton
           width={'calc(100% - 32px)'}
           margin={'0 0 24px'}
-          disabled={mintPhase === 0 || !account}
+          disabled={mintPhase === 0 || !account || choidTotalSupply >= supplyLimit}
           onClick={() => {
             if (mintPhase === 0 || !account) return
             handleOpenModal()
           }}
         >
-          {mintPhase === 0 ? 'Mint Paused' : 'Mint'}
+          {mintPhase === 0 ? 'Mint Paused' : choidTotalSupply >= supplyLimit ? `Supply Limited` : 'Mint'}
         </MainButton>
         <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder>
           <MintModal />
