@@ -111,11 +111,11 @@ export const useGenerateArtMetaData = () => {
       const metaData = {
         ...artMetaData,
         name,
-        description: `<b>${name}</b> is an algorithmically generated art piece created by ${ens ?? account}. For this piece, ${
+        description: `**${name}** is an algorithmically generated art piece created by ${
           ens ?? account
-        } chose a background color with hex code ${artParams.backgroundColor} and a pen color with hex code ${
+        }. For this piece, a background color with hex code ${artParams.backgroundColor} and a pen color with hex code ${
           artParams.canvasColor
-        }. A true visionary, ${ens ?? account} utilized ${artParams.radii.length} Rotors to generate the masterpiece before you.`,
+        } were chosen. ${artParams.radii.length} Rotors were put into motion to generate the masterpiece before you.`,
         attributes: [
           {
             trait_type: 'Creator',

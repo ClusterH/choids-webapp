@@ -12,8 +12,6 @@ export const ART_PRESET_LIST: { [key: string]: IArtParams } = {
       { id: 2, r: 55 },
       { id: 3, r: 9 },
       { id: 4, r: 20 },
-      { id: 5, r: 83 },
-      { id: 6, r: 1 },
     ],
   },
   PRESET2: {

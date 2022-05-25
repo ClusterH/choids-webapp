@@ -40,11 +40,15 @@ const MintedArtList: React.FC = () => {
           metaDataList &&
           metaDataList.length > 0 &&
           metaDataList.map((metadata, index) => (
-            <ArtWrapper
-              key={`${metadata.attributes[1].value}_${index}`}
-              src={convertIPFSToWebURL(metadata?.image)}
-              maxWidth={isMobile ? '45%' : '16%'}
-            />
+            <>
+              {metadata && (
+                <ArtWrapper
+                  key={`${metadata.attributes[1].value}_${index}`}
+                  src={convertIPFSToWebURL(metadata?.image)}
+                  maxWidth={isMobile ? '45%' : '16%'}
+                />
+              )}
+            </>
           ))
         )}
       </ArtListWrapper>

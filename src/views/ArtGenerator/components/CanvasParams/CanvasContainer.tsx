@@ -96,7 +96,7 @@ const CanvasContainer: React.FC = () => {
   )
 
   const handleAddRadius = useCallback(() => {
-    if (paramsRef.current.radii.length > 6) return
+    if (paramsRef.current.radii.length > 4) return
     const radii = [...paramsRef.current.radii]
     radii.push({ id: paramsRef.current.radii.length + 1, r: Math.floor(Math.random() * 90 + 10) })
     paramsRef.current.radii = radii
@@ -122,7 +122,7 @@ const CanvasContainer: React.FC = () => {
         <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14} margin={'12px 0'}>
           {'CANVAS'}
         </TextWrapper>
-        <RangeParam label={'Zoom'} range={{ min: 0.1, max: 2 }} defaultVal={paramsRef.current.zoom} handleRangeChange={handleZoomChange} />
+        <RangeParam label={'Zoom'} range={{ min: 0.1, max: 20 }} defaultVal={paramsRef.current.zoom} handleRangeChange={handleZoomChange} />
         <RangeParam label={'Size'} range={{ min: 1, max: 100 }} defaultVal={paramsRef.current.size} handleRangeChange={handleSizeChange} />
         <RangeParam
           label={'Pen Size'}
@@ -140,7 +140,7 @@ const CanvasContainer: React.FC = () => {
         ))}
         <FlexRow>
           <FlexRow rowWidth={'fit-content'} justifyContent={'flex-start'} gap={'4px'} onClick={handleAddRadius}>
-            {paramsRef.current.radii.length < 6 && (
+            {paramsRef.current.radii.length < 4 && (
               <>
                 <IoMdAddCircleOutline size={14} />
                 <HoverTextWrapper fontSize={'xs'}>{'Add Rotor'}</HoverTextWrapper>

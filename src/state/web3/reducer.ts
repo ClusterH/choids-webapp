@@ -4,12 +4,14 @@ interface IState {
   gasPrice: string
   walletBalance: { ethBalance: string; minterBalance: string }
   totalSupply: { choidTotalSupply: number }
+  supplyLimit: number
 }
 
 export const initialState: IState = {
   gasPrice: '',
   walletBalance: { ethBalance: '0.00', minterBalance: '0' },
   totalSupply: { choidTotalSupply: 0 },
+  supplyLimit: 0,
 }
 
 const web3Slice = createSlice({
@@ -25,8 +27,11 @@ const web3Slice = createSlice({
     setTotalSupply(state, action) {
       if (action.payload) state.totalSupply = { ...state.totalSupply, ...action.payload }
     },
+    setSupplyLimit(state, action) {
+      if (action.payload) state.supplyLimit = action.payload
+    },
   },
 })
 
-export const { setGasPrice, setWalletBalance, setTotalSupply } = web3Slice.actions
+export const { setGasPrice, setWalletBalance, setTotalSupply, setSupplyLimit } = web3Slice.actions
 export default web3Slice.reducer

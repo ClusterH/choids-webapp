@@ -67,3 +67,7 @@ export const mintNFT = async (
 export const getTokenURI = async (contract: Contract, tokenId: number) => {
   return await contract.tokenURI(tokenId)
 }
+
+export const getSupplyLimit = async (contract: Contract) => {
+  return await contract.supplyLimit()
+}

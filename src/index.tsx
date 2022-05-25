@@ -2,8 +2,9 @@ import React from 'react'
 
 import ReactDOM from 'react-dom'
 
-import { useEagerConnect, useInactiveListener } from 'hooks'
+import { useEagerConnect, useGetTotalSupply, useInactiveListener } from 'hooks'
 import 'react-toastify/dist/ReactToastify.css'
+import { useGetSupplyLimit } from 'hooks/useSupplyLimit'
 import { ToastWrapper } from 'styles/components'
 import GlobalStyles from 'styles/globalStyles'
 
@@ -15,6 +16,8 @@ import reportWebVitals from './reportWebVitals'
 const GlobalHooks = () => {
   useEagerConnect()
   useInactiveListener()
+  useGetSupplyLimit()
+  useGetTotalSupply()
 
   return null
 }
