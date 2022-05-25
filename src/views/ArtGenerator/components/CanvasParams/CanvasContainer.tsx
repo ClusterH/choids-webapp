@@ -171,7 +171,7 @@ const CanvasContainer: React.FC = () => {
             handleOpenModal()
           }}
         >
-          {mintPhase === 0 ? 'Mint Paused' : choidTotalSupply >= supplyLimit ? `Supply Limited` : 'Mint'}
+          {mintPhase === 0 ? 'Mint Paused' : choidTotalSupply >= supplyLimit ? `All Choids Minted` : 'Mint'}
         </MainButton>
         <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder>
           <MintModal />
