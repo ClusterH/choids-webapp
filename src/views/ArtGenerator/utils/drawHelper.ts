@@ -38,7 +38,7 @@ export const drawArt = (params: IArtParams, canvasRef: any, width: number, heigh
 
   if (canvasRef.current) {
     const ctx = canvasRef.current.getContext('2d')
-    ctx.clearRect(0, 0, w, he)
+    ctx.clearRect(0, 0, Math.max(w, width), Math.max(he, height))
     ctx.fillStyle = params.backgroundColor
     ctx.fillRect(0, 0, width, height)
     ctx.save()
