@@ -13,7 +13,7 @@ import MintedArtList from './MintedArtListContainer'
 const GradientBgWrapper = styled(ImageContainer)`
   position: absolute;
   right: 0;
-  bottom: ${isMobile ? '-20%' : '-110%'};
+  bottom: ${isMobile ? '-20%' : '-170%'};
   width: 100%;
   height: ${isMobile ? '125%' : 'auto'};
 `
@@ -25,7 +25,7 @@ const ArtIntroContainer: React.FC = () => {
     <FlexColumn>
       <GradientBgWrapper src={GRADIENT_BG} />
 
-      <FlexRow padding={isMobile ? '6%' : '6% 8% 0'} isWrap={isMobile}>
+      <FlexRow padding={isMobile ? '6%' : '2% 8% 0'} isWrap={isMobile}>
         <FlexColumn alignItems={'flex-start'} gap={'0px'}>
           <TextWrapper
             fontFamily={'title'}

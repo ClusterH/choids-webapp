@@ -21,6 +21,7 @@ export const FlexRow = styled.div<{
   margin?: string
   rowWidth?: string
   rowHeight?: string
+  minWidth?: string
   backgroundColor?: string
   borderRadius?: string
   border?: string
@@ -37,6 +38,7 @@ export const FlexRow = styled.div<{
   margin: ${({ margin }) => (margin ? margin : '0')};
   width: ${({ rowWidth }) => (rowWidth ? rowWidth : '100%')};
   height: ${({ rowHeight }) => (rowHeight ? rowHeight : 'auto')};
+  min-width: ${({ minWidth }) => (minWidth ? minWidth : 'auto')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'transparent')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.none)};
   border: ${({ border }) => (border ? border : 'none')};
@@ -49,6 +51,7 @@ export const FlexColumn = styled.div<{
   margin?: string
   colWidth?: string
   colHeight?: string
+  minWidth?: string
   backgroundColor?: string
   borderRadius?: string
   border?: string
@@ -68,6 +71,7 @@ export const FlexColumn = styled.div<{
   margin: ${({ margin }) => (margin ? margin : '0')};
   width: ${({ colWidth }) => (colWidth ? colWidth : '100%')};
   height: ${({ colHeight }) => (colHeight ? colHeight : 'auto')};
+  min-width: ${({ minWidth }) => (minWidth ? minWidth : 'auto')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'transparent')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.none)};
   border: ${({ border }) => (border ? border : 'none')};
@@ -209,6 +213,7 @@ export const ImageContainer = styled.img<{
   width?: string
   height?: string
   maxWidth?: string
+  minWidth?: string
   margin?: string
   objectFit?: string
   borderRadius?: string
@@ -223,9 +228,9 @@ export const ImageContainer = styled.img<{
   width: ${({ width }) => (width ? width : '100%')};
   height: ${({ height }) => (height ? height : 'auto')};
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100%')};
+  min-width: ${({ minWidth }) => (minWidth ? minWidth : 'auto')};
   margin: ${({ margin }) => (margin ? margin : '0')};
   object-fit: ${({ objectFit }) => (objectFit ? objectFit : 'cover')};
-  cursor: pointer;
   position: ${({ position }) => (position ? position : 'unset')};
   top: ${({ top }) => (top ? top : 'unset')};
   left: ${({ left }) => (left ? left : 'unset')};

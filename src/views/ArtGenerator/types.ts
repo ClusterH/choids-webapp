@@ -56,6 +56,7 @@ export interface IMetaData {
     value: string | number
     display_type?: string
   }[]
+  createdAt?: string
 }
 
 export type TUseCase = '#1' | '#2'

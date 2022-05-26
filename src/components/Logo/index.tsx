@@ -10,6 +10,7 @@ import { isMobile } from 'utils'
 
 const LogoWrapper = styled(ImageContainer)`
   z-index: 1;
+  cursor: pointer;
 `
 const Logo: React.FC = () => {
   const { handleNavigate } = useAppNavigate()

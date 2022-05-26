@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 import styled from 'styled-components'
@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Modal from 'components/Modal/ModalWrapper'
 import { useActiveWeb3React, useModal, useTotalSupply } from 'hooks'
 import { useSupplyLimit } from 'hooks/useSupplyLimit'
-import { useArtParamSettings, useIsDraw } from 'state/artGenerator/hook'
+import { useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
@@ -15,7 +15,6 @@ import { useMintPhaseStatus } from 'views/ArtGenerator/hooks'
 import { IArtParams } from 'views/ArtGenerator/types'
 
 import { MintModal } from '..'
-import MintModalTest from '../MintModalTest'
 
 import ColorParam from './ColorParam'
 import RangeParam from './RangeParam'

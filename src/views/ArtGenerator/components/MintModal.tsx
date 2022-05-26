@@ -4,6 +4,7 @@ import { FaEthereum } from 'react-icons/fa'
 import { ClipLoader, PulseLoader } from 'react-spinners'
 import styled from 'styled-components'
 
+import ANIMATED_GIF from 'assets/images/art_animation.gif'
 import { DEFAULT_CHAIN_ID } from 'config/constants'
 import { useActiveWeb3React, useGetTotalSupply, useHandleExternalLink, useTotalSupply } from 'hooks'
 import { usePrice } from 'state/choid/hook'
@@ -37,19 +38,15 @@ const MintModal: React.FC = () => {
   const { canvasRef, canvasContainerRef, canvasSize } = useArtAnimation()
 
   return (
-    <FlexRow rowWidth={'100%'} rowHeight={isLoading ? '40vh' : 'auto'} justifyContent={'center'} padding={'32px 0'}>
+    <FlexRow rowWidth={'100%'} rowHeight={'auto'} justifyContent={'center'} padding={'32px 0'}>
       {isLoading ? (
-        <FlexRow>
-          <FlexColumn ref={canvasContainerRef} colWidth={'50%'} colHeight={'100%'}>
-            <canvas ref={canvasRef} width={canvasSize} height={canvasSize} />
-          </FlexColumn>
-          <FlexColumn>
-            <TextWrapper fontSize={'xl'} fontWeight={'bold'}>
-              {'Uploading image to ipfs'}
-              <PulseLoader size={6} margin={2} color={themeColor.text1} />
-            </TextWrapper>
-          </FlexColumn>
-        </FlexRow>
+        <FlexColumn>
+          <ImageContainer src={ANIMATED_GIF} borderRadius={themeBorderRadius.regular} maxWidth={'50%'} />
+          <TextWrapper fontSize={'xl'} fontWeight={'bold'}>
+            {'Uploading image to ipfs'}
+            <PulseLoader size={6} margin={2} color={themeColor.text1} />
+          </TextWrapper>
+        </FlexColumn>
       ) : (
         <>
           <ImageContainer src={URL.createObjectURL(artImgData)} width={'50%'} borderRadius={themeBorderRadius.regular} />

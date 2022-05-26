@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import SelectBox from 'components/SelectBox'
+import TotalSupplyInfo from 'components/TotalSupplyInfo'
 import { ART_PRESET_LIST } from 'config/constants'
 import { setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
@@ -26,6 +27,7 @@ const PresetContainer: React.FC = () => {
 
   return (
     <MainWrapper alignItems={'flex-start'} padding={'16px'}>
+      <TotalSupplyInfo />
       <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14}>
         {'PRESET'}
       </TextWrapper>

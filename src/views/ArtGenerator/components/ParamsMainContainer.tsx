@@ -18,6 +18,7 @@ const ParamsMainContainer: React.FC = () => {
     <FlexColumn
       colWidth={'30%'}
       colHeight={'calc(100vh - 80px)'}
+      minWidth={'428px'}
       backgroundColor={themeColor.background4}
       justifyContent={'space-between'}
       gap={'0px'}

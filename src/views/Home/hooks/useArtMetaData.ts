@@ -1,3 +1,5 @@
+import { setTimeout } from 'timers/promises'
+
 import { useCallback, useEffect, useState } from 'react'
 
 import { Contract } from 'ethcall'
@@ -27,7 +29,7 @@ export const useGetArtMetaData = () => {
 
       const tokenIds = Array.from({ length: choidTotalSupply }, (_, i) => choidTotalSupply - i).slice(
         0,
-        choidTotalSupply <= 5 ? choidTotalSupply : 5
+        choidTotalSupply <= 10 ? choidTotalSupply : 10
       )
 
       const _calls = tokenIds.map((id) => {
@@ -45,7 +47,9 @@ export const useGetArtMetaData = () => {
     } catch (error) {
       console.log(error)
     } finally {
-      setIsLoading(false)
+      window.setTimeout(() => {
+        setIsLoading(false)
+      }, 2000)
     }
   }, [chainId, choidTotalSupply, dispatch])
 
