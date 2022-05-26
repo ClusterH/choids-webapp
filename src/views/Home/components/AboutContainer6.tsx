@@ -26,7 +26,7 @@ const AboutContainer6: React.FC = () => {
 
         <TextWrapper opacity={0.7} lineHeight={32} fontSize={isMobile ? 'xl' : 'base'}>
           {
-            'This project intends to provide significant value to the community. We’re just not going to tell you what the value is just yet.'
+            'Made it this far? The alpha. Diamond hand your Choids. Big things incoming. Join our Discord. Follow us on Twitter. Turn on notifications.'
           }
         </TextWrapper>
       </FlexColumn>

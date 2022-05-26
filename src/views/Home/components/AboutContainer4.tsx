@@ -28,16 +28,16 @@ const AboutContainer4: React.FC = () => {
           {'This project is not a'}
         </TextWrapper>
         <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={63}>
-          {'moneygrab'}
+          {'moneygrab or '}
         </TextWrapper>
         <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={63}>
-          {'with a vague'}
+          {'rug pull. This is'}
         </TextWrapper>
         <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={63}>
-          {'business plan.'}
+          {'art. This is web3.'}
         </TextWrapper>
         <TextWrapper opacity={0.7} lineHeight={32} fontSize={isMobile ? 'xl' : 'base'}>
-          {'This is mostly an art project. This project is not hype engine driven with the intent to evoke an emotional response.'}
+          {'This project does not aspire to be hype driven. This is for the love of web3 and the love of building.'}
         </TextWrapper>
       </FlexColumn>
       <ImageContainer src={ART_IMG} alt={'about art'} width={isMobile ? '100%' : '40%'} />

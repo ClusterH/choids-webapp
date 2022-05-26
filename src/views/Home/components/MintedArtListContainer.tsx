@@ -35,7 +35,7 @@ const MintedArtList: React.FC = () => {
 
   return (
     <FlexColumn alignItems={'flex-start'} padding={isMobile ? '6%' : '6% 8%'}>
-      <TextWrapper>{'RECENTLY MINTED ARTS'}</TextWrapper>
+      <TextWrapper>{'RECENTLY MINTED CREATIONS'}</TextWrapper>
       <TextWrapper fontWeight={'bold'} fontSize={'xl'}>{`${choidTotalSupply} / ${supplyLimit} choids minted`}</TextWrapper>
 
       <ArtListWrapper gap={'24px'} justifyContent={'flex-start'} padding={'12px 0'}>

@@ -36,10 +36,10 @@ const ArtIntroContainer: React.FC = () => {
             opacity={0.9}
             margin={isMobile ? '0 0 12px' : '0'}
           >
-            {'MATH IS BEAUTIFUL.'}
+            {'MATH IS BEAUTIFUL'}
           </TextWrapper>
           <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={isMobile ? 72 : 63}>
-            {'Crafting no-code'}
+            {'Generating'}
           </TextWrapper>
           <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={isMobile ? 72 : 63}>
             {'mathematically'}

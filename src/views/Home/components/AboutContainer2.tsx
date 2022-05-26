@@ -22,7 +22,7 @@ const AboutContainer2: React.FC = () => {
         </TextWrapper>
         <TextWrapper opacity={0.7} lineHeight={32} fontSize={isMobile ? 'xl' : 'base'}>
           {
-            'You are the creator. There is no guide or instructional videos for creating the pieces, enjoy with no boundaries. Full commercial rights are granted to the holder of a Blockchain Choids for any personal and commercial use.'
+            'You are the Creator. Enjoy Creating with no boundaries. Choose your colors. Set the parameters. Name your piece. Full commercial rights are granted to the holder of a Blockchain Choids for any personal and commercial use.'
           }
         </TextWrapper>
       </FlexColumn>

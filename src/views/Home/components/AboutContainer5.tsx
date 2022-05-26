@@ -31,13 +31,11 @@ const AboutContainer5: React.FC = () => {
           <br />
           {'Whitelists.'}
           <br />
-          {'Discords.'}
+          {'Paid promotions.'}
         </GradientTextWrapper>
 
         <TextWrapper opacity={0.7} lineHeight={32} fontSize={isMobile ? 'xl' : 'base'}>
-          {
-            'This project will not boast about our finances or other experiences to foster credibility. This project is about a decentralized community and falling in love with NFTs.'
-          }
+          {'This project is about a decentralized community and finding a way to fall back in love with NFTs.'}
         </TextWrapper>
       </FlexColumn>
     </FlexRow>

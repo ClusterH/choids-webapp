@@ -60,7 +60,7 @@ const AboutContainer3: React.FC = () => {
         </TextWrapper>
         <TextWrapper opacity={0.7} lineHeight={32} textAlign={isMobile ? 'flex-start' : 'center'} fontSize={isMobile ? 'xl' : 'base'}>
           {
-            'The Blockchain Choids is created all within your browser using intricate equations. Through the interactive interface, your creation’s DNA is represented through the input parameters of the algorithm and is generated alongside your art.'
+            'Blockchain Choids are created within your browser using intricate equations. Upon Minting, your art will be captured in history via an upload to decentralized storage. Through the interactive interface, your creation’s DNA is represented through the input parameters of the algorithm and is generated alongside your art.'
           }
         </TextWrapper>
       </FlexColumn>

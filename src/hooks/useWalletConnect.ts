@@ -34,7 +34,7 @@ export const useWalletConnect = () => {
                 const walletConnector = connector as WalletConnectConnector
                 walletConnector.walletConnectProvider = null
               }
-              notifyToast({ id: 'Authorization Error', type: 'error', content: 'Please authorize to access your account' })
+              notifyToast({ id: 'Authorization Error', type: 'error', content: 'You must connect to mint' })
             } else {
               notifyToast({ id: error.name, type: 'error', content: error.message })
             }
