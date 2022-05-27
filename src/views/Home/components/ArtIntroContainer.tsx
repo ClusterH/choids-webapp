@@ -26,7 +26,7 @@ const ArtIntroContainer: React.FC = () => {
       <GradientBgWrapper src={GRADIENT_BG} />
 
       <FlexRow padding={isMobile ? '6%' : '2% 8% 0'} isWrap={isMobile}>
-        <FlexColumn alignItems={'flex-start'} gap={'0px'}>
+        <FlexColumn alignItems={'flex-start'} gap={'0px'} colWidth={'50%'}>
           <TextWrapper
             fontFamily={'title'}
             fontWeight={'bold'}
@@ -56,9 +56,7 @@ const ArtIntroContainer: React.FC = () => {
             {'Create new design'}
           </MainButton>
         </FlexColumn>
-        <FlexColumn alignItems={'center'}>
-          <ImageContainer src={ART_IMG} maxWidth={isMobile ? '100%' : '60%'} />
-        </FlexColumn>
+        <ImageContainer src={ART_IMG} maxWidth={isMobile ? '100%' : '30%'} />
       </FlexRow>
       <MintedArtList />
     </FlexColumn>

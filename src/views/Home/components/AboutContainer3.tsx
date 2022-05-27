@@ -1,5 +1,6 @@
 import React from 'react'
 
+import LazyLoad from 'react-lazyload'
 import styled from 'styled-components'
 
 import ART_IMG1 from 'assets/images/about_art3.svg'
@@ -41,7 +42,9 @@ const ArtImgWrapper3 = styled(ImageContainer)`
 const AboutContainer3: React.FC = () => {
   return (
     <FlexRow justifyContent={'center'}>
-      <GradientBgWrapper src={GRADIENT_IMG} />
+      <LazyLoad offset={300}>
+        <GradientBgWrapper src={GRADIENT_IMG} />
+      </LazyLoad>
 
       {isMobile === false && (
         <>
