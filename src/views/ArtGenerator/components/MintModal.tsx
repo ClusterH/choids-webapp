@@ -82,9 +82,9 @@ const MintModal: React.FC = () => {
               </PriceWrapper>
               <FlexRow>
                 <TextWrapper fontWeight={'medium'}>{'Name your piece'}</TextWrapper>
-                <TextWrapper color={'text2'}>{`${name.length} / 40`}</TextWrapper>
+                <TextWrapper color={'text2'}>{`${name.length} / 30`}</TextWrapper>
               </FlexRow>
-              <InputWrapper height={'40px'} onChange={handleOnChange} maxLength={40} />
+              <InputWrapper height={'40px'} onChange={handleOnChange} maxLength={30} />
               <FlexRow justifyContent={'flex-start'} alignItems={'flex-start'}>
                 <TextWrapper fontWeight={'medium'}>{'DNA:'}</TextWrapper>
                 <LongTextWrapper>{shortString(artMetaData.dna, 14)}</LongTextWrapper>

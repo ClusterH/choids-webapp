@@ -10,6 +10,15 @@ import { isMobile } from 'utils'
 import { convertIPFSToWebURL } from 'utils/ipfsHelper'
 import { IMetaData } from 'views/ArtGenerator/types'
 
+const ItemWrapper = styled(FlexRow)`
+  transition: all 0.15s ease-in-out 0s;
+  border-radius: ${themeBorderRadius.regular};
+  &:hover {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #6c05ac 95%);
+    transform: translateY(-3px);
+  }
+`
+
 const PopUpWrapper = styled(FlexColumn)<{ isPopUp: boolean }>`
   position: absolute;
   bottom: 0;
@@ -35,7 +44,7 @@ const MintedArtItem: React.FC<{ metadata: IMetaData }> = ({ metadata }) => {
   return (
     <>
       {metadata && metadata.image ? (
-        <FlexRow
+        <ItemWrapper
           rowWidth={isMobile ? '24%' : '16%'}
           minWidth={isMobile ? '24%' : '16%'}
           onMouseEnter={onMouseEnter}
@@ -52,7 +61,7 @@ const MintedArtItem: React.FC<{ metadata: IMetaData }> = ({ metadata }) => {
           <PopUpWrapper padding={'8px'} isPopUp={isPopUp}>
             <TextWrapper>{`${metadata.name}`}</TextWrapper>
           </PopUpWrapper>
-        </FlexRow>
+        </ItemWrapper>
       ) : (
         <ImageContainer src={PLACEHOLDER_IMG} width={isMobile ? '24%' : '16%'} height={'auto'} borderRadius={themeBorderRadius.regular} />
       )}

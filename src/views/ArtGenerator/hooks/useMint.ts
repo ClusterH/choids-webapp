@@ -87,8 +87,8 @@ export const useGenerateArtMetaData = () => {
 
   const handleOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value
-    if (name.length > 40) {
-      notifyToast({ id: 'name_error', type: 'error', content: 'Name must be less than 40 characters' })
+    if (name.length > 30) {
+      notifyToast({ id: 'name_error', type: 'error', content: 'Name must be less than 30 characters' })
     }
     setName(e.target.value)
   }, [])
@@ -108,6 +108,8 @@ export const useGenerateArtMetaData = () => {
   const handleMint = useCallback(async () => {
     try {
       if (!minterContract || !account) return
+
+      if (name === '') return
 
       setIsMinting(true)
 
