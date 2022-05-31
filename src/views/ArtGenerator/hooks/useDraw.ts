@@ -3,9 +3,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import keccak256 from 'keccak256'
 
 import { notifyToast } from 'config/toast'
+import { useGetMinterContract } from 'hooks'
 import { useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtImgData, setCanvasContainerSize } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
+import { checkDNAIsUnique } from 'utils'
 import { checkDNAUniqueness } from 'utils/api/metadata'
 
 import { IArtParams } from '../types'
@@ -65,22 +67,27 @@ export const useDraw = () => {
 }
 
 export const useCheckDNAUniqueness = () => {
+  const minterContract = useGetMinterContract(false)
   const artParamSettings = useArtParamSettings()
 
   const params = useMemo(() => artParamSettings, [artParamSettings])
 
   const handleCheckDNA = useCallback(async () => {
-    const dna = b64EncodeUnicode(params)
-    const dnaHash = keccak256(dna).toString('hex')
-
     try {
+      if (!minterContract) return
+      const dna = b64EncodeUnicode(params)
+      const dnaHash = keccak256(dna).toString('hex')
+      console.log(dnaHash)
       const isDuplicated: boolean = await checkDNAUniqueness(dnaHash)
+      const isDuplicatedContract: boolean = await checkDNAIsUnique(minterContract, `0x${dnaHash}`)
 
-      if (isDuplicated === true) {
+      if (isDuplicated === true || isDuplicatedContract === true) {
         notifyToast({ id: 'dna_uniqueness', type: 'error', content: 'Same choid is already exist, please draw different ones.' })
+
+        return true
       }
 
-      return isDuplicated
+      return false
     } catch (error) {
       console.log(error)
       notifyToast({
@@ -90,7 +97,7 @@ export const useCheckDNAUniqueness = () => {
       })
       return true
     }
-  }, [params])
+  }, [minterContract, params])
 
   return { handleCheckDNA }
 }

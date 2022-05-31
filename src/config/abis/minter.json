@@ -11,6 +11,7 @@
     "type": "constructor"
   },
   { "inputs": [], "name": "CIDAlreadyUsed", "type": "error" },
+  { "inputs": [], "name": "DnaAlreadyUsed", "type": "error" },
   { "inputs": [], "name": "InsufficentSupply", "type": "error" },
   { "inputs": [], "name": "InvalidAddress", "type": "error" },
   { "inputs": [], "name": "InvalidMintPrice", "type": "error" },
@@ -22,6 +23,7 @@
     "name": "MintPhaseAlreadySet",
     "type": "error"
   },
+  { "inputs": [], "name": "NameAlreadyUsed", "type": "error" },
   { "inputs": [], "name": "NoContracts", "type": "error" },
   { "inputs": [], "name": "WrongEtherAmount", "type": "error" },
   {
@@ -178,7 +180,9 @@
       {
         "components": [
           { "internalType": "uint256", "name": "price", "type": "uint256" },
-          { "internalType": "string", "name": "cid", "type": "string" }
+          { "internalType": "string", "name": "cid", "type": "string" },
+          { "internalType": "bytes32", "name": "dnaHash", "type": "bytes32" },
+          { "internalType": "bytes32", "name": "nameHash", "type": "bytes32" }
         ],
         "internalType": "struct CreatorERC721Minter.Creation",
         "name": "creation_",
@@ -377,6 +381,20 @@
   {
     "inputs": [{ "internalType": "string", "name": "", "type": "string" }],
     "name": "usedCID",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "name": "usedDna",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "name": "usedName",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"

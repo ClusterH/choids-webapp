@@ -12,7 +12,16 @@ import { useArtImgData, useArtMetaData, useArtParamSettings } from 'state/artGen
 import { setArtMetaData } from 'state/artGenerator/reducer'
 import { setPrice } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
-import { checkMintPhaseStatus, estimateGas, getContractWithSimpleProvider, getMinterAddress, mintNFT, shortenAddress } from 'utils'
+import {
+  checkCIDIsUnique,
+  checkMintPhaseStatus,
+  checkNameIsUnique,
+  estimateGas,
+  getContractWithSimpleProvider,
+  getMinterAddress,
+  mintNFT,
+  shortenAddress,
+} from 'utils'
 import { getSignatureAndNonce } from 'utils/api'
 import { checkArtNameUniqueness, getDefaultMetadata, storeMetadata } from 'utils/api/metadata'
 import { convertHexToNumber } from 'utils/byte32Helper'
@@ -105,7 +114,8 @@ export const useGenerateArtMetaData = () => {
       const nameHash = keccak256(name).toString('hex')
 
       const isDuplicatedName = await checkArtNameUniqueness(nameHash)
-      if (isDuplicatedName === true) {
+      const isDuplicatedNameContract = await checkNameIsUnique(minterContract, `0x${nameHash}`)
+      if (isDuplicatedName === true || isDuplicatedNameContract === true) {
         notifyToast({ id: 'duplicated_name', type: 'error', content: 'Name is already exist, Please use another one' })
         setIsDuplicatedName(true)
         return
@@ -116,8 +126,14 @@ export const useGenerateArtMetaData = () => {
       const { result } = await storeMetadata(encrypt(JSON.stringify(metadata)))
 
       if (result) {
-        const creation = { price: result.price, cid: result.cid }
-        const body: ISignatureRequest = { ...creation, address: account, amount: '1' }
+        const isDuplicatedCID = await checkCIDIsUnique(minterContract, result.cid)
+        if (isDuplicatedCID === true) {
+          notifyToast({ id: 'duplicated_cid', type: 'error', content: 'CID is already exist, Please try again' })
+          return
+        }
+        const dnaHash = keccak256(dna).toString('hex')
+        const creation = { price: result.price, cid: result.cid, dnaHash: `0x${dnaHash}`, nameHash: `0x${nameHash}` }
+        const body: ISignatureRequest = { ...result, address: account, amount: '1' }
 
         const res = await getSignatureAndNonce(body)
         if (res) {

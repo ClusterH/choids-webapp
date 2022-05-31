@@ -71,3 +71,15 @@ export const getTokenURI = async (contract: Contract, tokenId: number) => {
 export const getSupplyLimit = async (contract: Contract) => {
   return await contract.supplyLimit()
 }
+
+export const checkCIDIsUnique = async (contract: Contract, cid: string) => {
+  return await contract.usedCID(cid)
+}
+
+export const checkNameIsUnique = async (contract: Contract, nameHash: string) => {
+  return await contract.usedName(nameHash)
+}
+
+export const checkDNAIsUnique = async (contract: Contract, dnaHash: string) => {
+  return await contract.usedDna(dnaHash)
+}
