@@ -1,43 +1,56 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import keccak256 from 'keccak256'
+
+import { notifyToast } from 'config/toast'
 import { useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtImgData, setCanvasContainerSize } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
+import { checkDNAUniqueness } from 'utils/api/metadata'
 
 import { IArtParams } from '../types'
 import { drawArt } from '../utils/drawHelper'
+import { b64EncodeUnicode } from '../utils/encodeHelper'
 
 export const useDraw = () => {
-  const canvasContainerRef: any = useRef<HTMLDivElement>(null)
+  const canvasContainerRef = useRef<HTMLDivElement>(null)
   const canvasRef: any = useRef<HTMLCanvasElement>(null)
   const artParamSettings = useArtParamSettings()
 
   const params = useMemo(() => artParamSettings, [artParamSettings])
 
+  const [canvasSize, setCanvasSize] = useState<{ width: number; height: number }>({ width: 800, height: 800 })
+
   const offset = 200
 
   const dispatch = useAppDispatch()
 
-  const canvasSize = useMemo(() => {
-    return {
-      width: canvasContainerRef.current ? canvasContainerRef.current.width - offset : 800,
-      height: canvasContainerRef.current ? canvasContainerRef.current.height - offset : 800,
-    }
-  }, [])
+  // const view = canvasContainerRef
+  // const ratio = window.devicePixelRatio || 1
+  // const width = (view.clientWidth * ratio) | 0
+  // const height = (view.clientHeight * ratio) | 0
 
-  const handleImageData = useCallback(
-    async (blob: any) => {
-      dispatch(setArtImgData(blob))
-    },
-    [dispatch]
-  )
+  // const canvasSize = useMemo(() => {
+  //   return {
+  //     width: canvasContainerRef.current ? canvasContainerRef.current.clientWidth - offset : 800,
+  //     height: canvasContainerRef.current ? canvasContainerRef.current.clientHeight - offset : 800,
+  //   }
+  // }, [])
+
+  // const handleImageData = useCallback(
+  //   async (blob: any) => {
+  //     dispatch(setArtImgData(blob))
+  //   },
+  //   [dispatch]
+  // )
 
   const handleDraw = useCallback(
     (params: IArtParams, canvasRef: any) => {
       drawArt(params, canvasRef, canvasSize.width, canvasSize.height)
-      canvasRef.current.toBlob(handleImageData, 'image/png', 1.0)
+      // canvasRef.current.toBlob(handleImageData, 'image/png', 1.0)
+      dispatch(setArtImgData(canvasRef.current.toDataURL()))
     },
-    [canvasSize, handleImageData]
+    [canvasSize, dispatch]
   )
 
   useEffect(() => {
@@ -49,4 +62,35 @@ export const useDraw = () => {
   }, [canvasSize, dispatch])
 
   return { canvasRef, canvasContainerRef, canvasSize, handleDraw }
+}
+
+export const useCheckDNAUniqueness = () => {
+  const artParamSettings = useArtParamSettings()
+
+  const params = useMemo(() => artParamSettings, [artParamSettings])
+
+  const handleCheckDNA = useCallback(async () => {
+    const dna = b64EncodeUnicode(params)
+    const dnaHash = keccak256(dna).toString('hex')
+
+    try {
+      const isDuplicated: boolean = await checkDNAUniqueness(dnaHash)
+
+      if (isDuplicated === true) {
+        notifyToast({ id: 'dna_uniqueness', type: 'error', content: 'Same choid is already exist, please draw different ones.' })
+      }
+
+      return isDuplicated
+    } catch (error) {
+      console.log(error)
+      notifyToast({
+        id: 'dna_uniqueness',
+        type: 'error',
+        content: 'We cannot estimate your DNA uniqueness. Set the parameters differently.',
+      })
+      return true
+    }
+  }, [params])
+
+  return { handleCheckDNA }
 }

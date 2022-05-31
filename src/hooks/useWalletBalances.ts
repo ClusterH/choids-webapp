@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react'
 
-import { useGetMinterContract } from 'hooks'
+import { useGetMintableContract, useGetMinterContract } from 'hooks'
 import { AppState } from 'state'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
 import { setWalletBalance } from 'state/web3/reducer'
@@ -15,7 +15,7 @@ export const useWalletBalances = () => {
 
 export const useGetWalletBalance = () => {
   const { account, chainId } = useActiveWeb3React()
-  const minterContract = useGetMinterContract()
+  const mintableContract = useGetMintableContract()
 
   const dispatch = useAppDispatch()
 
@@ -24,13 +24,13 @@ export const useGetWalletBalance = () => {
       const provider = getSimpleRPCProvider(chainId)
 
       if (!account || !provider) return
-      const minterBalance = minterContract ? await getNFTBalance(minterContract, account) : 0
+      const choidBalance = mintableContract ? await getNFTBalance(mintableContract, account) : 0
 
-      dispatch(setWalletBalance({ minterBalance }))
+      dispatch(setWalletBalance({ choidBalance }))
     } catch (e) {
       console.log(e)
     }
-  }, [chainId, account, minterContract, dispatch])
+  }, [chainId, account, mintableContract, dispatch])
 
   useEffect(() => {
     handleFetchBalances()

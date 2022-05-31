@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit'
 
 interface IState {
   gasPrice: string
-  walletBalance: { ethBalance: string; minterBalance: string }
+  walletBalance: { ethBalance: string; choidBalance: string }
   totalSupply: { choidTotalSupply: number }
   supplyLimit: number
 }
 
 export const initialState: IState = {
   gasPrice: '',
-  walletBalance: { ethBalance: '0.00', minterBalance: '0' },
+  walletBalance: { ethBalance: '0.00', choidBalance: '0' },
   totalSupply: { choidTotalSupply: 0 },
   supplyLimit: 0,
 }

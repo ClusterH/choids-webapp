@@ -14,7 +14,7 @@ interface IState {
 
 export const initialState: IState = {
   layerList: [],
-  artParamSettings: ART_PRESET_LIST.PRESET1,
+  artParamSettings: ART_PRESET_LIST.Shrek,
   isDraw: false,
   canvasContainerSize: { width: 800, height: 800 },
   artImgData: '',

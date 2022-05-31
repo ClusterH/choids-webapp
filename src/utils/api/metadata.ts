@@ -6,9 +6,33 @@ import { IMetaData, TUseCase } from 'views/ArtGenerator/types'
 
 const specificAxios = setupInterceptorsTo(axios.create())
 
-export const storeMetadata = async (metadata: IMetaData & { useCase: TUseCase }) => {
+export const checkDNAUniqueness = async (dnaHash: string) => {
   try {
-    const { data, status } = await specificAxios.post(`${API_URL}metadata/add`, metadata)
+    const { data, status } = await specificAxios.get(`${API_URL}is-duplicate/dna/${dnaHash}`)
+    if (status === 200) {
+      return data.result as boolean
+    } else return true
+  } catch (e: any) {
+    console.log(e)
+    return true
+  }
+}
+
+export const checkArtNameUniqueness = async (nameHash: string) => {
+  try {
+    const { data, status } = await specificAxios.get(`${API_URL}is-duplicate/name/${nameHash}`)
+    if (status === 200) {
+      return data.result as boolean
+    } else return true
+  } catch (e: any) {
+    console.log(e)
+    return true
+  }
+}
+
+export const storeMetadata = async (encryptedMetadata: string) => {
+  try {
+    const { data, status } = await specificAxios.post(`${API_URL}metadata/add`, { data: encryptedMetadata })
     if (status === 200) {
       return data
     } else return { result: false }

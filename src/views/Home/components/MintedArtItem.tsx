@@ -51,7 +51,7 @@ const MintedArtItem: React.FC<{ metadata: IMetaData }> = ({ metadata }) => {
           onMouseLeave={onMouseLeave}
         >
           <ProgressiveImg
-            src={convertIPFSToWebURL(metadata.image)}
+            src={metadata.image}
             placeholderSrc={PLACEHOLDER_IMG}
             width={'100%'}
             height={'auto'}

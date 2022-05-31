@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { formatEther } from '@ethersproject/units'
+import keccak256 from 'keccak256'
 import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 
 import { useReverseENSLookUp } from 'components/Header/hook'
@@ -13,11 +14,11 @@ import { setPrice } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { checkMintPhaseStatus, estimateGas, getContractWithSimpleProvider, getMinterAddress, mintNFT, shortenAddress } from 'utils'
 import { getSignatureAndNonce } from 'utils/api'
-import { getDefaultMetadata, storeMetadata } from 'utils/api/metadata'
+import { checkArtNameUniqueness, getDefaultMetadata, storeMetadata } from 'utils/api/metadata'
 import { convertHexToNumber } from 'utils/byte32Helper'
 
 import { ISignatureRequest, TUseCase } from '../types'
-import { b64EncodeUnicode } from '../utils/encodeHelper'
+import { b64EncodeUnicode, encrypt } from '../utils/encodeHelper'
 
 export const useMintPhaseStatus = () => {
   const { account, chainId } = useActiveWeb3React()
@@ -72,7 +73,7 @@ export const useGenerateArtMetaData = () => {
   const creatorName = useMemo(() => (ens ? ens : account ? shortenAddress(account) : ''), [account, ens])
   const dna = useMemo(() => b64EncodeUnicode(artParams), [artParams])
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false)
   const [isMinting, setIsMinting] = useState<boolean>(false)
   const [isMinted, setIsMinted] = useState<boolean>(false)
   const [txData, setTxData] = useState<{ id: number; txHash: string }>()
@@ -82,8 +83,8 @@ export const useGenerateArtMetaData = () => {
 
   const minterContract = useGetMinterContract(true, false)
 
-  const NFT_STORAGE_KEY = process.env.REACT_APP_NFT_STORAGE_KEY
-  const client = useMemo(() => new NFTStorage({ token: NFT_STORAGE_KEY! }), [NFT_STORAGE_KEY])
+  // const NFT_STORAGE_KEY = process.env.REACT_APP_NFT_STORAGE_KEY
+  // const client = useMemo(() => new NFTStorage({ token: NFT_STORAGE_KEY! }), [NFT_STORAGE_KEY])
 
   const handleOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value
@@ -93,18 +94,6 @@ export const useGenerateArtMetaData = () => {
     setName(e.target.value)
   }, [])
 
-  const handleMetaData = useCallback(async () => {
-    try {
-      setIsLoading(true)
-      const cid = await client.storeBlob(new Blob([artImgData]))
-      dispatch(setArtMetaData({ dna, image: `ipfs://${cid}` }))
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [artImgData, client, dispatch, dna])
-
   const handleMint = useCallback(async () => {
     try {
       if (!minterContract || !account) return
@@ -113,33 +102,18 @@ export const useGenerateArtMetaData = () => {
 
       setIsMinting(true)
 
-      const metaData = {
-        ...artMetaData,
-        name,
-        description: `**${name}** is an algorithmically generated art piece created by ${
-          ens ?? account
-        }. For this piece, a background color with hex code ${artParams.backgroundColor} and a pen color with hex code ${
-          artParams.canvasColor
-        } were chosen. ${artParams.radii.length} Rotors were put into motion to generate the masterpiece before you.`,
-        attributes: [
-          {
-            trait_type: 'Creator',
-            value: ens ?? account,
-          },
-          {
-            display_type: 'date',
-            trait_type: 'Created on',
-            value: Math.floor(new Date().getTime() / 1000),
-          },
-          {
-            trait_type: 'Edition',
-            value: 'First Generation',
-          },
-        ],
-        useCase: '#1' as TUseCase,
-      }
+      const nameHash = keccak256(name).toString('hex')
 
-      const { result } = await storeMetadata(metaData)
+      const isDuplicatedName = await checkArtNameUniqueness(nameHash)
+      if (isDuplicatedName === true) {
+        notifyToast({ id: 'duplicated_name', type: 'error', content: 'Name is already exist, Please use another one' })
+        setIsDuplicatedName(true)
+        return
+      } else setIsDuplicatedName(false)
+
+      const metadata = { useCase: '#1', name, account: creatorName, dna, base64Image: artImgData }
+
+      const { result } = await storeMetadata(encrypt(JSON.stringify(metadata)))
 
       if (result) {
         const creation = { price: result.price, cid: result.cid }
@@ -177,11 +151,11 @@ export const useGenerateArtMetaData = () => {
     } finally {
       setIsMinting(false)
     }
-  }, [account, artMetaData, artParams, ens, handleFetchTotalSupply, minterContract, name])
+  }, [account, artImgData, creatorName, dna, handleFetchTotalSupply, minterContract, name])
 
-  useEffect(() => {
-    handleMetaData()
-  }, [handleMetaData])
+  // useEffect(() => {
+  //   handleMetaData()
+  // }, [handleMetaData])
 
-  return { name, artMetaData, artImgData, creatorName, isLoading, isMinting, isMinted, txData, handleOnChange, handleMint }
+  return { name, dna, artImgData, creatorName, isDuplicatedName, isMinting, isMinted, txData, handleOnChange, handleMint }
 }

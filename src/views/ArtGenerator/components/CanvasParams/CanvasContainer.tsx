@@ -11,7 +11,7 @@ import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reduce
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
 import { isMobile } from 'utils'
-import { useMintPhaseStatus } from 'views/ArtGenerator/hooks'
+import { useCheckDNAUniqueness, useMintPhaseStatus } from 'views/ArtGenerator/hooks'
 import { IArtParams } from 'views/ArtGenerator/types'
 
 import { MintModal } from '..'
@@ -56,6 +56,7 @@ const CanvasContainer: React.FC = () => {
   })
 
   const { mintPhase } = useMintPhaseStatus()
+  const { handleCheckDNA } = useCheckDNAUniqueness()
 
   const handleColorChange = useCallback(
     (canvasColor: string) => {
@@ -165,8 +166,10 @@ const CanvasContainer: React.FC = () => {
           width={'calc(100% - 32px)'}
           margin={'0 0 24px'}
           disabled={mintPhase === 0 || !account || choidTotalSupply >= supplyLimit}
-          onClick={() => {
+          onClick={async () => {
             if (mintPhase === 0 || !account) return
+            const isDuplicate = await handleCheckDNA()
+            if (isDuplicate === true) return
             handleOpenModal()
           }}
         >
