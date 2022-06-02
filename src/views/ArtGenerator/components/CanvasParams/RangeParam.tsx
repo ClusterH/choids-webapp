@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import RangeInput from 'components/RangeInput'
 import { useStateWithProps } from 'hooks'
@@ -21,7 +21,7 @@ const RangeParam: React.FC<{
   )
 
   useEffect(() => {
-    handleRangeChange(val)
+    handleRangeChange(Number(val))
   }, [handleRangeChange, val])
 
   return (

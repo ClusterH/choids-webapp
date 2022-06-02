@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import Modal from 'components/Modal/ModalWrapper'
 import { useActiveWeb3React, useModal, useTotalSupply } from 'hooks'
 import { useSupplyLimit } from 'hooks/useSupplyLimit'
-import { useArtParamSettings } from 'state/artGenerator/hook'
+import { useArtParamSettings, useIsMinting } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
@@ -48,6 +48,7 @@ const CanvasContainer: React.FC = () => {
 
   const { isOpen, handleOpenModal } = useModal()
   const { account } = useActiveWeb3React()
+  const isMinting = useIsMinting()
 
   const [params, setParams] = useState<IArtParams>(() => artParams)
 
@@ -77,7 +78,7 @@ const CanvasContainer: React.FC = () => {
   const handleSizeChange = useCallback(
     (value: number) => {
       paramsRef.current.size = value
-      dispatch(setArtParamSettings({ size: value }))
+      dispatch(setArtParamSettings({ size: Number(value) }))
     },
     [dispatch]
   )
@@ -85,7 +86,7 @@ const CanvasContainer: React.FC = () => {
   const handlePencilSizeChange = useCallback(
     (value: number) => {
       paramsRef.current.pencilSize = value
-      dispatch(setArtParamSettings({ pencilSize: value }))
+      dispatch(setArtParamSettings({ pencilSize: Number(value) }))
     },
     [dispatch]
   )
@@ -93,7 +94,7 @@ const CanvasContainer: React.FC = () => {
   const handleZoomChange = useCallback(
     (value: number) => {
       paramsRef.current.zoom = value
-      dispatch(setArtParamSettings({ zoom: value }))
+      dispatch(setArtParamSettings({ zoom: Number(value) }))
     },
     [dispatch]
   )
@@ -175,7 +176,7 @@ const CanvasContainer: React.FC = () => {
         >
           {mintPhase === 0 ? 'Mint Paused' : choidTotalSupply >= supplyLimit ? `All Choids Minted` : 'Mint'}
         </MainButton>
-        <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder>
+        <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder isCloseDisabled={isMinting}>
           <MintModal />
         </Modal>
       </FlexColumn>

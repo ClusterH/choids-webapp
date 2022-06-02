@@ -223,6 +223,7 @@ export const ImageContainer = styled.img<{
   right?: string
   bottom?: string
   opacity?: number
+  cursor?: string
 }>`
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : themeBorderRadius.none)};
   width: ${({ width }) => (width ? width : '100%')};
@@ -237,6 +238,7 @@ export const ImageContainer = styled.img<{
   right: ${({ right }) => (right ? right : 'unset')};
   bottom: ${({ bottom }) => (bottom ? bottom : 'unset')};
   opacity: ${({ opacity }) => (opacity ? opacity : 1)};
+  cursor: ${({ cursor }) => cursor ?? 'default'};
 `
 export const Divider = styled.div<{ width?: string; height?: string; margin?: string; backColor?: string }>`
   width: ${({ width }) => (width ? width : '100%')};
@@ -253,7 +255,6 @@ export const OverlayContainer = styled.div<{ opacity?: number }>`
   background: ${themeColor.background1};
   opacity: ${({ opacity }) => opacity ?? 0.7};
   backdrop-filter: blur(16px);
-  z-index: 0;
 `
 export const BlurBackground = styled.div<{
   width?: string

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useReducer, useState } from 'react'
 
 import { ColorPicker, useColor } from 'react-color-palette'
 import 'react-color-palette/lib/css/styles.css'
@@ -27,6 +27,7 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (color:
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [val, setVal] = useStateWithProps<string>(value)
   const [color, setColor] = useColor('hex', value)
+  const [colorState, setColorState] = useState(() => color)
   const [isValid, setIsValid] = useState<boolean>(true)
 
   const handleOnChange = useCallback(
@@ -57,6 +58,15 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (color:
     handleChange(color.hex)
   }, [color, handleChange, setVal])
 
+  useEffect(() => {
+    if (validHex(val)) {
+      const color = toColor(val)
+      if (color !== undefined) {
+        setColorState(color)
+      }
+    }
+  }, [val])
+
   return (
     <FlexRow>
       <TextWrapper color={'text8'} fontSize={'xs'} lineHeight={14}>
@@ -74,7 +84,7 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (color:
           <>
             <OverlayContainer onClick={handleIsOpen} opacity={0} />
             <ColorPickerWrapper>
-              <ColorPicker width={240} height={120} color={color} onChange={setColor} hideHSV hideRGB dark alpha />
+              <ColorPicker width={240} height={120} color={colorState} onChange={setColor} hideHSV hideRGB dark alpha />
             </ColorPickerWrapper>
           </>
         )}

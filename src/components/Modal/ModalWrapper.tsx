@@ -23,15 +23,20 @@ interface IModalProps {
   width?: string
   backgroundColor?: string
   isBorder?: boolean
+  isCloseDisabled?: boolean
 }
 
-const Modal: React.FC<IModalProps> = ({ children, isOpen, handleOpenModal, width, backgroundColor, isBorder }) => {
+const Modal: React.FC<IModalProps> = ({ children, isOpen, handleOpenModal, width, backgroundColor, isBorder, isCloseDisabled }) => {
   if (!isOpen) return null
 
   return (
     <>
-      <OverlayContainer onClick={() => handleOpenModal()} />
       <FadeAnimationWrapper>
+        <OverlayContainer
+          onClick={() => {
+            isCloseDisabled !== true && handleOpenModal()
+          }}
+        />
         <ModalWrapper
           backgroundColor={backgroundColor ? backgroundColor : themeColor.background4}
           borderRadius={themeBorderRadius.small}
@@ -39,7 +44,11 @@ const Modal: React.FC<IModalProps> = ({ children, isOpen, handleOpenModal, width
           border={isBorder ? themeColor.border4 : 'none'}
         >
           {children}
-          <CloseIconWrapper onClick={handleOpenModal} />
+          <CloseIconWrapper
+            onClick={() => {
+              isCloseDisabled !== true && handleOpenModal()
+            }}
+          />
         </ModalWrapper>
       </FadeAnimationWrapper>
     </>

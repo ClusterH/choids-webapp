@@ -1,14 +1,12 @@
 import React from 'react'
 
-import { FaTwitter } from 'react-icons/fa'
 import styled from 'styled-components'
 
 import GRADIENT_BG from 'assets/images/footer_gradient.svg'
-import LOGO from 'assets/images/main_logo.svg'
+import SocialIconsContainer from 'components/Header/SocialIconsContainer'
+import Logo from 'components/Logo'
 import { useGetCurrentURLPath } from 'hooks'
-import { Divider, FlexColumn, FlexRow, ImageContainer, TextWrapper } from 'styles/components'
-import { themeColor } from 'styles/theme'
-import { isMobile } from 'utils'
+import { Divider, FlexColumn } from 'styles/components'
 
 const FooterWrapper = styled(FlexColumn)`
   background-image: url(${GRADIENT_BG});
@@ -27,10 +25,8 @@ const Footer: React.FC = () => {
       {path.includes('/generator') === false && (
         <FooterWrapper padding={'6% 8%'} margin={'6% 0 0'}>
           <Divider />
-          <FlexRow rowWidth={'fit-content'} margin={'2% 0 0'}>
-            <ImageContainer src={LOGO} height={isMobile ? '42px' : '62px'} />
-          </FlexRow>
-          <FaTwitter size={isMobile ? 24 : 32} color={themeColor.text1} />
+          <Logo />
+          <SocialIconsContainer />
         </FooterWrapper>
       )}
     </>

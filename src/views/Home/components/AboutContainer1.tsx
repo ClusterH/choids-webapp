@@ -23,7 +23,7 @@ const AboutContainer1: React.FC = () => {
           }
         </TextWrapper>
       </FlexColumn>
-      {isMobile === false && <ImageContainer src={ART_IMG} alt={'about art'} width={'40%'} />}
+      {/* {isMobile === false && <ImageContainer src={ART_IMG} alt={'about art'} width={'40%'} />} */}
     </FlexRow>
   )
 }

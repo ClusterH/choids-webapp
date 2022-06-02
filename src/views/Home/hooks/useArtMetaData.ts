@@ -1,16 +1,13 @@
-import { setTimeout } from 'timers/promises'
-
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { Contract } from 'ethcall'
 
 import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
 import { useActiveWeb3React, useTotalSupply } from 'hooks'
-import { setMetaDataList, setTokenURIs } from 'state/choid/reducer'
+import { setMetaDataList } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { getMintableAddress, getMultiCall } from 'utils'
 import { getMetadata } from 'utils/api/metadata'
-import { convertIPFSToWebURL } from 'utils/ipfsHelper'
 import { IMetaData } from 'views/ArtGenerator/types'
 
 export const useGetArtMetaData = () => {

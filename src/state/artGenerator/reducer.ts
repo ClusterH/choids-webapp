@@ -6,39 +6,17 @@ import { IArtLayer, IArtParams, IMetaData } from 'views/ArtGenerator/types'
 interface IState {
   layerList: IArtLayer[]
   artParamSettings: IArtParams
-  isDraw: boolean
   canvasContainerSize: { width: number; height: number }
   artImgData: any
-  artMetaData: IMetaData
+  isMinting: boolean
 }
 
 export const initialState: IState = {
   layerList: [],
   artParamSettings: ART_PRESET_LIST.Shrek,
-  isDraw: false,
   canvasContainerSize: { width: 800, height: 800 },
   artImgData: '',
-  artMetaData: {
-    name: '',
-    dna: '',
-    description: 'Description',
-    image: `ipfs://`, // this may be an id for Google Storage in the near future
-    attributes: [
-      {
-        trait_type: 'Creator',
-        value: '',
-      },
-      {
-        display_type: 'date',
-        trait_type: 'Birth Date',
-        value: 0, // 1644148800 // this needs to be in epoch to work with OpenSea
-      },
-      {
-        trait_type: 'Edition',
-        value: 'First Generation',
-      },
-    ],
-  },
+  isMinting: false,
 }
 
 const artGeneratorSlice = createSlice({
@@ -63,17 +41,14 @@ const artGeneratorSlice = createSlice({
     setArtParamRadii(state, action) {
       state.artParamSettings.radii[action.payload.id - 1].r = action.payload.value
     },
-    setIsDraw(state, action) {
-      state.isDraw = !state.isDraw
-    },
     setCanvasContainerSize(state, action) {
       state.canvasContainerSize = { ...action.payload }
     },
     setArtImgData(state, action) {
       state.artImgData = action.payload
     },
-    setArtMetaData(state, action) {
-      state.artMetaData = { ...state.artMetaData, ...action.payload }
+    setIsMinting(state, action) {
+      state.isMinting = action.payload
     },
   },
 })
@@ -83,9 +58,8 @@ export const {
   setHideLayer,
   setArtParamSettings,
   setArtParamRadii,
-  setIsDraw,
   setCanvasContainerSize,
   setArtImgData,
-  setArtMetaData,
+  setIsMinting,
 } = artGeneratorSlice.actions
 export default artGeneratorSlice.reducer

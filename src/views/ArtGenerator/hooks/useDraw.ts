@@ -77,7 +77,6 @@ export const useCheckDNAUniqueness = () => {
       if (!minterContract) return
       const dna = b64EncodeUnicode(params)
       const dnaHash = keccak256(dna).toString('hex')
-      console.log(dnaHash)
       const isDuplicated: boolean = await checkDNAUniqueness(dnaHash)
       const isDuplicatedContract: boolean = await checkDNAIsUnique(minterContract, `0x${dnaHash}`)
 

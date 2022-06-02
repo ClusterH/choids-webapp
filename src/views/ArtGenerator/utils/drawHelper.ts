@@ -44,8 +44,8 @@ export const drawArt = (params: IArtParams, canvasRef: any, width: number, heigh
     ctx.save()
     ctx.translate(width / 2, width / 2)
 
-    ctx.lineWidth = params.pencilSize
     ctx.strokeStyle = params.canvasColor
+    ctx.lineWidth = params.pencilSize + 0.1
     ctx.beginPath()
 
     // The rest of the code is presentation:

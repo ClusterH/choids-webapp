@@ -2,14 +2,13 @@ import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { formatEther } from '@ethersproject/units'
 import keccak256 from 'keccak256'
-import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js'
 
 import { useReverseENSLookUp } from 'components/Header/hook'
 import { CONTRACT_ABIS, DEFAULT_CHAIN_ID } from 'config/constants'
 import { notifyToast } from 'config/toast'
 import { useActiveWeb3React, useGetMinterContract, useGetTotalSupply } from 'hooks'
-import { useArtImgData, useArtMetaData, useArtParamSettings } from 'state/artGenerator/hook'
-import { setArtMetaData } from 'state/artGenerator/reducer'
+import { useArtImgData, useArtParamSettings } from 'state/artGenerator/hook'
+import { setIsMinting } from 'state/artGenerator/reducer'
 import { setPrice } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
 import {
@@ -26,7 +25,7 @@ import { getSignatureAndNonce } from 'utils/api'
 import { checkArtNameUniqueness, getDefaultMetadata, storeMetadata } from 'utils/api/metadata'
 import { convertHexToNumber } from 'utils/byte32Helper'
 
-import { ISignatureRequest, TUseCase } from '../types'
+import { ISignatureRequest } from '../types'
 import { b64EncodeUnicode, encrypt } from '../utils/encodeHelper'
 
 export const useMintPhaseStatus = () => {
@@ -71,19 +70,16 @@ export const useGetDefaltMetadata = () => {
   return { handleGetDefaultMetadata }
 }
 
-export const useGenerateArtMetaData = () => {
+export const useMint = () => {
   const { account } = useActiveWeb3React()
   const artImgData = useArtImgData()
   const artParams = useArtParamSettings()
-  const artMetaData = useArtMetaData()
   const ens = useReverseENSLookUp()
   const { handleFetchTotalSupply } = useGetTotalSupply()
 
   const creatorName = useMemo(() => (ens ? ens : account ? shortenAddress(account) : ''), [account, ens])
   const dna = useMemo(() => b64EncodeUnicode(artParams), [artParams])
 
-  const [isDuplicatedName, setIsDuplicatedName] = useState<boolean>(false)
-  const [isMinting, setIsMinting] = useState<boolean>(false)
   const [isMinted, setIsMinted] = useState<boolean>(false)
   const [txData, setTxData] = useState<{ id: number; txHash: string }>()
   const [name, setName] = useState<string>('')
@@ -91,9 +87,6 @@ export const useGenerateArtMetaData = () => {
   const dispatch = useAppDispatch()
 
   const minterContract = useGetMinterContract(true, false)
-
-  // const NFT_STORAGE_KEY = process.env.REACT_APP_NFT_STORAGE_KEY
-  // const client = useMemo(() => new NFTStorage({ token: NFT_STORAGE_KEY! }), [NFT_STORAGE_KEY])
 
   const handleOnChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value
@@ -109,7 +102,7 @@ export const useGenerateArtMetaData = () => {
 
       if (name === '') return
 
-      setIsMinting(true)
+      dispatch(setIsMinting(true))
 
       const nameHash = keccak256(name).toString('hex')
 
@@ -117,9 +110,8 @@ export const useGenerateArtMetaData = () => {
       const isDuplicatedNameContract = await checkNameIsUnique(minterContract, `0x${nameHash}`)
       if (isDuplicatedName === true || isDuplicatedNameContract === true) {
         notifyToast({ id: 'duplicated_name', type: 'error', content: 'Name is already exist, Please use another one' })
-        setIsDuplicatedName(true)
         return
-      } else setIsDuplicatedName(false)
+      }
 
       const metadata = { useCase: '#1', name, account: creatorName, dna, base64Image: artImgData }
 
@@ -165,13 +157,9 @@ export const useGenerateArtMetaData = () => {
       console.log(error)
       notifyToast({ id: 'mint_failed', type: 'error', content: 'Error Occured, please check console' })
     } finally {
-      setIsMinting(false)
+      dispatch(setIsMinting(false))
     }
-  }, [account, artImgData, creatorName, dna, handleFetchTotalSupply, minterContract, name])
+  }, [account, artImgData, creatorName, dispatch, dna, handleFetchTotalSupply, minterContract, name])
 
-  // useEffect(() => {
-  //   handleMetaData()
-  // }, [handleMetaData])
-
-  return { name, dna, artImgData, creatorName, isDuplicatedName, isMinting, isMinted, txData, handleOnChange, handleMint }
+  return { name, dna, artImgData, creatorName, isMinted, txData, handleOnChange, handleMint }
 }

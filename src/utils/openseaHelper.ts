@@ -1,6 +1,6 @@
 import { NETWORK_INDICATOR, SupportedChainId } from 'config/constants'
 
-const OPENSEA_PREFIXES: { [chainId: number]: string } = {
+export const OPENSEA_PREFIXES: { [chainId: number]: string } = {
   [SupportedChainId.MAIN]: '',
   [SupportedChainId.RINKEBY_TESTNET]: 'testnets.',
 }

@@ -42,9 +42,9 @@ const ArtImgWrapper3 = styled(ImageContainer)`
 const AboutContainer3: React.FC = () => {
   return (
     <FlexRow justifyContent={'center'}>
-      <LazyLoad offset={300}>
+      {/* <LazyLoad offset={300}>
         <GradientBgWrapper src={GRADIENT_IMG} />
-      </LazyLoad>
+      </LazyLoad> */}
 
       {isMobile === false && (
         <>
