@@ -52,11 +52,11 @@ export const getDefaultMetadata = async () => {
   }
 }
 
-export const getMetadata = async (tokenURI: string) => {
+export const getMetadata = async (count: number) => {
   try {
-    const { data, status } = await specificAxios.get(`${tokenURI}`)
+    const { data, status } = await specificAxios.get(`${API_URL}metadata/get-all/${count}`)
     if (status === 200) {
-      return data
+      return data.result
     } else return false
   } catch (e: any) {
     console.log(e)
