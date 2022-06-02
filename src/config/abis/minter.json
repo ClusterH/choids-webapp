@@ -181,8 +181,8 @@
         "components": [
           { "internalType": "uint256", "name": "price", "type": "uint256" },
           { "internalType": "string", "name": "cid", "type": "string" },
-          { "internalType": "bytes32", "name": "dnaHash", "type": "bytes32" },
-          { "internalType": "bytes32", "name": "nameHash", "type": "bytes32" }
+          { "internalType": "bytes32", "name": "nameHash", "type": "bytes32" },
+          { "internalType": "bytes32", "name": "dnaHash", "type": "bytes32" }
         ],
         "internalType": "struct CreatorERC721Minter.Creation",
         "name": "creation_",
