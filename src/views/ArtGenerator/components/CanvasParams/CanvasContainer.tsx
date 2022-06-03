@@ -4,6 +4,7 @@ import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
 import styled from 'styled-components'
 
 import Modal from 'components/Modal/ModalWrapper'
+import { ART_PRESET_LIST } from 'config/constants'
 import { useActiveWeb3React, useModal, useTotalSupply } from 'hooks'
 import { useSupplyLimit } from 'hooks/useSupplyLimit'
 import { useArtParamSettings, useIsMinting } from 'state/artGenerator/hook'
@@ -99,6 +100,14 @@ const CanvasContainer: React.FC = () => {
     [dispatch]
   )
 
+  const handleRotateChange = useCallback(
+    (value: number) => {
+      paramsRef.current.degrees = value
+      dispatch(setArtParamSettings({ degrees: Number(value) }))
+    },
+    [dispatch]
+  )
+
   const handleAddRadius = useCallback(() => {
     if (paramsRef.current.radii.length > 4) return
     const radii = [...paramsRef.current.radii]
@@ -118,6 +127,9 @@ const CanvasContainer: React.FC = () => {
   useEffect(() => {
     paramsRef.current = { ...paramsRef.current, ...artParams }
     setParams({ ...artParams })
+    return () => {
+      setParams(ART_PRESET_LIST.Shrek)
+    }
   }, [artParams])
 
   return (
@@ -133,6 +145,12 @@ const CanvasContainer: React.FC = () => {
           range={{ min: 1, max: 4 }}
           defaultVal={paramsRef.current.pencilSize}
           handleRangeChange={handlePencilSizeChange}
+        />
+        <RangeParam
+          label={'Rotate'}
+          range={{ min: 0, max: 359 }}
+          defaultVal={paramsRef.current.degrees}
+          handleRangeChange={handleRotateChange}
         />
         <ColorParam label={'Color'} value={paramsRef.current.canvasColor} handleChange={handleColorChange} />
         <ColorParam label={'Back Color'} value={paramsRef.current.backgroundColor} handleChange={handleBackColorChange} />

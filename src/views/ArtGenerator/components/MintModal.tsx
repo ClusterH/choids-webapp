@@ -50,7 +50,7 @@ const MintModal: React.FC = () => {
                 handleOpenExternalLink(`${getOpenSeaLink(chainId ?? DEFAULT_CHAIN_ID, txData.id, choidAddress.toLowerCase())}`)
               }}
             >
-              {'View on OpenSea'}
+              &nbsp;&nbsp;{'View on OpenSea'}&nbsp;&nbsp;
             </MainButton>
             <TransparentButton
               onClick={() => {

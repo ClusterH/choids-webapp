@@ -43,6 +43,7 @@ export const drawArt = (params: IArtParams, canvasRef: any, width: number, heigh
     ctx.fillRect(0, 0, width, height)
     ctx.save()
     ctx.translate(width / 2, width / 2)
+    ctx.rotate(params.degrees * (Math.PI / 180))
 
     ctx.strokeStyle = params.canvasColor
     ctx.lineWidth = params.pencilSize + 0.1
@@ -67,6 +68,7 @@ export const drawArt = (params: IArtParams, canvasRef: any, width: number, heigh
       )
       ctx.lineTo(output[0], output[1])
     }
+
     ctx.stroke()
 
     ctx.restore()

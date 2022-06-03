@@ -5,6 +5,7 @@ export const ART_PRESET_LIST: { [key: string]: IArtParams } = {
     size: 3,
     pencilSize: 1,
     zoom: 50,
+    degrees: 0,
     canvasColor: '#54ff3c6a',
     backgroundColor: '#000000',
     radii: [
@@ -17,6 +18,7 @@ export const ART_PRESET_LIST: { [key: string]: IArtParams } = {
     size: 15,
     pencilSize: 1,
     zoom: 20,
+    degrees: 0,
     canvasColor: '#e91e1e45',
     backgroundColor: '#ffe4f9',
     radii: [
@@ -29,6 +31,7 @@ export const ART_PRESET_LIST: { [key: string]: IArtParams } = {
     size: 93,
     pencilSize: 1,
     zoom: 2,
+    degrees: 0,
     canvasColor: '#3e0f0f97',
     backgroundColor: '#e142e6ff',
     radii: [
@@ -41,6 +44,7 @@ export const ART_PRESET_LIST: { [key: string]: IArtParams } = {
     size: 73,
     pencilSize: 1,
     zoom: 1.7,
+    degrees: 0,
     canvasColor: '#98ffa56d',
     backgroundColor: '#000000',
     radii: [
@@ -54,6 +58,7 @@ export const ART_PRESET_LIST: { [key: string]: IArtParams } = {
     size: 8,
     pencilSize: 1,
     zoom: 2.8,
+    degrees: 0,
     canvasColor: '#14141468',
     backgroundColor: '#7284f5ff',
     radii: [

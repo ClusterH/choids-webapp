@@ -12,8 +12,6 @@ import { isSupportedNetwork } from 'utils/web3Helpers'
 const NetworkIndicator: React.FC = () => {
   const { chainId } = useActiveWeb3React()
 
-  console.log(chainId, isSupportedNetwork(chainId))
-
   return (
     <FlexRow
       rowWidth={'fit-content'}

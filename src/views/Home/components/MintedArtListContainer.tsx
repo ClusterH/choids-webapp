@@ -32,7 +32,7 @@ const MintedArtList: React.FC = () => {
       <ArtListWrapper
         gap={isMobile ? '12px' : '24px'}
         justifyContent={'flex-start'}
-        padding={'12px 0'}
+        padding={'36px 0'}
         ref={increaseRef}
         onMouseEnter={() => onMouseEnter()}
         onMouseLeave={() => onMouseLeave()}
