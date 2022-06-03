@@ -18,7 +18,6 @@ export const themeColor: ThemeProps = {
   text7: 'var(--lightPurple1)',
   text8: 'var(--lightPurple4)',
   text9: 'var(--white2)',
-
   //button color
   button1: 'var(--buttonColor1)',
   buttonHover1: 'var(--buttonHoverColor1)',
@@ -32,9 +31,7 @@ export const themeColor: ThemeProps = {
   buttonHover5: 'var(--buttonHoverColor5)',
   button6: 'var(--buttonColor6)',
   buttonHover6: 'var(--buttonHoverColor6)',
-
   buttonDisabled: 'var(--disable)',
-
   // border, divider color
   border1: '1px solid var(--purple1)',
   border2: '0.5px solid var(--divider)',
@@ -44,6 +41,9 @@ export const themeColor: ThemeProps = {
   divider: 'var(--divider)',
   // box-shadow
   boxShadow1: '0px 4px 4px rgba(0, 0, 0, 0.25);',
+
+  error: 'var(--error)',
+  success: 'var(--success)',
 }
 
 export const themeTypography = {

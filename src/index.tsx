@@ -1,9 +1,11 @@
 import React from 'react'
 
+import AOS from 'aos'
 import ReactDOM from 'react-dom'
+import 'react-toastify/dist/ReactToastify.css'
+import 'aos/dist/aos.css'
 
 import { useEagerConnect, useGetTotalSupply, useInactiveListener } from 'hooks'
-import 'react-toastify/dist/ReactToastify.css'
 import { useGetSupplyLimit } from 'hooks/useSupplyLimit'
 import { ToastWrapper } from 'styles/components'
 import GlobalStyles from 'styles/globalStyles'
@@ -12,6 +14,11 @@ import App from './App'
 import './index.scss'
 import { Providers } from './Providers'
 import reportWebVitals from './reportWebVitals'
+
+const GlobalConfig = () => {
+  AOS.init({ offset: 160, duration: 1000, easing: 'ease-in-sine', delay: 50, disable: 'mobile' })
+  return null
+}
 
 const GlobalHooks = () => {
   useEagerConnect()
@@ -27,6 +34,7 @@ ReactDOM.render(
     <Providers>
       <GlobalHooks />
       <GlobalStyles />
+      <GlobalConfig />
       <ToastWrapper
         position="top-center"
         autoClose={5000}

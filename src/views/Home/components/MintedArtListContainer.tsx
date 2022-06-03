@@ -27,7 +27,7 @@ const MintedArtList: React.FC = () => {
   return (
     <FlexColumn alignItems={'flex-start'} padding={isMobile ? '6%' : '0% 8%'}>
       <TextWrapper>{'RECENTLY MINTED CREATIONS'}</TextWrapper>
-      <TotalSupplyInfo />
+      <TotalSupplyInfo isLanding />
 
       <ArtListWrapper
         gap={isMobile ? '12px' : '24px'}

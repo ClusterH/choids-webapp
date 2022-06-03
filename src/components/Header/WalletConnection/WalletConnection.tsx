@@ -1,15 +1,16 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import Davatar from '@davatar/react'
 import { UnsupportedChainIdError } from '@web3-react/core'
 
 import Modal from 'components/Modal/ModalWrapper'
 import { SUPPORTED_WALLETS } from 'config/constants/wallet'
+import { notifyToast } from 'config/toast'
 import { useActiveWeb3React, useModal } from 'hooks'
 import { ImageContainer, MainButton, TextWrapper } from 'styles/components'
 import { themeBorderRadius } from 'styles/theme'
 import { isMobile } from 'utils'
-import { shortenAddress } from 'utils/web3Helpers'
+import { isSupportedNetwork, shortenAddress } from 'utils/web3Helpers'
 
 import { useReverseENSLookUp } from '../hook'
 
@@ -18,7 +19,7 @@ import NetworkIndicator from './NetworkIndicator'
 import { WalletConnectionModal } from '.'
 
 const WalletConnection: React.FC = () => {
-  const { account, connector, error } = useActiveWeb3React()
+  const { account, chainId, connector, error } = useActiveWeb3React()
   const { isOpen, handleOpenModal } = useModal()
 
   const ens = useReverseENSLookUp()
@@ -30,6 +31,11 @@ const WalletConnection: React.FC = () => {
         .map((k) => SUPPORTED_WALLETS[k].iconURL)[0],
     [connector]
   )
+
+  useEffect(() => {
+    if (isSupportedNetwork(chainId) === false)
+      notifyToast({ id: 'wrong_network', type: 'error', content: 'Please connect Ethereum Network!' })
+  }, [chainId])
 
   return (
     <>

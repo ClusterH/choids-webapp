@@ -21,8 +21,18 @@ const AboutContainer5: React.FC = () => {
       isWrap={isMobile}
       justifyContent={isMobile ? 'center' : 'space-between'}
     >
-      {isMobile === false && <ImageContainer src={ART_IMG} alt={'about art'} width={isMobile ? '90%' : '40%'} />}
-      <FlexColumn alignItems={'flex-start'} colWidth={isMobile ? '100%' : '40%'}>
+      {isMobile === false && (
+        <ImageContainer
+          src={ART_IMG}
+          alt={'about art'}
+          width={isMobile ? '90%' : '40%'}
+          data-aos="fade-zoom-in"
+          data-aos-easing="ease-in-back"
+          data-aos-delay="300"
+          data-aos-offset="0"
+        />
+      )}
+      <FlexColumn alignItems={'flex-start'} colWidth={isMobile ? '100%' : '40%'} data-aos={'fade-down-left'}>
         <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={63}>
           {'This project will not do...'}
         </TextWrapper>

@@ -20,7 +20,7 @@ const AboutContainer4: React.FC = () => {
       alignItems={'flex-end'}
       isWrap={isMobile}
     >
-      <FlexColumn alignItems={'flex-start'} colWidth={isMobile ? '100%' : '40%'}>
+      <FlexColumn alignItems={'flex-start'} colWidth={isMobile ? '100%' : '40%'} data-aos={'fade-up-right'}>
         <BorderText fontWeight={'bold'} fontSize={'extra'} lineHeight={78}>
           {'MANIFESTO'}
         </BorderText>
@@ -40,7 +40,15 @@ const AboutContainer4: React.FC = () => {
           {'This project does not aspire to be hype driven. This is for the love of web3 and the love of building.'}
         </TextWrapper>
       </FlexColumn>
-      <ImageContainer src={ART_IMG} alt={'about art'} width={isMobile ? '100%' : '40%'} />
+      <ImageContainer
+        src={ART_IMG}
+        alt={'about art'}
+        width={isMobile ? '100%' : '40%'}
+        data-aos="fade-zoom-in"
+        data-aos-easing="ease-in-back"
+        data-aos-delay="300"
+        data-aos-offset="0"
+      />
     </FlexRow>
   )
 }

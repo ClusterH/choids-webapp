@@ -47,8 +47,11 @@ export interface Color {
 }
 
 export interface IMetaData {
+  id: string
   name: string
+  nameHash: string
   dna: string
+  dnaHash: string
   description: string
   image: string
   attributes: {
@@ -56,6 +59,7 @@ export interface IMetaData {
     value: string | number
     display_type?: string
   }[]
+  minted: boolean
   createdAt?: string
 }
 

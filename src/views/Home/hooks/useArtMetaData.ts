@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react'
 import { setMetaDataList } from 'state/choid/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { getMetadata } from 'utils/api/metadata'
+import { IMetaData } from 'views/ArtGenerator/types'
 
 export const useGetArtMetaData = () => {
   const dispatch = useAppDispatch()
@@ -13,7 +14,7 @@ export const useGetArtMetaData = () => {
     try {
       setIsLoading(true)
 
-      const metaDataList = await getMetadata(10)
+      const metaDataList = ((await getMetadata(10)) as IMetaData[]).filter((metadata) => metadata.minted === true)
       if (metaDataList && metaDataList.length > 0) dispatch(setMetaDataList(metaDataList))
     } catch (error) {
       console.log(error)

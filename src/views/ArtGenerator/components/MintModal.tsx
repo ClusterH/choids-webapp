@@ -94,7 +94,7 @@ const MintModal: React.FC = () => {
               </FlexRow>
             </FlexColumn>
             <MainButton width={'100%'} height={'40px'} onClick={handleMint} disabled={name === '' || isMinting}>
-              {'Confirm Mint'}&nbsp;
+              {isMinting ? 'Minting...' : 'Confirm Mint'}&nbsp;
               {isMinting && <ClipLoader size={24} color={themeColor.text1} />}
             </MainButton>
           </FlexColumn>

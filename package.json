@@ -17,6 +17,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "6.2.4",
     "@web3-react/walletlink-connector": "^6.2.12",
+    "aos": "^2.3.4",
     "axios": "^0.26.0",
     "crypto-js": "^4.1.1",
     "ethcall": "^4.7.0",
@@ -74,6 +75,7 @@
     ]
   },
   "devDependencies": {
+    "@types/aos": "^3.0.4",
     "@types/crypto-js": "^4.1.1",
     "@types/react-lazyload": "^3.2.0",
     "@types/react-router-dom": "^5.3.2",

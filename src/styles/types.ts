@@ -41,6 +41,9 @@ export interface ThemeProps {
   divider: string
   // box shadow
   boxShadow1: string
+  // status
+  error: string
+  success: string
 }
 
 export type GlobalThemeProps = {

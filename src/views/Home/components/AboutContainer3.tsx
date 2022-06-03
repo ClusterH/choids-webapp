@@ -54,7 +54,15 @@ const AboutContainer3: React.FC = () => {
         </>
       )}
 
-      <FlexColumn padding={isMobile ? '6%' : '12% 8%'} colWidth={isMobile ? '100%' : '50%'} alignItems={isMobile ? 'flex-start' : 'center'}>
+      <FlexColumn
+        padding={isMobile ? '6%' : '12% 8%'}
+        colWidth={isMobile ? '100%' : '50%'}
+        alignItems={isMobile ? 'flex-start' : 'center'}
+        data-aos={'zoom-in-up'}
+        data-aos-easing={'ease-in-out-back'}
+        data-aos-delay={50}
+        data-aos-duration={1200}
+      >
         <TextWrapper fontSize={'extra'} fontWeight={'bold'} lineHeight={63}>
           {'DNA right at your'}
         </TextWrapper>

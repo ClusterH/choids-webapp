@@ -2,7 +2,6 @@ import axios from 'axios'
 
 import { setupInterceptorsTo } from 'config/axios/axiosInterceptors'
 import { API_URL } from 'config/constants'
-import { IMetaData, TUseCase } from 'views/ArtGenerator/types'
 
 const specificAxios = setupInterceptorsTo(axios.create())
 

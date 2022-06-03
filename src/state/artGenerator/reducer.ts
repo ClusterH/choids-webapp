@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { ART_PRESET_LIST } from 'config/constants'
-import { IArtLayer, IArtParams, IMetaData } from 'views/ArtGenerator/types'
+import { IArtLayer, IArtParams } from 'views/ArtGenerator/types'
 
 interface IState {
   layerList: IArtLayer[]

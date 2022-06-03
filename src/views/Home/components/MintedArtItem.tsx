@@ -7,7 +7,6 @@ import ProgressiveImg from 'components/ProgressiveImg'
 import { FlexColumn, FlexRow, ImageContainer, TextWrapper } from 'styles/components'
 import { themeBorderRadius, themeColor } from 'styles/theme'
 import { isMobile } from 'utils'
-import { convertIPFSToWebURL } from 'utils/ipfsHelper'
 import { IMetaData } from 'views/ArtGenerator/types'
 
 const ItemWrapper = styled(FlexRow)`
