@@ -11,7 +11,7 @@ const TotalSupplyInfo: React.FC<{ isLanding?: boolean }> = ({ isLanding = false 
   return (
     <TextWrapper fontWeight={'bold'} fontSize={'xl'}>{`${choidTotalSupply} / ${supplyLimit} ${
       isLanding ? 'Choids' : ''
-    }minted`}</TextWrapper>
+    } minted`}</TextWrapper>
   )
 }
 

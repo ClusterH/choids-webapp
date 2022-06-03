@@ -38,6 +38,7 @@ export const useMintedArtList = () => {
           )
           window.clearInterval(categorySlideTimer)
           increaseRef.current.scrollTo(0, 0)
+          increaseRef.current.scrollLeft = 0
         }
       }, 20)
       setCategorySlideTimer(timer)
