@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 
 import keccak256 from 'keccak256'
 
@@ -7,7 +7,7 @@ import { useGetMinterContract } from 'hooks'
 import { useArtParamSettings } from 'state/artGenerator/hook'
 import { setArtImgData, setCanvasContainerSize } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
-import { checkDNAIsUnique } from 'utils'
+import { checkDNAIsUnique, isMobile } from 'utils'
 import { checkDNAUniqueness } from 'utils/api/metadata'
 
 import { IArtParams } from '../types'
@@ -15,41 +15,28 @@ import { drawArt } from '../utils/drawHelper'
 import { b64EncodeUnicode } from '../utils/encodeHelper'
 
 export const useDraw = () => {
-  const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
+  const pixelRatio = window.devicePixelRatio
+  const OFFSET = isMobile ? 0 : 50
+
+  const canvasContainerRef: any = useRef<HTMLDivElement>(null)
   const canvasRef: any = useRef<HTMLCanvasElement>(null)
   const artParamSettings = useArtParamSettings()
+  const dispatch = useAppDispatch()
 
   const params = useMemo(() => artParamSettings, [artParamSettings])
 
-  const [canvasSize, setCanvasSize] = useState<{ width: number; height: number }>({ width: 800, height: 800 })
+  const canvasSize = useMemo(() => {
+    return { width, height }
+  }, [height, width])
 
-  const offset = 200
-
-  const dispatch = useAppDispatch()
-
-  // const view = canvasContainerRef
-  // const ratio = window.devicePixelRatio || 1
-  // const width = (view.clientWidth * ratio) | 0
-  // const height = (view.clientHeight * ratio) | 0
-
-  // const canvasSize = useMemo(() => {
-  //   return {
-  //     width: canvasContainerRef.current ? canvasContainerRef.current.clientWidth - offset : 800,
-  //     height: canvasContainerRef.current ? canvasContainerRef.current.clientHeight - offset : 800,
-  //   }
-  // }, [])
-
-  // const handleImageData = useCallback(
-  //   async (blob: any) => {
-  //     dispatch(setArtImgData(blob))
-  //   },
-  //   [dispatch]
-  // )
+  const displayWidth = useMemo(() => Math.floor(width), [width])
+  const displayHeight = useMemo(() => Math.floor(height), [height])
 
   const handleDraw = useCallback(
     (params: IArtParams, canvasRef: any) => {
       drawArt(params, canvasRef, canvasSize.width, canvasSize.height)
-      // canvasRef.current.toBlob(handleImageData, 'image/png', 1.0)
       dispatch(setArtImgData(canvasRef.current.toDataURL()))
     },
     [canvasSize, dispatch]
@@ -59,11 +46,25 @@ export const useDraw = () => {
     handleDraw(params, canvasRef)
   }, [handleDraw, params])
 
+  // responsive width and height
+  useEffect(() => {
+    const size =
+      canvasContainerRef.current.clientHeight === 0
+        ? canvasContainerRef.current.clientWidth - OFFSET
+        : Math.min(canvasContainerRef.current.clientWidth, canvasContainerRef.current.clientHeight) - OFFSET
+    setWidth(size)
+    setHeight(size)
+  }, [OFFSET])
+
+  useLayoutEffect(() => {
+    handleDraw(params, canvasRef)
+  }, [handleDraw, params])
+
   useEffect(() => {
     dispatch(setCanvasContainerSize(canvasSize))
   }, [canvasSize, dispatch])
 
-  return { canvasRef, canvasContainerRef, canvasSize, handleDraw }
+  return { canvasRef, canvasContainerRef, canvasSize, displayWidth, displayHeight, handleDraw }
 }
 
 export const useCheckDNAUniqueness = () => {

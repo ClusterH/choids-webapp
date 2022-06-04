@@ -16,7 +16,7 @@ import { Providers } from './Providers'
 import reportWebVitals from './reportWebVitals'
 
 const GlobalConfig = () => {
-  AOS.init({ offset: 160, duration: 1000, easing: 'ease-in-sine', delay: 50, disable: 'mobile' })
+  AOS.init({ offset: 200, duration: 1000, easing: 'ease-in-sine', delay: 300, disable: 'mobile' })
   return null
 }
 

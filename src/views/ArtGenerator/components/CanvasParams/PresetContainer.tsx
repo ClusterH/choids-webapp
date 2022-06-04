@@ -9,6 +9,7 @@ import { setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { FlexColumn, TextWrapper } from 'styles/components'
 import { themeColor } from 'styles/theme'
+import { isMobile } from 'utils'
 
 const MainWrapper = styled(FlexColumn)`
   border-bottom: ${themeColor.border2};
@@ -26,9 +27,9 @@ const PresetContainer: React.FC = () => {
   )
 
   return (
-    <MainWrapper alignItems={'flex-start'} padding={'16px'}>
+    <MainWrapper alignItems={'flex-start'} padding={isMobile ? '8px' : '16px'}>
       <TotalSupplyInfo />
-      <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14}>
+      <TextWrapper color={'text5'} fontSize={isMobile ? 'base' : 'xs'} fontWeight={'semiBold'} lineHeight={isMobile ? 16 : 14}>
         {'PRESET'}
       </TextWrapper>
       <SelectBox optionList={optionList} isBorder handleOptionChange={handleOptionChange} />

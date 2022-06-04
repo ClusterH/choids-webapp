@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { useStateWithProps } from 'hooks'
 import { FlexColumn, FlexRow, InputWrapper, OverlayContainer, TextWrapper } from 'styles/components'
 import { themeBorderRadius, themeColor } from 'styles/theme'
+import { isMobile } from 'utils'
 import { toColor, validHex } from 'views/ArtGenerator/utils/ColorConvertHelper'
 
 const ColorPickerWrapper = styled(FlexColumn)`
@@ -69,7 +70,7 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (color:
 
   return (
     <FlexRow>
-      <TextWrapper color={'text8'} fontSize={'xs'} lineHeight={14}>
+      <TextWrapper color={'text8'} fontSize={isMobile ? 'sm' : 'xs'} lineHeight={14}>
         {label}
       </TextWrapper>
       <FlexRow justifyContent={'flex-end'} rowWidth={'60%'}>
@@ -88,7 +89,12 @@ const ColorParam: React.FC<{ label: string; value: string; handleChange: (color:
             </ColorPickerWrapper>
           </>
         )}
-        <InputWrapper onChange={handleOnChange} value={val} border={isValid ? themeColor.border1 : '1px solid #eb2372'} />
+        <InputWrapper
+          onChange={handleOnChange}
+          value={val}
+          fontSize={isMobile ? 'xl' : 'base'}
+          border={isValid ? themeColor.border1 : '1px solid #eb2372'}
+        />
       </FlexRow>
     </FlexRow>
   )

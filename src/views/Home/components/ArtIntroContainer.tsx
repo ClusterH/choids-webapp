@@ -26,7 +26,7 @@ const ArtIntroContainer: React.FC = () => {
       {/* <GradientBgWrapper src={GRADIENT_BG} /> */}
 
       <FlexRow padding={isMobile ? '6%' : '2% 8% 0'} isWrap={isMobile}>
-        <FlexColumn alignItems={'flex-start'} gap={'0px'} colWidth={'50%'}>
+        <FlexColumn alignItems={'flex-start'} gap={'0px'} colWidth={isMobile ? '100%' : '50%'}>
           <TextWrapper
             fontFamily={'title'}
             fontWeight={'bold'}

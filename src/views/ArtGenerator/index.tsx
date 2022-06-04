@@ -7,19 +7,14 @@ import { isMobile } from 'utils'
 
 import { ArtCanvasContainer, ParamsMainContainer } from './components'
 
-const RotatePageWrapper = styled(PageWrapper)<{ isLandscape: boolean }>`
-  // transform: ${({ isLandscape }) => (isLandscape ? `rotate(0deg)` : `rotate(90deg)`)};
-`
-
 const ArtGenerator: React.FC = () => {
-  const isLandscape = () => window.matchMedia('(orientation:landscape)').matches
   return (
-    <RotatePageWrapper isLandscape={isLandscape()}>
-      <FlexRow gap={'0px'}>
+    <PageWrapper>
+      <FlexRow gap={'0px'} isWrap={isMobile}>
         <ArtCanvasContainer />
         <ParamsMainContainer />
       </FlexRow>
-    </RotatePageWrapper>
+    </PageWrapper>
   )
 }
 

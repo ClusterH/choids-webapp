@@ -4,6 +4,7 @@ import RangeInput from 'components/RangeInput'
 import { useStateWithProps } from 'hooks'
 import { FlexRow, InputWrapper, TextWrapper } from 'styles/components'
 import { themeBorderRadius } from 'styles/theme'
+import { isMobile } from 'utils'
 
 const RangeParam: React.FC<{
   label: string
@@ -26,7 +27,7 @@ const RangeParam: React.FC<{
 
   return (
     <FlexRow>
-      <TextWrapper color={'text8'} fontSize={'xs'} lineHeight={14}>
+      <TextWrapper color={'text8'} fontSize={isMobile ? 'sm' : 'xs'} lineHeight={14}>
         {label}
       </TextWrapper>
       <FlexRow justifyContent={'flex-end'} rowWidth={'60%'}>
@@ -38,7 +39,7 @@ const RangeParam: React.FC<{
           padding={'0px'}
           borderRadius={themeBorderRadius.small}
           color={'text8'}
-          fontSize={'xs'}
+          fontSize={isMobile ? 'sm' : 'xs'}
           textAlign={'center'}
         />
         <FlexRow gap={'0px'}>

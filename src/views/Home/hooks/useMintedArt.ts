@@ -11,7 +11,7 @@ export const useMintedArtList = () => {
 
   const increaseRef = useRef<HTMLDivElement>(null)
   const [increaseSet, setIncreaseSet] = useState(false)
-  const [categorySlideTimer, setCategorySlideTimer] = useState<number | undefined>(undefined)
+  const [categorySlideTimer, setCategorySlideTimer] = useState<any>(undefined)
 
   const onMouseEnter = useCallback(() => {
     window.clearInterval(categorySlideTimer)
@@ -25,26 +25,19 @@ export const useMintedArtList = () => {
 
   const Timer = useCallback(() => {
     if (!increaseSet) {
-      const timer = window.setInterval(() => {
+      const timer = setInterval(() => {
         if (increaseRef.current && increaseRef.current.scrollLeft <= increaseRef.current.scrollWidth - increaseRef.current.clientWidth) {
           increaseRef.current.scrollTo(increaseRef.current.scrollLeft + 1, 0)
         }
         if (increaseRef.current && increaseRef.current.scrollLeft > increaseRef.current.scrollWidth - increaseRef.current.clientWidth) {
-          console.log(
-            increaseRef.current.scrollLeft,
-            increaseRef.current.offsetLeft,
-            increaseRef.current.scrollWidth,
-            increaseRef.current.clientWidth
-          )
-          window.clearInterval(categorySlideTimer)
-          increaseRef.current.scrollTo(0, 0)
           increaseRef.current.scrollLeft = 0
+          increaseRef.current.scrollTo(0, 0)
         }
       }, 20)
       setCategorySlideTimer(timer)
       setIncreaseSet(true)
     }
-  }, [categorySlideTimer, increaseSet])
+  }, [increaseSet])
 
   useEffect(() => {
     if (!increaseSet && increaseRef && increaseRef.current) {
@@ -52,7 +45,7 @@ export const useMintedArtList = () => {
     }
 
     return () => {
-      window.clearInterval(categorySlideTimer)
+      clearInterval(categorySlideTimer)
     }
   }, [Timer, categorySlideTimer, increaseSet])
 

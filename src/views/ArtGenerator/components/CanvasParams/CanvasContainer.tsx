@@ -134,8 +134,14 @@ const CanvasContainer: React.FC = () => {
 
   return (
     <>
-      <ParamWrapper alignItems={'flex-start'} padding={'16px'} colHeight={'100%'}>
-        <TextWrapper color={'text5'} fontSize={'xs'} fontWeight={'semiBold'} lineHeight={14} margin={'12px 0'}>
+      <ParamWrapper alignItems={'flex-start'} padding={isMobile ? '8px' : '16px'} colHeight={'100%'}>
+        <TextWrapper
+          color={'text5'}
+          fontSize={isMobile ? 'base' : 'xs'}
+          fontWeight={'semiBold'}
+          lineHeight={isMobile ? 16 : 14}
+          margin={'12px 0'}
+        >
           {'CANVAS'}
         </TextWrapper>
         <RangeParam label={'Zoom'} range={{ min: 0.1, max: 20 }} defaultVal={paramsRef.current.zoom} handleRangeChange={handleZoomChange} />
@@ -165,7 +171,7 @@ const CanvasContainer: React.FC = () => {
             {paramsRef.current.radii.length < 4 && (
               <>
                 <IoMdAddCircleOutline size={14} />
-                <HoverTextWrapper fontSize={'xs'}>{'Add Rotor'}</HoverTextWrapper>
+                <HoverTextWrapper fontSize={isMobile ? 'sm' : 'xs'}>{'Add Rotor'}</HoverTextWrapper>
               </>
             )}
           </FlexRow>
@@ -173,17 +179,17 @@ const CanvasContainer: React.FC = () => {
             {paramsRef.current.radii.length > 2 && (
               <>
                 <IoMdRemoveCircleOutline size={14} />
-                <HoverTextWrapper fontSize={'xs'}>{'Remove Last Rotor'}</HoverTextWrapper>
+                <HoverTextWrapper fontSize={isMobile ? 'sm' : 'xs'}>{'Remove Last Rotor'}</HoverTextWrapper>
               </>
             )}
           </FlexRow>
         </FlexRow>
       </ParamWrapper>
       <FlexColumn colHeight={'fit-content'}>
-        <Divider />
+        <Divider margin={isMobile ? '8px' : '1rem'} />
         <MainButton
-          width={'calc(100% - 32px)'}
-          margin={'0 0 24px'}
+          width={`calc(100% - ${isMobile ? '8px' : '32px'})`}
+          margin={isMobile ? '0 0 8px' : '0 0 24px'}
           disabled={mintPhase === 0 || !account || choidTotalSupply >= supplyLimit}
           onClick={async () => {
             if (mintPhase === 0 || !account) return

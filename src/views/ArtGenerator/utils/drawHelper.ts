@@ -8,8 +8,8 @@ export const hypotrochoid = (d: number, radii: number[], t: number, output: any)
 
   let x = 0
   let y = 0
-  let a
-  let b
+  let a = 0
+  let b = 0
 
   const l = radii.length - 1
 
@@ -39,6 +39,8 @@ export const drawArt = (params: IArtParams, canvasRef: any, width: number, heigh
   if (canvasRef.current) {
     const ctx = canvasRef.current.getContext('2d')
     ctx.clearRect(0, 0, Math.max(w, width), Math.max(he, height))
+    ctx.width = width
+    ctx.height = height
     ctx.fillStyle = params.backgroundColor
     ctx.fillRect(0, 0, width, height)
     ctx.save()
