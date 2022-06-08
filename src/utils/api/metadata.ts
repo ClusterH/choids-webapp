@@ -2,6 +2,7 @@ import axios from 'axios'
 
 import { setupInterceptorsTo } from 'config/axios/axiosInterceptors'
 import { API_URL } from 'config/constants'
+import { IMetaData } from 'views/ArtGenerator/types'
 
 const specificAxios = setupInterceptorsTo(axios.create())
 
@@ -55,7 +56,7 @@ export const getMetadata = async (count: number) => {
   try {
     const { data, status } = await specificAxios.get(`${API_URL}metadata/get-all/${count}`)
     if (status === 200) {
-      return data.result
+      return data.result as IMetaData[]
     } else return false
   } catch (e: any) {
     console.log(e)

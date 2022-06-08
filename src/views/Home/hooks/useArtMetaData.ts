@@ -14,8 +14,12 @@ export const useGetArtMetaData = () => {
     try {
       setIsLoading(true)
 
-      const metaDataList = ((await getMetadata(10)) as IMetaData[]).filter((metadata) => metadata.minted === true)
-      if (metaDataList && metaDataList.length > 0) dispatch(setMetaDataList(metaDataList))
+      const res = await getMetadata(10)
+
+      if (!!res) {
+        const metaDataList = ((await getMetadata(10)) as IMetaData[]).filter((metadata) => metadata.minted === true)
+        if (metaDataList && metaDataList.length > 0) dispatch(setMetaDataList(metaDataList))
+      }
     } catch (error) {
       console.log(error)
     } finally {
