@@ -25,11 +25,11 @@ export const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [SupportedChainId.MAIN, S
 type AddressMap = { [chainId: number]: string }
 
 export const MINTER_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MAIN]: '0x6beEA5649Fc6BFEb7f2d23E0678aD9D02408B1F7',
+  [SupportedChainId.MAIN]: '0x3570F04B9D254FeE8c8d477611F5B1655F30C294',
   [SupportedChainId.RINKEBY_TESTNET]: '0x974aEd9EC041A91e1310FD4748Db2B2dD473E33e',
 }
 export const MINTABLE_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MAIN]: '0x6b3A1C4F88Fd57013C2c2ac97aB35317dfD424B3',
+  [SupportedChainId.MAIN]: '0xff42D75F5a9e5b72bc7d51708BEaC4F2E3aC8569',
   [SupportedChainId.RINKEBY_TESTNET]: '0x88d9436220248e7c5ecE9B746a52e50aA42bF817',
 }
 

@@ -26,10 +26,13 @@ export const useMintedArtList = () => {
   const Timer = useCallback(() => {
     if (!increaseSet) {
       const timer = setInterval(() => {
-        if (increaseRef.current && increaseRef.current.scrollLeft <= increaseRef.current.scrollWidth - increaseRef.current.clientWidth) {
+        if (
+          increaseRef.current &&
+          increaseRef.current.scrollLeft + 2 <= increaseRef.current.scrollWidth - increaseRef.current.clientWidth
+        ) {
           increaseRef.current.scrollTo(increaseRef.current.scrollLeft + 1, 0)
         }
-        if (increaseRef.current && increaseRef.current.scrollLeft > increaseRef.current.scrollWidth - increaseRef.current.clientWidth) {
+        if (increaseRef.current && increaseRef.current.scrollLeft + 2 > increaseRef.current.scrollWidth - increaseRef.current.clientWidth) {
           increaseRef.current.scrollLeft = 0
           increaseRef.current.scrollTo(0, 0)
         }
