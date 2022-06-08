@@ -10,12 +10,7 @@ import { useGetDefaltMetadata } from '../hooks'
 import { CanvasContainer, PresetContainer } from './CanvasParams'
 
 const ParamsMainContainer: React.FC = () => {
-  const { handleGetDefaultMetadata } = useGetDefaltMetadata()
   const { width, height } = useCanvasContainerSize()
-
-  useEffect(() => {
-    handleGetDefaultMetadata()
-  }, [handleGetDefaultMetadata])
 
   return (
     <FlexColumn

@@ -14,6 +14,8 @@ import { IArtParams } from '../types'
 import { drawArt } from '../utils/drawHelper'
 import { b64EncodeUnicode } from '../utils/encodeHelper'
 
+import { useGetDefaltMetadata } from './useMint'
+
 export const useDraw = () => {
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
@@ -70,12 +72,16 @@ export const useDraw = () => {
 export const useCheckDNAUniqueness = () => {
   const minterContract = useGetMinterContract(false)
   const artParamSettings = useArtParamSettings()
+  const { handleGetDefaultMetadata } = useGetDefaltMetadata()
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const params = useMemo(() => artParamSettings, [artParamSettings])
 
   const handleCheckDNA = useCallback(async () => {
     try {
       if (!minterContract) return
+      setIsLoading(true)
       const dna = b64EncodeUnicode(params)
       const dnaHash = keccak256(dna).toString('hex')
       const isDuplicated: boolean = await checkDNAUniqueness(dnaHash)
@@ -86,7 +92,7 @@ export const useCheckDNAUniqueness = () => {
 
         return true
       }
-
+      await handleGetDefaultMetadata()
       return false
     } catch (error) {
       console.log(error)
@@ -96,8 +102,10 @@ export const useCheckDNAUniqueness = () => {
         content: 'We cannot estimate your DNA uniqueness. Set the parameters differently.',
       })
       return true
+    } finally {
+      setIsLoading(false)
     }
-  }, [minterContract, params])
+  }, [handleGetDefaultMetadata, minterContract, params])
 
-  return { handleCheckDNA }
+  return { handleCheckDNA, isLoading }
 }

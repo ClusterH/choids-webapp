@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io'
+import ClipLoader from 'react-spinners/ClipLoader'
 import styled from 'styled-components'
 
 import Modal from 'components/Modal/ModalWrapper'
@@ -11,6 +12,7 @@ import { useArtParamSettings, useIsMinting } from 'state/artGenerator/hook'
 import { setArtParamRadii, setArtParamSettings } from 'state/artGenerator/reducer'
 import { useAppDispatch } from 'state/hooks'
 import { Divider, FlexColumn, FlexRow, HoverTextWrapper, MainButton, TextWrapper } from 'styles/components'
+import { themeColor } from 'styles/theme'
 import { isMobile } from 'utils'
 import { useCheckDNAUniqueness, useMintPhaseStatus } from 'views/ArtGenerator/hooks'
 import { IArtParams } from 'views/ArtGenerator/types'
@@ -58,7 +60,7 @@ const CanvasContainer: React.FC = () => {
   })
 
   const { mintPhase } = useMintPhaseStatus()
-  const { handleCheckDNA } = useCheckDNAUniqueness()
+  const { handleCheckDNA, isLoading } = useCheckDNAUniqueness()
 
   const handleColorChange = useCallback(
     (canvasColor: string) => {
@@ -190,7 +192,7 @@ const CanvasContainer: React.FC = () => {
         <MainButton
           width={`calc(100% - ${isMobile ? '8px' : '32px'})`}
           margin={isMobile ? '0 0 8px' : '0 0 24px'}
-          disabled={mintPhase === 0 || !account || choidTotalSupply >= supplyLimit}
+          disabled={mintPhase === 0 || !account || choidTotalSupply >= supplyLimit || isLoading === true}
           onClick={async () => {
             if (mintPhase === 0 || !account) return
             const isDuplicate = await handleCheckDNA()
@@ -198,7 +200,14 @@ const CanvasContainer: React.FC = () => {
             handleOpenModal()
           }}
         >
-          {mintPhase === 0 ? 'Mint Paused' : choidTotalSupply >= supplyLimit ? `All Choids Minted` : 'Mint'}
+          {mintPhase === 0
+            ? 'Mint Paused'
+            : choidTotalSupply >= supplyLimit
+            ? `All Choids Minted`
+            : isLoading === true
+            ? 'DNA Checking...'
+            : 'Mint'}
+          {isLoading && <ClipLoader size={24} color={themeColor.text1} />}
         </MainButton>
         <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder isCloseDisabled={isMinting}>
           <MintModal />
