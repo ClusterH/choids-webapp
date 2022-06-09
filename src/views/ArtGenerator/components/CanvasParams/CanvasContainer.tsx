@@ -207,6 +207,7 @@ const CanvasContainer: React.FC = () => {
             : isLoading === true
             ? 'DNA Checking...'
             : 'Mint'}
+          &nbsp;
           {isLoading && <ClipLoader size={24} color={themeColor.text1} />}
         </MainButton>
         <Modal isOpen={isOpen} handleOpenModal={handleOpenModal} width={isMobile ? '90%' : '50%'} isBorder isCloseDisabled={isMinting}>

@@ -4,14 +4,14 @@ import { FaEthereum } from 'react-icons/fa'
 import { ClipLoader } from 'react-spinners'
 import styled from 'styled-components'
 
-import { DEFAULT_CHAIN_ID } from 'config/constants'
+import { DEFAULT_CHAIN_ID, NETWORK_INDICATOR } from 'config/constants'
 import { useActiveWeb3React, useGetTotalSupply, useHandleExternalLink } from 'hooks'
 import { useIsMinting } from 'state/artGenerator/hook'
 import { usePrice } from 'state/choid/hook'
 import { FlexColumn, FlexRow, ImageContainer, InputWrapper, MainButton, TextWrapper, TransparentButton } from 'styles/components'
 import { themeBorderRadius, themeColor } from 'styles/theme'
 import { ExplorerDataType, getExplorerLink, getMintableAddress } from 'utils'
-import { getOpenSeaLink } from 'utils/openseaHelper'
+import { getOpenSeaLink, OPENSEA_TYPE } from 'utils/openseaHelper'
 
 import { useMint } from '../hooks'
 import { shortString } from '../utils/encodeHelper'
@@ -47,7 +47,13 @@ const MintModal: React.FC = () => {
             <MainButton
               onClick={() => {
                 if (txData === undefined) return
-                handleOpenExternalLink(`${getOpenSeaLink(chainId ?? DEFAULT_CHAIN_ID, txData.id, choidAddress.toLowerCase())}`)
+                handleOpenExternalLink(
+                  getOpenSeaLink(
+                    chainId ?? DEFAULT_CHAIN_ID,
+                    OPENSEA_TYPE.ASSETS,
+                    `${NETWORK_INDICATOR[chainId ?? DEFAULT_CHAIN_ID].name.toLowerCase()}/${choidAddress.toLowerCase()}/${txData.id}`
+                  )
+                )
               }}
             >
               &nbsp;&nbsp;{'View on OpenSea'}&nbsp;&nbsp;

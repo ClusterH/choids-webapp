@@ -9,7 +9,7 @@ import { useActiveWeb3React, useHandleExternalLink } from 'hooks'
 import { FlexRow, ImageContainer } from 'styles/components'
 import { themeColor } from 'styles/theme'
 import { ExplorerDataType, getExplorerLink, getMintableAddress } from 'utils'
-import { OPENSEA_PREFIXES } from 'utils/openseaHelper'
+import { getOpenSeaLink, OPENSEA_TYPE } from 'utils/openseaHelper'
 
 const SocialIconsContainer: React.FC = () => {
   const { chainId } = useActiveWeb3React()
@@ -48,7 +48,13 @@ const SocialIconsContainer: React.FC = () => {
         width={'32px'}
         cursor={'pointer'}
         onClick={() =>
-          handleOpenExternalLink(`https://${OPENSEA_PREFIXES[chainId ?? DEFAULT_CHAIN_ID] ?? ''}opensea.io/collection/blockchain-choids-v4`)
+          handleOpenExternalLink(
+            getOpenSeaLink(
+              chainId ?? DEFAULT_CHAIN_ID,
+              OPENSEA_TYPE.COLLECTION,
+              chainId === 4 ? 'blockchain-choids-v4' : 'blockchain-choids'
+            )
+          )
         }
       />
     </FlexRow>
