@@ -10,7 +10,7 @@ Clone down this repository. You will need `node` and `yarn`(or You can use `npm`
 
 ### Get the code and dependencies:
 
-    git clone https://github.com/wenbali-io/choids-webapp.git
+    git clone https://github.com/ClusterH/choids-webapp.git
     cd choids-webapp
     yarn
 
